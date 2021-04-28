@@ -27,7 +27,8 @@ public class Minion : Character {
         return (Player)api.GetCharacter(owner);
     }
     public bool canAttack(CosmicAPI api) {
-        if (api.GetGame().round != spawnRound && !hasAttacked) return true;
+        Player ownerPlayer = (Player)api.GetCharacter(owner);
+        if (api.GetGame().round != spawnRound && !hasAttacked && ownerPlayer.turn) return true;
         return false;
     }
 }
@@ -327,7 +328,6 @@ public class CosmicAPI : MonoBehaviour {
 
 
         ws.OnOpen += () => {
-            Debug.Log("Connected to Cosmic server");
             OnConnected?.Invoke();
             Login();
         };
@@ -378,6 +378,7 @@ public class CosmicAPI : MonoBehaviour {
 
     // Game update from the server
     void GameUpdate(string json) {
+
         Game update = JsonConvert.DeserializeObject<Game>(json);
         game = update;
 
@@ -400,7 +401,7 @@ public class CosmicAPI : MonoBehaviour {
                     OnGameStart?.Invoke();
                     break;
                 case "next_turn":
-                    OnTurn(gameEvent.values["attacking_player"]);
+                    OnTurn?.Invoke(gameEvent.values["attacking_player"]);
                     break;
                 case "player_deal_card":
                     OnPlayerDealCard(gameEvent.values);
@@ -420,10 +421,10 @@ public class CosmicAPI : MonoBehaviour {
     void OnPlayerDealCard(Dictionary<string, string> info) {
         if (info["player"] == me.id) {
             // Client was dealt a card
-            OnCard(Int32.Parse(info["card"]));
+            OnCard?.Invoke(Int32.Parse(info["card"]));
         } else {
             // Opponent was dealt a card
-            OnOpponentCard();
+            OnOpponentCard?.Invoke();
         }
     }
 
@@ -456,18 +457,34 @@ public class CosmicAPI : MonoBehaviour {
     }
 
 
-    public GameObject InstantiateCard(int id, Transform parent) {
+    public GameObject InstantiateCard(int id, Transform parent, bool handCard = false) {
         Card card = GetCard(id);
         GameObject worldCard = parent == null ? Instantiate(cardPrefab) : Instantiate(cardPrefab, parent);
+
+        if (handCard) {
+            BoxCollider[] colliders = worldCard.GetComponents<BoxCollider>();
+            Destroy(colliders[0]);
+            colliders[1].enabled = true;
+        }
 
         worldCard.GetComponent<WorldCard>().Setup(id, this);
         worldCard.name = "Card - " + card.name;
         return worldCard;
     }
 
-    public void InstantiateMinionCard(string id) {
+    public GameObject InstantiateMinionCard(string id, Transform parent = null) {
         Minion minion = (Minion)GetCharacter(id);
-        Debug.Log("Got the character " + minion.owner);
+        GameObject card = InstantiateCard(minion.origin, parent);
+        WorldCard wc = card.GetComponent<WorldCard>();
+
+        if (minion.canAttack(this)) wc.SetActive(true);
+
+        Card origin = GetCard(minion.origin);
+
+        wc.SetDamage(origin.damage);
+        wc.SetHp(minion.hp);
+
+        return card;
     }
 
     void Send(string identifier, string data) {

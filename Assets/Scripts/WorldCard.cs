@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class WorldCard : MonoBehaviour {
 
 
+    public int handIndex;
     int id, hp, damage, mana;
     Card origin;
 
@@ -16,6 +17,8 @@ public class WorldCard : MonoBehaviour {
 
     public Sprite minionCard, spellCard, minionMask, spellMask;
     public Image frame, mask, image;
+
+    public Transform activeBorder;
 
     bool isMinion;
 
@@ -27,6 +30,10 @@ public class WorldCard : MonoBehaviour {
         {"taunt", new Color(230, 230, 230)},
         {"rush", new Color(22, 22, 22)}
     };
+
+    public void SetActive(bool active) {
+        activeBorder.gameObject.SetActive(active);
+    }
 
     public void Setup(int id, CosmicAPI api) {
         this.id = id;
@@ -68,6 +75,10 @@ public class WorldCard : MonoBehaviour {
     }
     public int GetDamage() {
         return damage;
+    }
+
+    public int GetMana() {
+        return mana;
     }
 
     public void SetHp(int hp) {
