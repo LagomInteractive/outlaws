@@ -43,7 +43,11 @@ public class GameManager : MonoBehaviour {
 
         startMatchmakingButton.onClick.AddListener(() => {
             matchmaking = !matchmaking;
+            if (matchmaking) api.StartMatchMaking();
+            else api.StopMatchMaking();
+
             startMatchmakingButton.GetComponentInChildren<Text>().text = matchmaking ? "Searching game..." : "Start match making";
+
         });
 
         api.OnTurn += (attackingPlayer) => {
