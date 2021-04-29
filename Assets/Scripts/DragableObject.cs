@@ -37,9 +37,9 @@ public class DragableObject : MonoBehaviour {
         // z coordinate of game object on screen
         mousePoint.z = mZCoord;
         // Convert it to world 
-
         return Camera.main.ScreenToWorldPoint(mousePoint);
     }
+
     void OnMouseDown() {
 
         if (GetComponent<WorldCard>().GetMana() <= api.GetPlayer().manaLeft && api.GetPlayer().turn) {
@@ -66,7 +66,7 @@ public class DragableObject : MonoBehaviour {
         if (!dragging) return;
         transform.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Physics.Raycast(ray, out hit, layermask);
+        Physics.Raycast(ray, out hit, Mathf.Infinity, layermask);
 
         transform.position = GetMouseAsWorldPoint() + mOffset;
     }

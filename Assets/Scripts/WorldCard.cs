@@ -10,6 +10,7 @@ public class WorldCard : MonoBehaviour {
 
     public int handIndex;
     int id, hp, damage, mana;
+    string minionId;
     Card origin;
 
     public TextMeshProUGUI minionTitle, spellTitle;
@@ -17,8 +18,7 @@ public class WorldCard : MonoBehaviour {
 
     public Sprite minionCard, spellCard, minionMask, spellMask;
     public Image frame, mask, image;
-
-    public Transform activeBorder;
+    public Transform activeBorder, targetBorder;
 
     bool isMinion;
 
@@ -35,9 +35,24 @@ public class WorldCard : MonoBehaviour {
         activeBorder.gameObject.SetActive(active);
     }
 
+    public void SetTargeted(bool active) {
+        targetBorder.gameObject.SetActive(active);
+    }
+
+    public void Setup(string id, CosmicAPI api) {
+        minionId = id;
+        Setup(-1, api);
+    }
+
+
     public void Setup(int id, CosmicAPI api) {
-        this.id = id;
-        origin = api.GetCard(id);
+        if (id != -1) {
+            this.id = id;
+            origin = api.GetCard(id);
+        } else {
+            Minion minion = (Minion)api.GetCharacter(minionId);
+            origin = api.GetCard(minion.origin);
+        }
 
         isMinion = origin.type == CardType.Minion;
 
@@ -77,18 +92,29 @@ public class WorldCard : MonoBehaviour {
         return damage;
     }
 
+    /// <summary>
+    /// If this world card is a spawned minion, this will return its UUID
+    /// </summary>
+    /// <returns>Minion UUID</returns>
+    public string GetMinionId() {
+        return minionId;
+    }
+
     public int GetMana() {
         return mana;
     }
 
     public void SetHp(int hp) {
         this.hp = hp;
+        UpdateCardValues();
     }
     public void SetDamage(int damage) {
         this.damage = damage;
+        UpdateCardValues();
     }
     public void SetMana(int mana) {
         this.mana = mana;
+        UpdateCardValues();
     }
 
     void UpdateCardValues() {

@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour {
     public Text infoText;
     public float roundTimer;
 
+    public Transform endTurnButton, winnerTitle;
+
     Game game;
 
     private void Update() {
@@ -22,6 +24,12 @@ public class GameManager : MonoBehaviour {
             roundTimer -= Time.deltaTime;
             infoText.text = $"Round: {game.round}\nTurn: {(api.GetPlayer().turn ? "You" : "Opponent")}\nTime left: {Mathf.Round(roundTimer)}";
         }
+    }
+
+    void SetEndRoundButtonState(bool enabled) {
+        endTurnButton.GetComponent<Button>().interactable = enabled;
+        endTurnButton.GetComponent<Image>().color = enabled ? Color.white : Color.grey;
+        endTurnButton.Find("Text").GetComponent<Text>().color = enabled ? Color.white : Color.grey;
     }
 
     void Start() {
@@ -32,7 +40,6 @@ public class GameManager : MonoBehaviour {
         };
 
         api.OnCard += (id) => {
-            Debug.Log("Got card");
             hand.UpdateHand();
         };
 
@@ -42,8 +49,10 @@ public class GameManager : MonoBehaviour {
 
         api.OnUpdate += () => {
             UpdateManaBar();
-            UpdateStats(playerStats, api.GetPlayer());
+            Player player = api.GetPlayer();
+            UpdateStats(playerStats, player);
             UpdateStats(opponentStats, api.GetOpponent());
+            SetEndRoundButtonState(player.turn);
         };
 
         api.OnCardUsed += (index) => {
@@ -51,8 +60,13 @@ public class GameManager : MonoBehaviour {
         };
 
         api.OnMinionSpawned += (id) => {
-            Debug.Log("Minion spawned");
             hand.UpdateHand();
+        };
+
+        api.OnGameEnd += (winner) => {
+
+            winnerTitle.gameObject.SetActive(true);
+
         };
     }
 

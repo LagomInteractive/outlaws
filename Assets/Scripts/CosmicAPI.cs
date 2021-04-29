@@ -309,6 +309,9 @@ public class CosmicAPI : MonoBehaviour {
         ws.Connect();
     }
 
+    /// <summary>
+    /// Send a ping to the server. Listen to OnPing to catch it.
+    /// </summary>
     public void Ping() {
         stopwatch.Reset();
         stopwatch.Start();
@@ -412,6 +415,9 @@ public class CosmicAPI : MonoBehaviour {
                 case "card_used":
                     if (gameEvent.values["player"] == me.id) OnCardUsed?.Invoke(Int32.Parse(gameEvent.values["index"]));
                     break;
+                case "game_over":
+                    OnGameEnd?.Invoke(gameEvent.values["winner"]);
+                    break;
             }
             yield return new WaitForSeconds(0);
         }
@@ -443,21 +449,31 @@ public class CosmicAPI : MonoBehaviour {
     }
 
 
-
+    /// <summary>
+    /// Get a database of all cards (not in a specific game)
+    /// </summary>
+    /// <returns>Array of all cards</returns>
     public Card[] GetCards() {
         return cards;
     }
 
+    /// <summary>
+    /// Send information to the server (only identifier)
+    /// </summary>
+    /// <param name="identifier"></param>
     void Send(string identifier) {
         Send(identifier, "");
     }
 
-    public GameObject InstantiateCard(int id) {
-        return this.InstantiateCard(id, null);
-    }
 
-
-    public GameObject InstantiateCard(int id, Transform parent, bool handCard = false) {
+    /// <summary>
+    /// Instantiate a card the hand or to display in the inventory
+    /// </summary>
+    /// <param name="id">Card id</param>
+    /// <param name="parent">Instantiate parent</param>
+    /// <param name="handCard"></param>
+    /// <returns>The GameObject that was instantiated</returns>
+    public GameObject InstantiateCard(int id, Transform parent = null, bool handCard = false) {
         Card card = GetCard(id);
         GameObject worldCard = parent == null ? Instantiate(cardPrefab) : Instantiate(cardPrefab, parent);
 
@@ -472,17 +488,37 @@ public class CosmicAPI : MonoBehaviour {
         return worldCard;
     }
 
+    /// <summary>
+    /// Instantiate a card for a spawned minion on the board
+    /// </summary>
+    /// <param name="id">UUID of the minion</param>
+    /// <param name="parent">The parent (Optional)</param>
+    /// <returns></returns>
     public GameObject InstantiateMinionCard(string id, Transform parent = null) {
         Minion minion = (Minion)GetCharacter(id);
         GameObject card = InstantiateCard(minion.origin, parent);
+
+        if (minion.owner == me.id) {
+            Attacker attacker = card.AddComponent<Attacker>();
+            attacker.api = this;
+
+        } else {
+            // Attackable
+            card.layer = 7;
+        }
+
         WorldCard wc = card.GetComponent<WorldCard>();
 
         if (minion.canAttack(this)) wc.SetActive(true);
 
         Card origin = GetCard(minion.origin);
 
+        wc.Setup(minion.id, this);
         wc.SetDamage(origin.damage);
         wc.SetHp(minion.hp);
+        Debug.Log(origin.name + " MINION HP: " + minion.hp);
+
+
 
         return card;
     }
@@ -497,6 +533,10 @@ public class CosmicAPI : MonoBehaviour {
         ws.SendText(json);
     }
 
+    public void Attack(string attacker, string target) {
+        AttackInfo info = new AttackInfo() { attacker = attacker, target = target };
+        Send("attack", JsonConvert.SerializeObject(info));
+    }
 
 
     void OnUser(string packet) {
