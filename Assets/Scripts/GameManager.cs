@@ -39,15 +39,17 @@ public class GameManager : MonoBehaviour {
         endTurnButton.Find("Text").GetComponent<Text>().color = enabled ? Color.white : Color.grey;
     }
 
+    void UpdateMatchmakingButton() {
+        startMatchmakingButton.GetComponentInChildren<Text>().text = matchmaking ? "Searching game..." : "Start match making";
+    }
+
     void Start() {
 
         startMatchmakingButton.onClick.AddListener(() => {
             matchmaking = !matchmaking;
             if (matchmaking) api.StartMatchMaking();
             else api.StopMatchMaking();
-
-            startMatchmakingButton.GetComponentInChildren<Text>().text = matchmaking ? "Searching game..." : "Start match making";
-
+            UpdateMatchmakingButton();
         });
 
         api.OnTurn += (attackingPlayer) => {
@@ -70,6 +72,8 @@ public class GameManager : MonoBehaviour {
 
         api.OnGameStart += () => {
             endGameTitle.gameObject.SetActive(false);
+            matchmaking = false;
+            UpdateMatchmakingButton();
         };
 
         api.OnCardUsed += (index) => {
