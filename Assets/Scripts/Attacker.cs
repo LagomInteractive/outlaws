@@ -62,12 +62,17 @@ public class Attacker : MonoBehaviour {
             GameObject target = GetTarget();
 
             if (target && target.name == "OpponentTarget") {
-                opponentTargeted = true;
+                if (api.GetOpponent().canBeAttacked(api))
+                    opponentTargeted = true;
             } else if (target) {
                 if (targetMinion != null && target != targetMinion.gameObject) UpdateTarget(false);
 
-                targetMinion = target.GetComponent<WorldCard>();
-                targetMinion.SetTargeted(true);
+                Minion minion = (Minion)api.GetCharacter(target.GetComponent<WorldCard>().GetMinionId());
+                if (minion.canBeAttacked(api)) {
+                    targetMinion = target.GetComponent<WorldCard>();
+                    targetMinion.SetTargeted(true);
+                }
+
             } else {
                 UpdateTarget(true);
                 opponentTargeted = false;

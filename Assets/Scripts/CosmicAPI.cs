@@ -28,8 +28,19 @@ public class Minion : Character {
     }
     public bool canAttack(CosmicAPI api) {
         Player ownerPlayer = (Player)api.GetCharacter(owner);
-        if (api.GetGame().round != spawnRound && !hasAttacked && ownerPlayer.turn) return true;
+        if (!hasAttacked && ownerPlayer.turn)
+            if (api.GetGame().round != spawnRound || api.GetCard(origin).element == Element.rush) return true;
         return false;
+    }
+
+    public bool canBeAttacked(CosmicAPI api) {
+        if (api.GetCard(origin).element != Element.taunt) {
+            Player opponent = api.GetOpponent();
+            foreach (Minion minion in opponent.minions) {
+                if (api.GetCard(minion.origin).element == Element.taunt) return false;
+            }
+        }
+        return true;
     }
 }
 
@@ -42,6 +53,13 @@ public class Player : Character {
     public int[] deck;
     public Minion[] minions;
     public Profile profile;
+
+    public bool canBeAttacked(CosmicAPI api) {
+        foreach (Minion minion in minions) {
+            if (api.GetCard(minion.origin).element == Element.taunt) return false;
+        }
+        return true;
+    }
 
     public bool canAttack(CosmicAPI api) {
         return hasAttacked;
@@ -191,6 +209,7 @@ public class CosmicAPI : MonoBehaviour {
     long timeDifference = 0;
 
     public void StartTestGame() {
+        ConcedeGame();
         Send("start_test");
     }
 
@@ -209,7 +228,7 @@ public class CosmicAPI : MonoBehaviour {
 
     public Player GetOpponent() {
         foreach (Player player in game.players) {
-            if (player.id == me.id) return player;
+            if (player.id != me.id) return player;
         }
         return null;
     }
@@ -252,6 +271,7 @@ public class CosmicAPI : MonoBehaviour {
     public Game GetGame() {
         return game;
     }
+
 
     /// <summary>
     /// Get information about a card
@@ -377,6 +397,14 @@ public class CosmicAPI : MonoBehaviour {
 
         // Connect to the server
         await ws.Connect();
+    }
+
+    public void StartMatchMaking() {
+        Send("start_matchmaking");
+    }
+
+    public void StopMatchMaking() {
+        Send("stop_matchmaking");
     }
 
     // Game update from the server
@@ -516,9 +544,6 @@ public class CosmicAPI : MonoBehaviour {
         wc.Setup(minion.id, this);
         wc.SetDamage(origin.damage);
         wc.SetHp(minion.hp);
-        Debug.Log(origin.name + " MINION HP: " + minion.hp);
-
-
 
         return card;
     }
@@ -534,10 +559,14 @@ public class CosmicAPI : MonoBehaviour {
     }
 
     public void Attack(string attacker, string target) {
+        Debug.Log("ATTACK CALLED  " + attacker + " : " + target);
         AttackInfo info = new AttackInfo() { attacker = attacker, target = target };
         Send("attack", JsonConvert.SerializeObject(info));
     }
 
+    public void ConcedeGame() {
+        Send("concede");
+    }
 
     void OnUser(string packet) {
         me = JsonConvert.DeserializeObject<Profile>(packet);

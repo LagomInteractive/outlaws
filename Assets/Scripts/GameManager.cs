@@ -15,11 +15,18 @@ public class GameManager : MonoBehaviour {
     public Text infoText;
     public float roundTimer;
 
-    public Transform endTurnButton, winnerTitle;
+    public Transform endTurnButton, endGameTitle;
+    public Sprite winner, loser;
+
+    public GameObject buttons;
+    public Button startMatchmakingButton;
+    bool matchmaking = false;
 
     Game game;
 
+
     private void Update() {
+        buttons.SetActive(game == null);
         if (game != null) {
             roundTimer -= Time.deltaTime;
             infoText.text = $"Round: {game.round}\nTurn: {(api.GetPlayer().turn ? "You" : "Opponent")}\nTime left: {Mathf.Round(roundTimer)}";
@@ -34,6 +41,11 @@ public class GameManager : MonoBehaviour {
 
     void Start() {
 
+        startMatchmakingButton.onClick.AddListener(() => {
+            matchmaking = !matchmaking;
+            startMatchmakingButton.GetComponentInChildren<Text>().text = matchmaking ? "Searching game..." : "Start match making";
+        });
+
         api.OnTurn += (attackingPlayer) => {
             game = api.GetGame();
             roundTimer = game.roundLength;
@@ -43,9 +55,6 @@ public class GameManager : MonoBehaviour {
             hand.UpdateHand();
         };
 
-        api.OnGameEnd += (winningPlayer) => {
-            game = null;
-        };
 
         api.OnUpdate += () => {
             UpdateManaBar();
@@ -53,6 +62,10 @@ public class GameManager : MonoBehaviour {
             UpdateStats(playerStats, player);
             UpdateStats(opponentStats, api.GetOpponent());
             SetEndRoundButtonState(player.turn);
+        };
+
+        api.OnGameStart += () => {
+            endGameTitle.gameObject.SetActive(false);
         };
 
         api.OnCardUsed += (index) => {
@@ -63,12 +76,13 @@ public class GameManager : MonoBehaviour {
             hand.UpdateHand();
         };
 
-        api.OnGameEnd += (winner) => {
-
-            winnerTitle.gameObject.SetActive(true);
-
+        api.OnGameEnd += (winningPlayer) => {
+            game = null;
+            endGameTitle.gameObject.SetActive(true);
+            endGameTitle.Find("Text").GetComponent<Image>().sprite = (winningPlayer == api.GetProfile().id) ? winner : loser;
         };
     }
+
 
     public void UpdateStats(Transform target, Player player) {
         target.Find("hp").GetComponent<Text>().text = player.hp.ToString();
@@ -83,7 +97,8 @@ public class GameManager : MonoBehaviour {
     }
 
     public void StartTest() {
-        api.StartTestGame();
-        Destroy(GameObject.Find("StartTestButton"));
+        if (!matchmaking) {
+            api.StartTestGame();
+        }
     }
 }
