@@ -24,7 +24,7 @@ public class Attacker : MonoBehaviour {
     private void Start() {
         wc = GetComponent<WorldCard>();
         line = GameObject.Find("AttackLine").GetComponent<AttackLine>();
-        opponentTargetUI = GameObject.Find("UI").transform.Find("OpponentTargeted").gameObject;
+        opponentTargetUI = GameObject.Find("UI").transform.Find("UI").transform.Find("OpponentTargeted").gameObject;
     }
 
     private void OnMouseDown() {

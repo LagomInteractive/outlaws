@@ -29,15 +29,15 @@ public class Minion : Character {
     public bool canAttack(CosmicAPI api) {
         Player ownerPlayer = (Player)api.GetCharacter(owner);
         if (!hasAttacked && ownerPlayer.turn)
-            if (api.GetGame().round != spawnRound || api.GetCard(origin).element == Element.rush) return true;
+            if (api.GetGame().round != spawnRound || api.GetCard(origin).element == Element.Rush) return true;
         return false;
     }
 
     public bool canBeAttacked(CosmicAPI api) {
-        if (api.GetCard(origin).element != Element.taunt) {
+        if (api.GetCard(origin).element != Element.Taunt) {
             Player opponent = api.GetOpponent();
             foreach (Minion minion in opponent.minions) {
-                if (api.GetCard(minion.origin).element == Element.taunt) return false;
+                if (api.GetCard(minion.origin).element == Element.Taunt) return false;
             }
         }
         return true;
@@ -56,7 +56,7 @@ public class Player : Character {
 
     public bool canBeAttacked(CosmicAPI api) {
         foreach (Minion minion in minions) {
-            if (api.GetCard(minion.origin).element == Element.taunt) return false;
+            if (api.GetCard(minion.origin).element == Element.Taunt) return false;
         }
         return true;
     }
@@ -86,7 +86,7 @@ public enum CardType {
 }
 
 public enum Element {
-    Lunar, Solar, Zenith, Nova, rush, taunt
+    Lunar, Solar, Zenith, Nova, Rush, Taunt, Neutral
 }
 
 public enum Rarity {
