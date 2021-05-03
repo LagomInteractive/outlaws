@@ -28,6 +28,7 @@ public class Attacker : MonoBehaviour {
     }
 
     private void OnMouseDown() {
+        Debug.Log("Mouse down!½");
         Minion minion = (Minion)api.GetCharacter(wc.GetMinionId());
         if (minion.canAttack(api)) {
             dragging = true;
