@@ -24,11 +24,10 @@ public class Attacker : MonoBehaviour {
     private void Start() {
         wc = GetComponent<WorldCard>();
         line = GameObject.Find("AttackLine").GetComponent<AttackLine>();
-        opponentTargetUI = GameObject.Find("UI").transform.Find("UI").transform.Find("OpponentTargeted").gameObject;
+        opponentTargetUI = GameObject.Find("Camera").transform.Find("UI").transform.Find("OpponentTargeted").gameObject;
     }
 
     private void OnMouseDown() {
-        Debug.Log("Mouse down!½");
         Minion minion = (Minion)api.GetCharacter(wc.GetMinionId());
         if (minion.canAttack(api)) {
             dragging = true;
@@ -49,7 +48,7 @@ public class Attacker : MonoBehaviour {
     Vector3 GetMousePosition() {
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Physics.Raycast(ray, out hit, Mathf.Infinity, line.layermask);
+        Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("AttackArrow"));
         if (hit.collider) {
             return hit.point;
         }
@@ -58,7 +57,7 @@ public class Attacker : MonoBehaviour {
 
     private void OnMouseDrag() {
         if (dragging) {
-            line.Draw(start, GetMousePosition());
+
 
             GameObject target = GetTarget();
 

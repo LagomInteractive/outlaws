@@ -6,26 +6,25 @@ using Newtonsoft.Json.Serialization;
 using UnityEngine;
 public class DragableObject : MonoBehaviour {
     private Vector3 mOffset;
-    private Vector3 originalPos;
     private float mZCoord;
     private RaycastHit hit;
-    private Vector3 scaleChange;
     public CosmicAPI api;
 
-    private float lastPos;
     public float cardSpeed;
     public float cardRotation;
     public bool cardMoving = false;
     public int id;
 
     bool dragging = false;
-    bool active = false;
+
     bool animatingBack = false;
     float activeOffset = .8f;
 
     Vector3 originalPosition;
 
     public LayerMask layermask;
+
+    bool activeOverwrite = false;
 
     private void Start() {
         originalPosition = transform.position;
@@ -41,8 +40,7 @@ public class DragableObject : MonoBehaviour {
     }
 
     void OnMouseDown() {
-
-        if (GetComponent<WorldCard>().GetMana() <= api.GetPlayer().manaLeft && api.GetPlayer().turn) {
+        if (GetComponent<WorldCard>().GetMana() <= api.GetPlayer().manaLeft && api.GetPlayer().turn && api.GetCard(id).type != CardType.TargetSpell) {
             dragging = true;
             mZCoord = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
             // Store offset = gameobject world pos - mouse world pos
@@ -51,14 +49,17 @@ public class DragableObject : MonoBehaviour {
     }
 
     private void OnMouseEnter() {
-        if (dragging || animatingBack) return;
-        active = true;
+        if ((dragging || animatingBack)) return;
         StartCoroutine(MoveOverSeconds(gameObject, originalPosition + new Vector3(0, 0, activeOffset), .1f));
     }
 
+    public void SetActivePosition(bool active) {
+        activeOverwrite = active;
+        StartCoroutine(MoveOverSeconds(gameObject, active ? (originalPosition + new Vector3(0, 0, activeOffset)) : originalPosition, .1f));
+    }
+
     private void OnMouseExit() {
-        if (dragging || animatingBack) return;
-        active = false;
+        if (dragging || animatingBack || activeOverwrite) return;
         StartCoroutine(MoveOverSeconds(gameObject, originalPosition, .1f));
     }
 
@@ -80,7 +81,16 @@ public class DragableObject : MonoBehaviour {
             }));
             transform.gameObject.layer = LayerMask.NameToLayer("Default");
         } else if (hit.collider.tag == "Board") {
-            api.PlayMinion(GetComponent<WorldCard>().handIndex);
+            WorldCard card = GetComponent<WorldCard>();
+            switch (api.GetCard(card.GetId()).type) {
+                case CardType.Minion:
+                    api.PlayMinion(GetComponent<WorldCard>().handIndex);
+                    break;
+                case CardType.AOESpell:
+                    api.PlaySpell(GetComponent<WorldCard>().handIndex);
+                    break;
+            }
+
         }
     }
 

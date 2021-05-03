@@ -31,7 +31,7 @@ Transform:
   - {fileID: 7192518090680635441}
   - {fileID: 7192518091995624153}
   m_Father: {fileID: 7192518092012327099}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3477996178911571262
 GameObject:
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 1290067452679051491}
   - component: {fileID: 5725232704838828354}
   - component: {fileID: 1512427101868754771}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: ActiveBorder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 714901253742639742}
   - component: {fileID: 9147502060283470531}
   - component: {fileID: 5931804078517341215}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: SpellTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,7 +139,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7192518092012327099}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -300,7 +300,7 @@ GameObject:
   - component: {fileID: 7192518090680635441}
   - component: {fileID: 7192518090680635447}
   - component: {fileID: 7192518090680635446}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Hp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -379,7 +379,7 @@ GameObject:
   - component: {fileID: 7192518090752530713}
   - component: {fileID: 7192518090752530719}
   - component: {fileID: 7192518090752530718}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Description
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -398,7 +398,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7192518092012327099}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -466,7 +466,7 @@ GameObject:
   - component: {fileID: 7192518091245511585}
   - component: {fileID: 7192518091245511584}
   - component: {fileID: 7192518091245511590}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: MinionTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -485,7 +485,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7192518092012327099}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -674,7 +674,7 @@ GameObject:
   - component: {fileID: 7192518091683221537}
   - component: {fileID: 7192518091683221536}
   - component: {fileID: 7192518091683221539}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -694,7 +694,7 @@ RectTransform:
   m_Children:
   - {fileID: 7192518091712794815}
   m_Father: {fileID: 7192518092012327099}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -766,7 +766,7 @@ GameObject:
   - component: {fileID: 3865111202100039461}
   m_Layer: 0
   m_Name: Card
-  m_TagString: Untagged
+  m_TagString: Card
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -841,6 +841,7 @@ MonoBehaviour:
   image: {fileID: 7192518091712794812}
   activeBorder: {fileID: 1290067452679051491}
   targetBorder: {fileID: 4421209897054573001}
+  battlecryActiveBorder: {fileID: 2130497068837473747}
 --- !u!1 &7192518091712794814
 GameObject:
   m_ObjectHideFlags: 0
@@ -852,7 +853,7 @@ GameObject:
   - component: {fileID: 7192518091712794815}
   - component: {fileID: 7192518091712794813}
   - component: {fileID: 7192518091712794812}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -927,7 +928,7 @@ GameObject:
   - component: {fileID: 7192518091995624153}
   - component: {fileID: 7192518091995624159}
   - component: {fileID: 7192518091995624158}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Mana
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1007,7 +1008,7 @@ GameObject:
   - component: {fileID: 7192518092012327098}
   - component: {fileID: 7192518092012327045}
   - component: {fileID: 7192518092012327044}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: CardRaw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1026,6 +1027,7 @@ RectTransform:
   m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_Children:
   - {fileID: 1290067452679051491}
+  - {fileID: 2130497068837473747}
   - {fileID: 4421209897054573001}
   - {fileID: 7192518091683221538}
   - {fileID: 7192518092313999815}
@@ -1114,7 +1116,7 @@ GameObject:
   - component: {fileID: 7192518092313999815}
   - component: {fileID: 7192518092313999813}
   - component: {fileID: 7192518092313999812}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: CardFrame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1133,7 +1135,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7192518092012327099}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1189,7 +1191,7 @@ GameObject:
   - component: {fileID: 7192518092400343117}
   - component: {fileID: 7192518092400343107}
   - component: {fileID: 7192518092400343106}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Damage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1268,7 +1270,7 @@ GameObject:
   - component: {fileID: 8146372010473392663}
   - component: {fileID: 830541189946765777}
   - component: {fileID: 5358014679119586712}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Element
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1287,7 +1289,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7192518092012327099}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1347,7 +1349,7 @@ GameObject:
   - component: {fileID: 4421209897054573001}
   - component: {fileID: 3113375819797114434}
   - component: {fileID: 7541200386599621199}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: TargetBorder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1366,7 +1368,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7192518092012327099}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1395,6 +1397,81 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 0.26937398, b: 0.16470587, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!1 &9077995768498004263
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2130497068837473747}
+  - component: {fileID: 8566877634497148339}
+  - component: {fileID: 3146466815720161622}
+  m_Layer: 0
+  m_Name: BattlecryActive
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &2130497068837473747
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9077995768498004263}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7192518092012327099}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 6.4, y: -16.94}
+  m_SizeDelta: {x: 621.09, y: 892.04}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &8566877634497148339
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9077995768498004263}
+  m_CullTransparentMesh: 1
+--- !u!114 &3146466815720161622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9077995768498004263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 0.6640022, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

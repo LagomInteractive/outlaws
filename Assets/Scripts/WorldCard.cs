@@ -18,7 +18,7 @@ public class WorldCard : MonoBehaviour {
 
     public Sprite minionCard, spellCard, minionMask, spellMask;
     public Image frame, mask, image;
-    public Transform activeBorder, targetBorder;
+    public Transform activeBorder, targetBorder, battlecryActiveBorder;
 
     bool isMinion;
 
@@ -37,6 +37,10 @@ public class WorldCard : MonoBehaviour {
 
     public void SetTargeted(bool active) {
         targetBorder.gameObject.SetActive(active);
+    }
+
+    public void SetBattlecryActive(bool active) {
+        battlecryActiveBorder.gameObject.SetActive(active);
     }
 
     public void Setup(string id, CosmicAPI api) {

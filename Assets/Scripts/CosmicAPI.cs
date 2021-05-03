@@ -14,8 +14,6 @@ public class Character {
     public int hp;
     public bool isAttacking, hasAttacked, hasBeenAttacked;
     public Buff buff;
-
-
 }
 
 [Serializable]
@@ -283,12 +281,7 @@ public class CosmicAPI : MonoBehaviour {
         return null;
     }
 
-    /// <summary>
-    /// Play a minion card from the hand
-    /// </summary>
-    public void PlayMinion(int index) {
-        Send("play_minion", index.ToString());
-    }
+
 
     /// <summary>
     /// Gives you all card ids (For testing)
@@ -303,10 +296,19 @@ public class CosmicAPI : MonoBehaviour {
     }
 
     /// <summary>
+    /// Play a minion card from the hand
+    /// </summary>
+    public void PlayMinion(int index) {
+        Send("play_minion", index.ToString());
+    }
+
+    /// <summary>
     /// Play a spell card, only if the card is a targeted spell provide a target player or minion
     /// </summary>
-    public void PlaySpell(int id, string target = null) {
-        Debug.Log("Played spell: " + id + " targeted: " + target);
+    /// <param name="index">Index in the hand of the card you want to play</param>
+    /// <param name="target">Spell target (Optional, only if the spell is a TargetSpell)</param>
+    public void PlaySpell(int index, string target = null) {
+        Send("play_spell", JsonConvert.SerializeObject(new Dictionary<string, string>() { { "index", index.ToString() }, { "target", target } }));
     }
 
     /// <summary>
@@ -441,7 +443,11 @@ public class CosmicAPI : MonoBehaviour {
                     OnMinionSpawned?.Invoke(gameEvent.values["id"]);
                     break;
                 case "card_used":
-                    if (gameEvent.values["player"] == me.id) OnCardUsed?.Invoke(Int32.Parse(gameEvent.values["index"]));
+                    if (gameEvent.values["player"] == me.id) {
+                        OnCardUsed?.Invoke(Int32.Parse(gameEvent.values["index"]));
+                    } else {
+                        Debug.Log("Opponent played " + GetCard(int.Parse(gameEvent.values["card"])).name);
+                    }
                     break;
                 case "game_over":
                     OnGameEnd?.Invoke(gameEvent.values["winner"]);
@@ -509,6 +515,10 @@ public class CosmicAPI : MonoBehaviour {
             BoxCollider[] colliders = worldCard.GetComponents<BoxCollider>();
             Destroy(colliders[0]);
             colliders[1].enabled = true;
+
+            if (card.type == CardType.TargetSpell) {
+                worldCard.layer = 7;
+            }
         }
 
         worldCard.GetComponent<WorldCard>().Setup(id, this);
@@ -526,14 +536,8 @@ public class CosmicAPI : MonoBehaviour {
         Minion minion = (Minion)GetCharacter(id);
         GameObject card = InstantiateCard(minion.origin, parent);
 
-        if (minion.owner == me.id) {
-            Attacker attacker = card.AddComponent<Attacker>();
-            attacker.api = this;
-
-        } else {
-            // Attackable
-            card.layer = 7;
-        }
+        card.layer = 7;
+        card.tag = "Minion";
 
         WorldCard wc = card.GetComponent<WorldCard>();
 

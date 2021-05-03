@@ -39,13 +39,13 @@ public class HandPlacement : MonoBehaviour {
 
         for (int i = 0; i < cards.Length; i++) {
             GameObject cardObject = api.InstantiateCard(cards[i], transform, true);
-            DragableObject draggable = cardObject.AddComponent<DragableObject>();
 
+            DragableObject draggable = cardObject.AddComponent<DragableObject>();
             draggable.api = api;
+            draggable.id = cards[i];
             draggable.layermask = draggableCardLayerMask;
 
             cardObject.GetComponent<WorldCard>().handIndex = i;
-
             cardObject.transform.position = transform.position + new Vector3(start + (i * distance), 0, 0);
         }
         SetActiveCards();
