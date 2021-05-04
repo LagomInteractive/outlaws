@@ -20,6 +20,7 @@ public class Character {
 public class Minion : Character {
     public int origin, spawnRound;
     public bool canSacrifice;
+    public bool battlecryActive;
     public string owner;
     Player GetOwner(CosmicAPI api) {
         return (Player)api.GetCharacter(owner);
@@ -137,6 +138,8 @@ public class GameEvent {
 [Serializable]
 public class CosmicAPI : MonoBehaviour {
 
+    public const string API_VERSION = "2.4";
+
     public GameObject cardPrefab;
 
     // Socket connection wit the server
@@ -173,6 +176,11 @@ public class CosmicAPI : MonoBehaviour {
     public Action<string> OnGameEnd { get; set; }
     // UUID from, UUID to, float amount
     public Action<string, string, float> OnDamage { get; set; }
+
+    /// <summary>
+    /// When the game client is running an older version, prevent the player from playing.
+    /// </summary>
+    public Action<string, string> OnClientOutdated { get; set; }
 
 
     // Diagnostics
@@ -363,6 +371,9 @@ public class CosmicAPI : MonoBehaviour {
             SocketPackage package = JsonUtility.FromJson<SocketPackage>(message);
 
             switch (package.identifier) {
+                case "version":
+                    if (package.packet != API_VERSION) OnClientOutdated?.Invoke(package.packet, API_VERSION);
+                    break;
                 case "ping":
                     stopwatch.Stop();
                     OnPing?.Invoke((int)stopwatch.ElapsedMilliseconds);
@@ -428,7 +439,7 @@ public class CosmicAPI : MonoBehaviour {
     // If there are more than 1 event, a delay is placed between each
     IEnumerator RunEvents(GameEvent[] events) {
         foreach (GameEvent gameEvent in events) {
-            Debug.Log("Handling event " + gameEvent.identifier);
+            //Debug.Log("Handling event " + gameEvent.identifier);
             switch (gameEvent.identifier) {
                 case "game_start":
                     OnGameStart?.Invoke();
@@ -542,6 +553,7 @@ public class CosmicAPI : MonoBehaviour {
         WorldCard wc = card.GetComponent<WorldCard>();
 
         if (minion.canAttack(this)) wc.SetActive(true);
+        if (minion.battlecryActive) wc.SetBattlecryActive(true);
 
         Card origin = GetCard(minion.origin);
 
@@ -562,8 +574,24 @@ public class CosmicAPI : MonoBehaviour {
         ws.SendText(json);
     }
 
+    /// <summary>
+    /// Perform a battecry from a minion
+    /// </summary>
+    /// <param name="origin">The minion performing the battlecry</param>
+    /// <param name="target">The target receving the battlecry</param>
+    public void Battlecry(string origin, string target) {
+        Send("battlecry", JsonConvert.SerializeObject(new Dictionary<string, string>() {
+            { "origin", origin },
+            { "target", target}
+        }));
+    }
+
+    /// <summary>
+    /// Attack a player or minion with a minion
+    /// </summary>
+    /// <param name="attacker">The minion attacking</param>
+    /// <param name="target">The target player or minion</param>
     public void Attack(string attacker, string target) {
-        Debug.Log("ATTACK CALLED  " + attacker + " : " + target);
         AttackInfo info = new AttackInfo() { attacker = attacker, target = target };
         Send("attack", JsonConvert.SerializeObject(info));
     }
@@ -571,6 +599,7 @@ public class CosmicAPI : MonoBehaviour {
     public void ConcedeGame() {
         Send("concede");
     }
+
 
     void OnUser(string packet) {
         me = JsonConvert.DeserializeObject<Profile>(packet);
