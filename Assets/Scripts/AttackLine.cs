@@ -77,25 +77,25 @@ public class AttackLine : MonoBehaviour {
                 if (origin.tag == "Minion") {
                     WorldCard wc = origin.GetComponent<WorldCard>();
                     Minion minion = (Minion)api.GetCharacter(wc.GetMinionId());
-                    if (minion.canAttack(api)) {
+                    if (minion.canAttack(api) || minion.battlecryActive) {
                         active = true;
-                        attackMode = true;
+                        attackMode = !minion.battlecryActive;
+
                         attackerCard = wc;
                         attackerCard.SetTargeted(true);
                         SetStart();
-                        SetLineColor(); // Set the line to attack color
+                        SetLineColor(attackMode); // Set the line to attack color
                     }
                 } else if (origin.tag == "Card") {
                     WorldCard spellCard = origin.GetComponent<WorldCard>();
                     if (spellCard.GetMana() <= api.GetPlayer().manaLeft && api.GetCard(spellCard.GetId()).type == CardType.TargetSpell) {
+                        active = true;
                         attackMode = false;
                         activeSpellCard = spellCard;
                         activeSpellCard.SetTargeted(true);
                         activeSpellCard.GetComponent<DragableObject>().SetActivePosition(true);
-                        active = true;
                         SetStart();
                     }
-
                 }
             }
         }
@@ -133,12 +133,16 @@ public class AttackLine : MonoBehaviour {
             if (targetPlayer) targetId = targetPlayer.id;
             if (targetMinion) targetId = targetMinion.GetMinionId();
 
-
-            if (attackerCard) {
-                api.Attack(attackerCard.GetMinionId(), targetId);
-            } else if (activeSpellCard) {
-                api.PlaySpell(activeSpellCard.handIndex, targetId);
+            if (targetId != null) {
+                if (attackerCard) {
+                    if (attackMode) api.Attack(attackerCard.GetMinionId(), targetId);
+                    else api.Battlecry(attackerCard.GetMinionId(), targetId);
+                } else if (activeSpellCard) {
+                    api.PlaySpell(activeSpellCard.handIndex, targetId);
+                }
             }
+
+
 
             ClearTarget();
             StopDrawing();

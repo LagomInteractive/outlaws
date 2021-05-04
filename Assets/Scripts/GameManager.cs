@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour {
     public Button startMatchmakingButton;
     bool matchmaking = false;
 
+    public Transform GameClientOutOfDateWarning;
+
     Game game;
 
 
@@ -88,6 +90,10 @@ public class GameManager : MonoBehaviour {
             game = null;
             endGameTitle.gameObject.SetActive(true);
             endGameTitle.Find("Text").GetComponent<Image>().sprite = (winningPlayer == api.GetProfile().id) ? winner : loser;
+        };
+
+        api.OnClientOutdated += (server_version, client_version) => {
+            GameClientOutOfDateWarning.gameObject.SetActive(true);
         };
     }
 
