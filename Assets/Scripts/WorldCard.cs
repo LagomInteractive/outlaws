@@ -128,7 +128,7 @@ public class WorldCard : MonoBehaviour {
             damageText.text = damage.ToString();
 
 
-            damageText.color = damage != origin.damage ? Color.green : Color.black;
+            damageText.color = damage != origin.damage ? Color.green : Color.white;
 
         }
     }
