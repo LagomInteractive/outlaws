@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour {
 
     public Transform GameClientOutOfDateWarning;
 
+    public PlayerUIController playerUI, opponentUI;
+
     Game game;
 
 
@@ -67,9 +69,13 @@ public class GameManager : MonoBehaviour {
         api.OnUpdate += () => {
             UpdateManaBar();
             Player player = api.GetPlayer();
-            UpdateStats(playerStats, player);
-            UpdateStats(opponentStats, api.GetOpponent());
+
+            playerUI.UpdateUI(player);
+            opponentUI.UpdateUI(api.GetOpponent());
+
             SetEndRoundButtonState(player.turn);
+
+
         };
 
         api.OnGameStart += () => {
@@ -95,11 +101,6 @@ public class GameManager : MonoBehaviour {
         api.OnClientOutdated += (server_version, client_version) => {
             GameClientOutOfDateWarning.gameObject.SetActive(true);
         };
-    }
-
-
-    public void UpdateStats(Transform target, Player player) {
-        target.Find("hp").GetComponent<Text>().text = player.hp.ToString();
     }
 
     public void UpdateManaBar() {

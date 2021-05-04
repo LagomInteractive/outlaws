@@ -7,7 +7,6 @@ using UnityEngine;
 using NativeWebSocket;
 // JSON protocol to parse and pack packets from and to the server.
 using Newtonsoft.Json;
-using UnityEditor;
 
 public class Character {
     public string id;
