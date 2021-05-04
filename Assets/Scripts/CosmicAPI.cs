@@ -17,7 +17,7 @@ public class Character {
 
 [Serializable]
 public class Minion : Character {
-    public int origin, spawnRound;
+    public int origin, spawnRound, damage;
     public bool canSacrifice;
     public bool battlecryActive;
     public string owner;
@@ -557,7 +557,7 @@ public class CosmicAPI : MonoBehaviour {
         Card origin = GetCard(minion.origin);
 
         wc.Setup(minion.id, this);
-        wc.SetDamage(origin.damage);
+        wc.SetDamage(minion.damage);
         wc.SetHp(minion.hp);
 
         return card;

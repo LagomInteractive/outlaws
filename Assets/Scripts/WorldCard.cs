@@ -126,6 +126,10 @@ public class WorldCard : MonoBehaviour {
         if (isMinion) {
             hpText.text = hp.ToString();
             damageText.text = damage.ToString();
+
+
+            damageText.color = damage != origin.damage ? Color.green : Color.black;
+
         }
     }
 
