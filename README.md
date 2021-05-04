@@ -2,6 +2,22 @@
 
 We have custom, internal tools for our designers to create, test and balance cards for the game. This is done via the [Outlaws website](https://outlaws.ygstr.com/cards). Every part of every card is created and can be tweaked on here.
 
+There are three types of cards: Minion, Target Spell & AOE (Area Of Effect) Spell
+
+**Minion** or Unit as they are referred to in-game _(for legal reasons)_ can be spawned to the battlefield. They have a mana cost as all cards, damage and health. Minions have a lot more events since they persists in the game for longer. Efter round after their spawn, they can attack once. If they have a `onPlayedTarget` event they will be able to use it immediately when they spawn.
+
+All cards can any element: Lunar, Solar, Zenith, Nova. Some cards are Neutral, Neutral with Rush or Neutral with Taunt. If the card is not neutral it will give you a buff in a certain way depending on it's element upon being sacrificed.
+
+If a unit with **Taunt** is present, the enemy can only attack the units with taunt.
+
+If a unit has **Rush** they can attack immediately on being spawned.
+
+![Card editor minion](https://user-images.githubusercontent.com/6502251/117049038-f6b56900-ad13-11eb-9b0a-61d52e827bfa.png)
+
+**Spells** The spells do note have damage or HP, and they are only played once, then they disappear. AOE spells are played like a minion but only run their functions. The Target spell acts like an attack when played and can be used to target any minion or player on the battlefield.
+
+![Card editor spell](https://user-images.githubusercontent.com/6502251/117049361-4dbb3e00-ad14-11eb-98fe-4c1c5bf8e04f.png)
+
 ### Card events
 
 Every card can have events, that can be triggered throughout a game.
