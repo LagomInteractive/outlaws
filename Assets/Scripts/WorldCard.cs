@@ -16,9 +16,11 @@ public class WorldCard : MonoBehaviour {
     public TextMeshProUGUI minionTitle, spellTitle;
     public Text descriptionText, elementText, damageText, hpText, manaText;
 
-    public Sprite minionCard, spellCard, minionMask, spellMask;
-    public Image frame, mask, image;
-    public Transform activeBorder, targetBorder, battlecryActiveBorder;
+    public Sprite minionCard, spellCard, minionMask, spellMask, minionBanner, spellBanner;
+    public Image frame, mask, image, banner;
+    public Transform activeBorder, targetBorder, battlecryActiveBorder, manaContainer, hpContainer, damageContainer;
+
+
 
     bool isMinion;
 
@@ -65,6 +67,12 @@ public class WorldCard : MonoBehaviour {
 
         mask.sprite = isMinion ? minionMask : spellMask;
         frame.sprite = isMinion ? minionCard : spellCard;
+        banner.sprite = isMinion ? minionBanner : spellBanner;
+
+        if (!isMinion) {
+            Destroy(hpContainer.gameObject);
+            Destroy(damageContainer.gameObject);
+        }
 
         descriptionText.text = origin.description;
         elementText.text = origin.element.ToString().ToUpper();
