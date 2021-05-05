@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AttackLine : MonoBehaviour {
 
@@ -21,8 +22,11 @@ public class AttackLine : MonoBehaviour {
     WorldCard targetMinion;
     PlayerUIController targetPlayer;
 
+    public Image sacrificeButton;
 
     public PlayerUIController player, opponent;
+    bool canSacrifice = false;
+    bool sacrificeActive = false;
 
     void Start() {
         line = GetComponent<LineRenderer>();
@@ -68,7 +72,18 @@ public class AttackLine : MonoBehaviour {
         start = GetWorldSpaceMousePosition();
     }
 
+    void SetSacrificeActive(bool active) {
+        sacrificeButton.color = active ? Color.red : Color.white;
+        sacrificeActive = active;
+    }
+
+    void ShowSacrifice(bool visible) {
+        sacrificeButton.gameObject.SetActive(visible);
+    }
+
     void Update() {
+
+
 
         if (!active && Input.GetMouseButtonDown(0)) {
 
@@ -81,7 +96,8 @@ public class AttackLine : MonoBehaviour {
                     if (minion.owner == api.GetPlayer().id && (minion.canAttack(api) || minion.battlecryActive || minion.canSacrifice(api))) {
                         active = true;
                         attackMode = !minion.battlecryActive;
-
+                        if (minion.canSacrifice(api))
+                            canSacrifice = true;
                         attackerCard = wc;
                         attackerCard.SetTargeted(true);
                         SetStart();
@@ -112,6 +128,11 @@ public class AttackLine : MonoBehaviour {
             targetPlayer = null;
 
             if (target) {
+                if (target.tag == "Action") {
+                    if (target.name == "Sacrifice") {
+                        SetSacrificeActive(true);
+                    }
+                }
                 if (target.tag == "Player") {
                     bool isOpponent = target.GetComponent<PlayerHit>().opponent;
                     targetPlayer = isOpponent ? opponent : player;
@@ -128,11 +149,17 @@ public class AttackLine : MonoBehaviour {
             }
         }
 
+        if (canSacrifice) ShowSacrifice(true);
+
         if (active && Input.GetMouseButtonUp(0)) {
             active = false;
             string targetId = null;
             if (targetPlayer) targetId = targetPlayer.id;
             if (targetMinion) targetId = targetMinion.GetMinionId();
+
+            if (sacrificeActive) {
+                api.Sacrifice(attackerCard.GetMinionId());
+            }
 
             if (targetId != null) {
                 if (attackerCard) {
@@ -143,14 +170,15 @@ public class AttackLine : MonoBehaviour {
                 }
             }
 
-
-
+            canSacrifice = false;
             ClearTarget();
             StopDrawing();
         }
     }
 
     void ClearTarget() {
+        SetSacrificeActive(false);
+        ShowSacrifice(false);
         if (targetMinion) targetMinion.SetTargeted(false);
         if (targetPlayer) targetPlayer.targeted.gameObject.SetActive(false);
     }

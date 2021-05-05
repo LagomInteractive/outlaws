@@ -1,6 +1,11 @@
 ## Card creation and balancing
 
-We have custom, internal tools for our designers to create, test and balance cards for the game. This is done via the [Outlaws website](https://outlaws.ygstr.com/cards). Every part of every card is created and can be tweaked on here.
+We have custom, internal tools for our designers to create, test and balance cards for the game. This is done via the [Outlaws website](https://outlaws.ygstr.com/cards).
+
+Every part of every card is created and can be tweaked on here. Card stats, events and functions are loaded from the server to the game client and always up to date with the server.
+
+This allows us to tweak and balance the game while people are playing it without
+issuing a new game build. The card images are downloaded via a [script](https://outlaws.ygstr.com/api/assets) and included in the game build.
 
 There are three types of cards: Minion, Target Spell & AOE (Area Of Effect) Spell
 

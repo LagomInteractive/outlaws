@@ -8,8 +8,21 @@ public class PlayerUIController : MonoBehaviour {
     public Transform sacrifices, passives, mana;
     public Image targeted;
 
+    public Sprite sacrificeEmpty, sacrificeFilled;
+    public CosmicAPI api;
+
+
     public void UpdateUI(Player player) {
         transform.Find("hp").GetComponent<Text>().text = player.hp.ToString();
+
+
+
+        for (int i = 0; i < sacrifices.childCount; i++) {
+            GameObject sacrificeCrystal = sacrifices.GetChild(i).gameObject;
+            bool active = player.buff.sacrifices >= (i + 1);
+            sacrificeCrystal.GetComponent<Image>().color = active ? api.elementColors[player.buff.element.ToString().ToLower()] : Color.white;
+            sacrificeCrystal.GetComponent<Image>().sprite = active ? sacrificeFilled : sacrificeEmpty;
+        }
 
         if (!player.turn) {
             SetMana(0, player.totalMana);

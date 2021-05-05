@@ -24,15 +24,6 @@ public class WorldCard : MonoBehaviour {
 
     bool isMinion;
 
-    Dictionary<string, Color> elementColors = new Dictionary<string, Color>() {
-        {"lunar", new Color(0, 162, 255)},
-        {"solar", new Color(255, 38, 0)},
-        {"zenith", new Color(46, 255, 99)},
-        {"nova", new Color(147, 40, 246)},
-        {"taunt", new Color(230, 230, 230)},
-        {"rush", new Color(22, 22, 22)}
-    };
-
     public void SetActive(bool active) {
         activeBorder.gameObject.SetActive(active);
     }

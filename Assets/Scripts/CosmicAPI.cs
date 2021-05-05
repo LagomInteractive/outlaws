@@ -12,7 +12,6 @@ public class Character {
     public string id;
     public int hp, maxHp;
     public bool isAttacking, hasAttacked, hasBeenAttacked;
-    public Buff buff;
 }
 
 [Serializable]
@@ -25,7 +24,10 @@ public class Minion : Character {
     }
 
     public bool canSacrifice(CosmicAPI api) {
-        return true;
+        if (!hasEverAttacked && api.GetGame().round != spawnRound) {
+            return true;
+        }
+        return false;
     }
 
     public bool canAttack(CosmicAPI api) {
@@ -55,6 +57,7 @@ public class Player : Character {
     public int[] deck;
     public Minion[] minions;
     public Profile profile;
+    public Buff buff;
 
     public bool canBeAttacked(CosmicAPI api) {
         foreach (Minion minion in minions) {
@@ -70,7 +73,8 @@ public class Player : Character {
 
 [Serializable]
 public class Buff {
-    public int sacrifices, damage, mana;
+    public int sacrifices = 0;
+    public Element element = Element.Nova;
 }
 
 [Serializable]
@@ -144,6 +148,15 @@ public class CosmicAPI : MonoBehaviour {
     public const string API_VERSION = "2.4";
 
     public GameObject cardPrefab;
+
+    public Dictionary<string, Color> elementColors = new Dictionary<string, Color>() {
+        {"lunar", new Color(0, 162, 255)},
+        {"solar", new Color(255, 38, 0)},
+        {"zenith", new Color(46, 255, 99)},
+        {"nova", new Color(147, 40, 246)},
+        {"taunt", new Color(230, 230, 230)},
+        {"rush", new Color(22, 22, 22)}
+    };
 
     // Socket connection wit the server
     WebSocket ws;
@@ -329,7 +342,7 @@ public class CosmicAPI : MonoBehaviour {
     /// Sacrifice a minion
     /// </summary>
     public void Sacrifice(string id) {
-        Debug.Log("Sacrificed minion ID: " + id);
+        Send("sacrifice", id);
     }
 
     /// <summary>
