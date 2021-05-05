@@ -42,9 +42,6 @@ they can only be placed in a `onPlayedTarget` (minion) or a Target Spell.
 | damageTarget          | Deals damage to the target                         | Damage amount   | Yes    |
 | damageRandomAlly      | Deals damage to a random friendly (unit or player) | Damage amount   | No     |
 | damageEveryOpponent   | Deals damage to every opponent (unit and player)   | Damage amount   | No     |
-| healTarget            | Heals the target (can exceed max HP)               | Health amount   | Yes    |
-| healRandomAlly        | Heals a reandom friendly (unit or player)          | Health amount   | No     |
-| healEveryAlly         | Heals every friendly (unit and player)             | Health amount   | No     |
 | spawnMinion           | Spawns a friendly minion (no cards used from deck) | Minion card ID  | No     |
 | gainMana              | Gives player more mana (cannot exceed max mana)    | Mana amount     | No     |
 | drawAmountCards       | Draws cards from deck                              | Amount of cards | No     |
@@ -53,7 +50,11 @@ they can only be placed in a `onPlayedTarget` (minion) or a Target Spell.
 | damageOpponent        | Deals damage to the opponent player                | Damage amount   | No     |
 | damageRandomOpponent  | Deals damage to random opponent (unit or player)   | Damage amount   | No     |
 | damageRandomEnemyUnit | Deals damage to random enemy unit (not player)     | Damage amount   | No     |
-| healPlayer            | Heals the player (friendly, cannot exceed max HP)  | Heal amount     | No     |
+| healTarget            | Heals the target (respects max HP)                 | Health amount   | Yes    |
+| healEveryAlly         | Heals every friendly (unit and player)             | Health amount   | No     |
+| healRandomAlly        | Heals a reandom friendly (unit or player)          | Health amount   | No     |
+| healPlayer            | Heals the player (friendly, respects max HP)       | Heal amount     | No     |
+| changeTargetMaxHp     | Buffs or nerfs the targets max HP                  | Health amount+- | Yes    |
 | damageAllUnits        | Deals damage to all units on the battlefield       | Damage amount   | No     |
 | damageRandomUnit      | Deals damage to random Unit (any team)             | Damage amount   | No     |
 | changeTargetAttack    | Changes the target attack value (Only unit)        | Attack change+- | Yes    |

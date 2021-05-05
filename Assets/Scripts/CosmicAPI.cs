@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 
 public class Character {
     public string id;
-    public int hp;
+    public int hp, maxHp;
     public bool isAttacking, hasAttacked, hasBeenAttacked;
     public Buff buff;
 }
@@ -18,12 +18,16 @@ public class Character {
 [Serializable]
 public class Minion : Character {
     public int origin, spawnRound, damage;
-    public bool canSacrifice;
-    public bool battlecryActive;
+    public bool battlecryActive, hasEverAttacked;
     public string owner;
     Player GetOwner(CosmicAPI api) {
         return (Player)api.GetCharacter(owner);
     }
+
+    public bool canSacrifice(CosmicAPI api) {
+        return true;
+    }
+
     public bool canAttack(CosmicAPI api) {
         Player ownerPlayer = (Player)api.GetCharacter(owner);
         if (!hasAttacked && ownerPlayer.turn)
@@ -163,6 +167,9 @@ public class CosmicAPI : MonoBehaviour {
     public Action OnGameStart { get; set; }
     // UUID Minion
     public Action<string> OnMinionSpawned { get; set; }
+
+    // When the opponent uses any card (CardID)
+    public Action<int> OnOpponentUsedCard { get; set; }
     // UUID Minion
     public Action<string> OnMinionDeath { get; set; }
     // When the client draws a card from the deck, int is the card ID
@@ -456,7 +463,7 @@ public class CosmicAPI : MonoBehaviour {
                     if (gameEvent.values["player"] == me.id) {
                         OnCardUsed?.Invoke(Int32.Parse(gameEvent.values["index"]));
                     } else {
-                        Debug.Log("Opponent played " + GetCard(int.Parse(gameEvent.values["card"])).name);
+                        OnOpponentUsedCard?.Invoke(int.Parse(gameEvent.values["card"]));
                     }
                     break;
                 case "game_over":
