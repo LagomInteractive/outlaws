@@ -93,7 +93,7 @@ public class AttackLine : MonoBehaviour {
                     WorldCard wc = origin.GetComponent<WorldCard>();
                     Minion minion = (Minion)api.GetCharacter(wc.GetMinionId());
 
-                    if (minion.owner == api.GetPlayer().id && (minion.canAttack(api) || minion.battlecryActive || minion.canSacrifice(api))) {
+                    if (api.GetPlayer().turn && minion.owner == api.GetPlayer().id && (minion.canAttack(api) || minion.battlecryActive || minion.canSacrifice(api))) {
                         active = true;
                         attackMode = !minion.battlecryActive;
                         if (minion.canSacrifice(api))
