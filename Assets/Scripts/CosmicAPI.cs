@@ -133,6 +133,7 @@ public class SocketPackage {
 public class Game {
     public string id;
     public long gameStarted, roundStarted;
+    public float roundTimeLeft;
     public int roundLength, round, turn;
     public Player[] players;
     public GameEvent[] events;
@@ -184,6 +185,7 @@ public class CosmicAPI : MonoBehaviour {
     // On every game update from the server, not specifik
     public Action OnUpdate { get; set; }
     // (int index) When one of the players cards from the hand is used (removed)
+    public Action<int> OnFriendlyCardUsed { get; set; }
     public Action<int> OnCardUsed { get; set; }
     // When a new game starts (from main menu)
     public Action OnGameStart { get; set; }
@@ -199,6 +201,7 @@ public class CosmicAPI : MonoBehaviour {
 
     // When a character gets healed, string id, int amount
     public Action<string, int> OnHeal { get; set; }
+    public Action<string, int> OnMinionHeal { get; set; }
 
     // UUID form, UUID to
     public Action<string, string> OnAttack { get; set; }
@@ -213,6 +216,8 @@ public class CosmicAPI : MonoBehaviour {
     public Action<string> OnGameEnd { get; set; }
     // UUID to, int amount
     public Action<string, int> OnDamage { get; set; }
+
+    public Action<string, int> OnMinionDamage { get; set; }
 
     /// <summary>
     /// When the game client is running an older version, prevent the player from playing.
@@ -410,6 +415,15 @@ public class CosmicAPI : MonoBehaviour {
         // Create socket and input the game server URL
         ws = new WebSocket("wss://api.cosmic.ygstr.com");
 
+        OnDamage += (id, amount) => {
+            Character target = GetCharacter(id);
+            if (target is Minion || target == null) OnMinionDamage?.Invoke(id, amount);
+        };
+
+        OnHeal += (id, amount) => {
+            Character target = GetCharacter(id);
+            if (target is Minion || target == null) OnMinionHeal?.Invoke(id, amount);
+        };
 
         ws.OnOpen += () => {
             OnConnected?.Invoke();
@@ -506,11 +520,12 @@ public class CosmicAPI : MonoBehaviour {
                     OnMinionSpawned?.Invoke(gameEvent.values["id"]);
                     break;
                 case "card_used":
+                    OnCardUsed?.Invoke(int.Parse(gameEvent.values["card"]));
                     if (gameEvent.values["player"] == me.id) {
-                        OnCardUsed?.Invoke(Int32.Parse(gameEvent.values["index"]));
+                        OnFriendlyCardUsed?.Invoke(int.Parse(gameEvent.values["index"]));
                     } else {
                         OnOpponentUsedCard?.Invoke(int.Parse(gameEvent.values["card"]));
-                        yield return new WaitForSeconds(1.5f);
+                        yield return new WaitForSeconds(1.8f);
                     }
                     break;
                 case "game_over":
@@ -518,9 +533,11 @@ public class CosmicAPI : MonoBehaviour {
                     break;
                 case "minion_death":
                     OnMinionDeath?.Invoke(gameEvent.values["minion"]);
+                    yield return new WaitForSeconds(.5f);
                     break;
                 case "damage":
                     OnDamage?.Invoke(gameEvent.values["id"], int.Parse(gameEvent.values["damage"]));
+                    yield return new WaitForSeconds(.5f);
                     break;
                 case "attack":
                     OnAttack?.Invoke(gameEvent.values["from"], gameEvent.values["to"]);
@@ -530,9 +547,10 @@ public class CosmicAPI : MonoBehaviour {
                     break;
                 case "heal":
                     OnHeal?.Invoke(gameEvent.values["id"], int.Parse(gameEvent.values["hp"]));
+                    yield return new WaitForSeconds(.3f);
                     break;
             }
-            yield return new WaitForSeconds(.8f);
+            yield return new WaitForSeconds(.2f);
         }
     }
 
@@ -541,11 +559,11 @@ public class CosmicAPI : MonoBehaviour {
         if (info["player"] == me.id) {
             // Client was dealt a card
             OnCard?.Invoke(Int32.Parse(info["card"]));
-            return new WaitForSeconds(0.8f);
+            return new WaitForSeconds(1.4f);
         } else {
             // Opponent was dealt a card
             OnOpponentCard?.Invoke();
-            return new WaitForSeconds(.05f);
+            return new WaitForSeconds(0);
         }
     }
 

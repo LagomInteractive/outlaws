@@ -105,7 +105,7 @@ public class Tests : MonoBehaviour {
             api.InstantiateMinionCard(id);
         };
 
-        api.OnCardUsed += (index) => {
+        api.OnFriendlyCardUsed += (index) => {
             Destroy(handCards[index]);
             handCards.RemoveAt(index);
             ArrangeHand();

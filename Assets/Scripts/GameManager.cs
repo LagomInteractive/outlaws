@@ -36,8 +36,14 @@ public class GameManager : MonoBehaviour {
         buttons.SetActive(game == null);
         if (game != null) {
             roundTimer -= Time.deltaTime;
-            infoText.text = $"Round: {game.round}\nTurn: {(api.GetPlayer().turn ? "You" : "Opponent")}\nTime left: {Mathf.Round(roundTimer)}";
+            infoText.text = $"V{CosmicAPI.API_VERSION} outlaws.ygstr.com\n---\nRound: {game.round}\nTurn: {(api.GetPlayer().turn ? "You" : "Opponent")}\nTime left: {Mathf.Round(roundTimer)}\nOpponent: {api.GetOpponent().name}\nOutlaw: {api.GetPlayer().outlaw} (You) vs. {api.GetOpponent().outlaw}";
+        } else {
+            infoText.text = $"V{CosmicAPI.API_VERSION} outlaws.ygstr.com\n---\nReady for a game!";
         }
+    }
+
+    public void ReportBug() {
+        Application.OpenURL("https://github.com/LagomInteractive/cosmic-game/issues");
     }
 
     void SetEndRoundButtonState(bool enabled) {
@@ -68,9 +74,9 @@ public class GameManager : MonoBehaviour {
             UpdateMatchmakingButton();
         });
 
-        api.OnTurn += (attackingPlayer) => {
+        api.OnUpdate += () => {
             game = api.GetGame();
-            roundTimer = game.roundLength;
+            roundTimer = game.roundTimeLeft;
         };
 
         api.OnCard += (id) => {
@@ -96,7 +102,7 @@ public class GameManager : MonoBehaviour {
             UpdateMatchmakingButton();
         };
 
-        api.OnCardUsed += (index) => {
+        api.OnFriendlyCardUsed += (index) => {
             hand.UpdateHand();
         };
 

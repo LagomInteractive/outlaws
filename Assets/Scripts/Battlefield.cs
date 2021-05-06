@@ -10,8 +10,6 @@ public class Battlefield : MonoBehaviour {
 
     List<WorldCard> unitsList = new List<WorldCard>();
 
-    float rowCenterX = -8.79f;
-
     WorldCard GetMinion(string id) {
         foreach (WorldCard wc in unitsList) {
             if (wc.GetMinionId() == id) {
@@ -79,36 +77,41 @@ public class Battlefield : MonoBehaviour {
     }
 
 
-    void RemoveMinion(string id) {
+    IEnumerator RemoveMinion(string id, float delay = 0) {
         WorldCard minion = GetMinion(id);
+        yield return new WaitForSeconds(delay);
         DestroyImmediate(minion.gameObject);
         CenterBoards();
     }
+
+
 
     void Start() {
         api.OnMinionSpawned += (id) => {
             AddMinion(id);
         };
 
-        api.OnDamage += (id, damage) => {
+        api.OnMinionDamage += (id, damage) => {
             WorldCard minion = GetMinion(id);
-            if (!minion) return;
             minion.AnimateDamage(damage);
             minion.SetHp(minion.GetHp() - damage);
+            minion.PlayEffect(effectsManager.GetEffect("ON_HIT"), effectsManager.audioSource);
         };
 
         api.OnMinionSacrificed += (id) => {
-            RemoveMinion(id);
+            WorldCard minion = GetMinion(id);
+            minion.PlayEffect(effectsManager.GetEffect("ON_SACRIFICED"), effectsManager.audioSource);
+            StartCoroutine(RemoveMinion(id, 1));
         };
 
-        api.OnHeal += (id, amount) => {
+        api.OnMinionHeal += (id, amount) => {
             WorldCard minion = GetMinion(id);
             //minion.AnimateDamage(damage);
             minion.SetHp(minion.GetHp() + amount);
         };
 
         api.OnMinionDeath += (id) => {
-            RemoveMinion(id);
+            StartCoroutine(RemoveMinion(id));
         };
 
         api.OnGameEnd += winner => {

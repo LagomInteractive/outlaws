@@ -7,7 +7,6 @@ using UnityEngine.UI;
 // This script should be added to in game 3D cards
 public class WorldCard : MonoBehaviour {
 
-
     public int handIndex;
     int id, hp, damage, mana;
     string minionId;
@@ -169,6 +168,16 @@ public class WorldCard : MonoBehaviour {
         this.damage = damage;
         UpdateCardValues();
     }
+
+    public void PlayEffect(Effect effect, AudioSource source) {
+        while (effectsSpawn.childCount > 0) DestroyImmediate(effectsSpawn.GetChild(0).gameObject);
+
+        GameObject effectObject = Instantiate(effect.particles, effectsSpawn);
+        effectObject.transform.localPosition = Vector3.zero;
+        effect.PlayParticles(effectObject);
+        effect.PlaySound(source);
+    }
+
     public void SetMana(int mana) {
         this.mana = mana;
         UpdateCardValues();

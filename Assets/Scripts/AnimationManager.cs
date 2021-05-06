@@ -5,19 +5,16 @@ using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AnimationManager : MonoBehaviour
-{
+public class AnimationManager : MonoBehaviour {
     public CosmicAPI api;
     public Transform enemyCardEnter;
     public Transform cardDrawPlayer;
     public AnimatorController animatorController;
     public AnimatorController animatorController2;
 
-    private void Start()
-    {
+    private void Start() {
         api = FindObjectOfType<CosmicAPI>();
-        api.OnOpponentUsedCard += (cardID) =>
-        {
+        api.OnOpponentUsedCard += (cardID) => {
             GameObject enemyCardUsed = api.InstantiateCard(cardID, enemyCardEnter, false);
             enemyCardUsed.transform.localScale *= 0.2f;
             enemyCardUsed.AddComponent<Animations>();
@@ -25,10 +22,8 @@ public class AnimationManager : MonoBehaviour
             animator.runtimeAnimatorController = animatorController;
             animator.SetTrigger("OnOpponentCard");
         };
-        
-        api.OnCard += (cardID) =>
-        {
-            Debug.Log("drawncard");
+
+        api.OnCard += (cardID) => {
             GameObject enemyCardUsed = api.InstantiateCard(cardID, cardDrawPlayer, false);
             enemyCardUsed.transform.localScale *= 0.2f;
             enemyCardUsed.transform.Rotate(90f, 0f, 62.473f);
@@ -37,8 +32,7 @@ public class AnimationManager : MonoBehaviour
             animator.runtimeAnimatorController = animatorController2;
         };
     }
-    void Update()
-    {
-        
+    void Update() {
+
     }
 }
