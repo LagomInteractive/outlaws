@@ -135,6 +135,7 @@ public class Game {
     public int roundLength, round, turn;
     public Player[] players;
     public GameEvent[] events;
+
     public bool OpponentIsBot() {
         foreach (Player player in this.players) {
             if (player.isBot) return true;
@@ -187,6 +188,8 @@ public class CosmicAPI : MonoBehaviour {
     public Action OnGameStart { get; set; }
     // UUID Minion
     public Action<string> OnMinionSpawned { get; set; }
+    // When a minion is sacrificed, minion ID
+    public Action<string> OnMinionSacrificed { get; set; }
 
     // When the opponent uses any card (CardID)
     public Action<int> OnOpponentUsedCard { get; set; }
@@ -475,10 +478,14 @@ public class CosmicAPI : MonoBehaviour {
                     OnTurn?.Invoke(gameEvent.values["attacking_player"]);
                     break;
                 case "player_deal_card":
-                    OnPlayerDealCard(gameEvent.values);
+                    yield return OnPlayerDealCard(gameEvent.values);
+
                     break;
                 case "minion_spawned":
                     OnMinionSpawned?.Invoke(gameEvent.values["id"]);
+                    break;
+                case "minion_sacrificed":
+
                     break;
                 case "card_used":
                     if (gameEvent.values["player"] == me.id) {
@@ -490,19 +497,24 @@ public class CosmicAPI : MonoBehaviour {
                 case "game_over":
                     OnGameEnd?.Invoke(gameEvent.values["winner"]);
                     break;
+                case "minion_death":
+                    OnMinionDeath?.Invoke(gameEvent.values["minion"]);
+                    break;
             }
-            yield return new WaitForSeconds(0);
+            yield return new WaitForSeconds(.8f);
         }
     }
 
 
-    void OnPlayerDealCard(Dictionary<string, string> info) {
+    WaitForSeconds OnPlayerDealCard(Dictionary<string, string> info) {
         if (info["player"] == me.id) {
             // Client was dealt a card
             OnCard?.Invoke(Int32.Parse(info["card"]));
+            return new WaitForSeconds(0.8f);
         } else {
             // Opponent was dealt a card
             OnOpponentCard?.Invoke();
+            return new WaitForSeconds(.05f);
         }
     }
 
