@@ -10,7 +10,9 @@ public class MenuController : MonoBehaviour
     public GameObject SignIn;
     public GameObject LoadingScreen;
     public GameObject MenuDaily;
+    public GameObject MenuDailyClaimed;
     public GameObject MenuMain;
+    public GameObject TheElements;
     public GameObject MainQuit;
     public GameObject MainSettings;
     public GameObject Store;
@@ -71,10 +73,24 @@ public class MenuController : MonoBehaviour
         SignUp.SetActive(false);
     }
 
+    public void DailyLoginClaim()
+    {
+        MenuDaily.SetActive(false);
+        MenuDailyClaimed.SetActive(true);
+    }
+
+    public void ElementWindow()
+    {
+        MenuMain.SetActive(false);
+        TheElements.SetActive(true);
+    }
+
+
     public void ToMenu()
     {
         MenuMain.SetActive(true);
-        MenuDaily.SetActive(false);
+        MenuDailyClaimed.SetActive(false);
+        TheElements.SetActive(false);
         MainSettings.SetActive(false);
         GamemodePicker.SetActive(false);
         Store.SetActive(false);
