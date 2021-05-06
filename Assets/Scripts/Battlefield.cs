@@ -5,55 +5,113 @@ using UnityEngine;
 public class Battlefield : MonoBehaviour {
 
     public CosmicAPI api;
-    public Transform playerCards, opponentCards;
+    public Transform friendlyUnits, opponentUnits;
 
-    public List<WorldCard> battlefield = new List<WorldCard>();
+    List<WorldCard> unitsList = new List<WorldCard>();
 
-    public void UpdateBoard() {
-        foreach (Player player in api.GetGame().players) {
-            DrawBoard(player == api.GetPlayer() ? playerCards : opponentCards, player);
-        }
-    }
+    float rowCenterX = -8.79f;
 
     WorldCard GetMinion(string id) {
-        foreach (WorldCard wc in battlefield) {
-            if (wc.GetMinionId() == id) return wc;
+        foreach (WorldCard wc in unitsList) {
+            if (wc.GetMinionId() == id) {
+                return wc;
+            }
         }
         return null;
     }
 
-    void DrawBoard(Transform target, Player player) {
-        Clear(target);
-        float cardWidth = 2f;
-        float totalWidth = player.minions.Length * cardWidth;
-        float start = -(totalWidth / 2);
+    void AddMinion(string id) {
+        Minion minion = (Minion)api.GetCharacter(id);
 
-        for (int i = 0; i < player.minions.Length; i++) {
-            Minion minion = player.minions[i];
-            GameObject card = api.InstantiateMinionCard(minion.id, target);
-            battlefield.Add(card.GetComponent<WorldCard>());
-            card.transform.position = card.transform.position + new Vector3(start + (i * cardWidth), 0f, 0f);
+        GameObject card = api.InstantiateMinionCard(minion.id, minion.owner == api.GetPlayer().id ? friendlyUnits : opponentUnits);
+
+        unitsList.Add(card.GetComponent<WorldCard>());
+
+        CenterBoards();
+    }
+
+    void CenterBoards() {
+        CenterBoard(friendlyUnits);
+        CenterBoard(opponentUnits);
+    }
+
+    /// <summary>
+    /// Centeres all the minions and moves them closer or further apart incase a minion has spawned or died/sacrificed.
+    /// </summary>
+    void CenterBoard(Transform parent) {
+        float spacing = 7;
+
+        for (int i = 0; i < parent.childCount; i++) {
+            Transform minion = parent.GetChild(i);
+            minion.localPosition = new Vector3(spacing * i, 0, 0);
+        }
+
+        parent.localPosition = new Vector3(-((spacing * parent.childCount) / 2 - (parent.childCount > 0 ? spacing / 2 : 0)), parent.localPosition.y, parent.localPosition.z);
+    }
+
+    /// <summary>
+    /// Updates general things to battlefield minions.
+    /// i.e Battlecry status, Can attack status. Runs on every server update
+    /// </summary>
+    void GeneralUpdate() {
+        foreach (WorldCard wc in unitsList) {
+            Minion minion = (Minion)api.GetCharacter(wc.GetMinionId());
+            if (minion != null) {
+                wc.SetBattlecryActive(minion.battlecryActive);
+                wc.SetActive(minion.canAttack(api));
+                wc.SetDamage(minion.damage);
+            }
         }
     }
 
+    /// <summary>
+    /// Clear the field of every minion, used when the game is over
+    /// </summary>
+    void ClearField() {
+        while (unitsList.Count > 0) unitsList.RemoveAt(0);
+        while (friendlyUnits.childCount > 0) DestroyImmediate(friendlyUnits.GetChild(0).gameObject);
+        while (opponentUnits.childCount > 0) DestroyImmediate(opponentUnits.GetChild(0).gameObject);
+    }
 
-    void Clear(Transform transform) {
-        while (transform.childCount > 0) {
-            DestroyImmediate(transform.GetChild(0).gameObject);
-        }
 
-        while (battlefield.Count > 0) {
-            battlefield.RemoveAt(0);
-        }
+    void RemoveMinion(string id) {
+        WorldCard minion = GetMinion(id);
+        DestroyImmediate(minion.gameObject);
+        CenterBoards();
     }
 
     void Start() {
-        api.OnUpdate += () => {
-            UpdateBoard();
+        api.OnMinionSpawned += (id) => {
+            AddMinion(id);
         };
-    }
 
-    void Update() {
+        api.OnDamage += (id, damage) => {
+            WorldCard minion = GetMinion(id);
+            if (!minion) return;
+            minion.AnimateDamage(damage);
+            minion.SetHp(minion.GetHp() - damage);
+        };
 
+        api.OnMinionSacrificed += (id) => {
+            RemoveMinion(id);
+        };
+
+        api.OnHeal += (id, amount) => {
+            WorldCard minion = GetMinion(id);
+            //minion.AnimateDamage(damage);
+            minion.SetHp(minion.GetHp() + amount);
+        };
+
+        api.OnMinionDeath += (id) => {
+            RemoveMinion(id);
+        };
+
+        api.OnGameEnd += winner => {
+            ClearField();
+        };
+
+        api.OnUpdate += () => {
+            GeneralUpdate();
+        };
     }
 }

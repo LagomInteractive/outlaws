@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour {
 
     public CosmicAPI api;
     public HandPlacement hand;
+    public Battlefield battlefield;
 
     public Transform manaBar;
 
@@ -97,6 +98,11 @@ public class GameManager : MonoBehaviour {
 
         api.OnCardUsed += (index) => {
             hand.UpdateHand();
+        };
+
+        api.OnDamage += (id, damage) => {
+            //battlefield.AnimateDamage(id, damage);
+            Debug.Log("On damage called!");
         };
 
         api.OnMinionSpawned += (id) => {

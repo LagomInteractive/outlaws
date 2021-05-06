@@ -196,6 +196,13 @@ public class CosmicAPI : MonoBehaviour {
     public Action<int> OnOpponentUsedCard { get; set; }
     // UUID Minion
     public Action<string> OnMinionDeath { get; set; }
+
+    // When a character gets healed, string id, int amount
+    public Action<string, int> OnHeal { get; set; }
+
+    // UUID form, UUID to
+    public Action<string, string> OnAttack { get; set; }
+
     // When the client draws a card from the deck, int is the card ID
     public Action<int> OnCard { get; set; }
     // When the opponent draws a card (card is secret)
@@ -204,8 +211,8 @@ public class CosmicAPI : MonoBehaviour {
     public Action<string> OnTurn { get; set; }
     // UUID Winning player
     public Action<string> OnGameEnd { get; set; }
-    // UUID from, UUID to, float amount
-    public Action<string, string, float> OnDamage { get; set; }
+    // UUID to, int amount
+    public Action<string, int> OnDamage { get; set; }
 
     /// <summary>
     /// When the game client is running an older version, prevent the player from playing.
@@ -499,9 +506,6 @@ public class CosmicAPI : MonoBehaviour {
                 case "minion_spawned":
                     OnMinionSpawned?.Invoke(gameEvent.values["id"]);
                     break;
-                case "minion_sacrificed":
-
-                    break;
                 case "card_used":
                     if (gameEvent.values["player"] == me.id) {
                         OnCardUsed?.Invoke(Int32.Parse(gameEvent.values["index"]));
@@ -514,6 +518,18 @@ public class CosmicAPI : MonoBehaviour {
                     break;
                 case "minion_death":
                     OnMinionDeath?.Invoke(gameEvent.values["minion"]);
+                    break;
+                case "damage":
+                    OnDamage?.Invoke(gameEvent.values["id"], int.Parse(gameEvent.values["damage"]));
+                    break;
+                case "attack":
+                    OnAttack?.Invoke(gameEvent.values["from"], gameEvent.values["to"]);
+                    break;
+                case "minion_sacrificed":
+                    OnMinionSacrificed?.Invoke(gameEvent.values["id"]);
+                    break;
+                case "heal":
+                    OnHeal?.Invoke(gameEvent.values["id"], int.Parse(gameEvent.values["hp"]));
                     break;
             }
             yield return new WaitForSeconds(.8f);

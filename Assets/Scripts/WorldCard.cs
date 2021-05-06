@@ -13,6 +13,8 @@ public class WorldCard : MonoBehaviour {
     string minionId;
     Card origin;
 
+    public Animation onDamage;
+
     public TextMeshProUGUI minionTitle, spellTitle;
     public Text descriptionText, elementText, damageText, hpText, manaText;
 
@@ -39,6 +41,13 @@ public class WorldCard : MonoBehaviour {
         battlecryActiveBorder.gameObject.SetActive(active);
     }
 
+    public void AnimateDamage(int damage) {
+        Debug.Log("ANIMATING DAMGE!!!");
+        onDamage.GetComponent<Text>().text = damage.ToString();
+        onDamage.Rewind();
+        onDamage.Play();
+    }
+
     public void Setup(string id, CosmicAPI api) {
         minionId = id;
         Setup(-1, api);
@@ -59,6 +68,10 @@ public class WorldCard : MonoBehaviour {
 
 
         image.sprite = origin.image;
+
+        onDamage.Play();
+        onDamage.Sample();
+        onDamage.Stop();
 
 
         if (isCard) {
@@ -148,6 +161,7 @@ public class WorldCard : MonoBehaviour {
     }
 
     public void SetHp(int hp) {
+        if (hp < 0) hp = 0;
         this.hp = hp;
         UpdateCardValues();
     }

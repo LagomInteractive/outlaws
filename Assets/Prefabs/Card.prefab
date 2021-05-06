@@ -1774,6 +1774,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   handIndex: 0
+  onDamage: {fileID: 4031901357882495428}
   minionTitle: {fileID: 7192518091245511584}
   spellTitle: {fileID: 9147502060283470531}
   descriptionText: {fileID: 7192518090752530718}
@@ -2630,7 +2631,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7276214069989153436, guid: 36218e643d2820e49b0f4acb85b7b499, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7276214069989153437, guid: 36218e643d2820e49b0f4acb85b7b499, type: 3}
       propertyPath: m_Pivot.x
@@ -2734,7 +2735,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7564132670616147522, guid: 36218e643d2820e49b0f4acb85b7b499, type: 3}
       propertyPath: m_PlayAutomatically
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 36218e643d2820e49b0f4acb85b7b499, type: 3}
@@ -2746,5 +2747,10 @@ GameObject:
 --- !u!224 &4321006340192853275 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7276214069989153437, guid: 36218e643d2820e49b0f4acb85b7b499, type: 3}
+  m_PrefabInstance: {fileID: 6849133332047906694}
+  m_PrefabAsset: {fileID: 0}
+--- !u!111 &4031901357882495428 stripped
+Animation:
+  m_CorrespondingSourceObject: {fileID: 7564132670616147522, guid: 36218e643d2820e49b0f4acb85b7b499, type: 3}
   m_PrefabInstance: {fileID: 6849133332047906694}
   m_PrefabAsset: {fileID: 0}
