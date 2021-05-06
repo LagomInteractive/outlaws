@@ -269,7 +269,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &28986291
 Transform:
   m_ObjectHideFlags: 0
@@ -25616,7 +25616,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 374905942749310184, guid: 0f977ba729f0d934bb597f35b07c688b, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1095745235001154504, guid: 0f977ba729f0d934bb597f35b07c688b, type: 3}
       propertyPath: m_Materials.Array.size
@@ -25843,7 +25843,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 987336288474419095, guid: 81d0917ee125b2f498f281cc99123842, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1284928557853615659, guid: 81d0917ee125b2f498f281cc99123842, type: 3}
       propertyPath: m_Materials.Array.size
@@ -27172,16 +27172,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 376283135}
-  m_LocalRotation: {x: -0, y: -0.38268343, z: -0.92387956, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0.9238795, z: -0.38268346, w: 0}
+  m_LocalPosition: {x: 0, y: 0.00999999, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1632067273}
-  - {fileID: 1857259416}
-  - {fileID: 486132564}
-  - {fileID: 1009023185}
-  - {fileID: 437727272}
-  m_Father: {fileID: 1425106795}
+  m_Children: []
+  m_Father: {fileID: 1526430870}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -45, y: 0, z: -180}
 --- !u!199 &376283137
@@ -27266,7 +27261,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -41817,12 +41812,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 437727271}
-  m_LocalRotation: {x: -0.38268343, y: 0, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 0, y: 0.29, z: 0.29}
-  m_LocalScale: {x: 0.49593, y: 0.49593, z: 0.49593}
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0.7071068, w: 0}
+  m_LocalPosition: {x: 0, y: 0.4201219, z: 0}
+  m_LocalScale: {x: 0.49593002, y: 0.4959301, z: 0.49593005}
   m_Children: []
-  m_Father: {fileID: 376283136}
-  m_RootOrder: 4
+  m_Father: {fileID: 1526430870}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: -45, y: 0, z: 0}
 --- !u!199 &437727273
 ParticleSystemRenderer:
@@ -41906,7 +41901,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 1
   prewarm: 1
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -46803,12 +46798,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 486132563}
-  m_LocalRotation: {x: -0.38268343, y: -0, z: -0, w: 0.92387956}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0000024, y: 1.0000014, z: 1.0000012}
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0.7071068, w: 0}
+  m_LocalPosition: {x: 0, y: 0.00999999, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 376283136}
-  m_RootOrder: 2
+  m_Father: {fileID: 1526430870}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: -45, y: 0, z: 0}
 --- !u!199 &486132565
 ParticleSystemRenderer:
@@ -46892,7 +46887,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -51652,6 +51647,11 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!1 &507956074 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 987336288474419095, guid: 81d0917ee125b2f498f281cc99123842, type: 3}
+  m_PrefabInstance: {fileID: 205078656}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &520889473
 GameObject:
   m_ObjectHideFlags: 0
@@ -51741,10 +51741,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effects:
-  - ids: 
-    particleEffect: {fileID: 0}
-  - ids: 
-    particleEffect: {fileID: 0}
+  - name: ON_SACRIFICED
+    ids: 
+    particles: {fileID: 507956074}
+    sounds: []
+  - name: ON_HIT
+    ids: 
+    particles: {fileID: 1145181245}
+    sounds: []
+  - name: ARROW_AOE
+    ids: 790000007f000000730000007d000000
+    particles: {fileID: 28986290}
+    sounds: []
+  - name: AOE_1
+    ids: 810000008500000084000000
+    particles: {fileID: 1432219793}
+    sounds: []
+  - name: HEAL_1
+    ids: 7a00000075000000
+    particles: {fileID: 1526430869}
+    sounds: []
 --- !u!1001 &540797608
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -51802,7 +51818,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8204497960005015712, guid: d14178e470b0c1b46a14f523cedfe8ed, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8294495076296386400, guid: d14178e470b0c1b46a14f523cedfe8ed, type: 3}
       propertyPath: m_Materials.Array.size
@@ -57862,7 +57878,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6500563749156181101, guid: f99a823d8bf02a243be2f79139bbc927, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8817342970722563699, guid: f99a823d8bf02a243be2f79139bbc927, type: 3}
       propertyPath: m_RootOrder
@@ -58610,7 +58626,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8739238530712206000, guid: a7c142aaab3e3914894ef2683754fad9, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8901422601116007856, guid: a7c142aaab3e3914894ef2683754fad9, type: 3}
       propertyPath: m_Materials.Array.size
@@ -68472,12 +68488,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1009023184}
-  m_LocalRotation: {x: -0.38268343, y: 0, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 0, y: -0.64, z: -0.64}
-  m_LocalScale: {x: 0.48114, y: 0.48114, z: 0.48114}
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0.7071068, w: 0}
+  m_LocalPosition: {x: 0, y: -0.8950968, z: 0}
+  m_LocalScale: {x: 0.48114005, y: 0.4811401, z: 0.48114005}
   m_Children: []
-  m_Father: {fileID: 376283136}
-  m_RootOrder: 3
+  m_Father: {fileID: 1526430870}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: -45, y: 0, z: 0}
 --- !u!199 &1009023186
 ParticleSystemRenderer:
@@ -68561,7 +68577,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 1
   prewarm: 1
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -83493,6 +83509,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 04109e82c0d966447966dba624e3821b, type: 3}
+--- !u!1 &1145181245 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6500563749156181101, guid: f99a823d8bf02a243be2f79139bbc927, type: 3}
+  m_PrefabInstance: {fileID: 908421000}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1149759595
 GameObject:
   m_ObjectHideFlags: 0
@@ -83956,11 +83977,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1274186497}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -0, z: 0.701}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.71099997, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1425106795}
+  m_Father: {fileID: 1526430870}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!199 &1274186499
@@ -84045,7 +84066,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -88919,7 +88940,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2450885893731227903, guid: 683df21d49e641640a03517ecabb118a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 683df21d49e641640a03517ecabb118a, type: 3}
@@ -89419,7 +89440,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7012600832046278655, guid: bf37db9bd60f70348a108ad5254ef94d, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7096251717601062124, guid: bf37db9bd60f70348a108ad5254ef94d, type: 3}
       propertyPath: m_Materials.Array.size
@@ -89703,7 +89724,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4171645566269746553, guid: 43029e968d26df245bbf5f66c62a90f2, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5802133413345959232, guid: 43029e968d26df245bbf5f66c62a90f2, type: 3}
       propertyPath: m_Materials.Array.size
@@ -89855,11 +89876,9 @@ Transform:
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0.01, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1274186498}
-  - {fileID: 376283136}
+  m_Children: []
   m_Father: {fileID: 1526430870}
-  m_RootOrder: 0
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!199 &1425106796
 ParticleSystemRenderer:
@@ -89943,7 +89962,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -94703,6 +94722,11 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!1 &1432219793 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7229681330848490522, guid: 69973c425ad0402428860b673f9ead14, type: 3}
+  m_PrefabInstance: {fileID: 1906202787}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1433872701
 GameObject:
   m_ObjectHideFlags: 0
@@ -94751,6 +94775,7 @@ MonoBehaviour:
   api: {fileID: 1400600605}
   friendlyUnits: {fileID: 1807909049}
   opponentUnits: {fileID: 1394979586}
+  effectsManager: {fileID: 533724124}
 --- !u!1 &1438055320
 GameObject:
   m_ObjectHideFlags: 0
@@ -100138,7 +100163,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1526430870
 Transform:
   m_ObjectHideFlags: 0
@@ -100150,6 +100175,13 @@ Transform:
   m_LocalPosition: {x: -1.3249297, y: 1.5409756, z: -0.042466164}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1274186498}
+  - {fileID: 376283136}
+  - {fileID: 1632067273}
+  - {fileID: 1857259416}
+  - {fileID: 486132564}
+  - {fileID: 1009023185}
+  - {fileID: 437727272}
   - {fileID: 1425106795}
   m_Father: {fileID: 533724123}
   m_RootOrder: 2
@@ -105696,12 +105728,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1632067272}
-  m_LocalRotation: {x: -0.38268343, y: 0, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0.7071068, w: 0}
+  m_LocalPosition: {x: 0, y: 0.00999999, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 376283136}
-  m_RootOrder: 0
+  m_Father: {fileID: 1526430870}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: -45, y: 0, z: 0}
 --- !u!199 &1632067274
 ParticleSystemRenderer:
@@ -105785,7 +105817,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 1
   prewarm: 1
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -120993,7 +121025,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1846603277
 Transform:
   m_ObjectHideFlags: 0
@@ -125895,12 +125927,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1857259415}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0.9238795, z: -0.38268346, w: 0}
+  m_LocalPosition: {x: 0, y: 0.00999999, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 376283136}
-  m_RootOrder: 1
+  m_Father: {fileID: 1526430870}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!199 &1857259417
 ParticleSystemRenderer:
@@ -125984,7 +126016,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -130850,7 +130882,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1149215262751576239, guid: c360cc69b27ba624cb87ea5df02191a8, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1449632438610766922, guid: c360cc69b27ba624cb87ea5df02191a8, type: 3}
       propertyPath: m_Materials.Array.size
@@ -131073,7 +131105,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7229681330848490522, guid: 69973c425ad0402428860b673f9ead14, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7231871951640742334, guid: 69973c425ad0402428860b673f9ead14, type: 3}
       propertyPath: m_RootOrder
@@ -137018,7 +137050,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4086672603274927026, guid: d049b0ced0b43034d9eb1c427bb8316d, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4817372592849305322, guid: d049b0ced0b43034d9eb1c427bb8316d, type: 3}
       propertyPath: m_Materials.Array.size
@@ -149192,7 +149224,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8284765345574701450, guid: acf90744f4a504d4ab81276cba058bd1, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: acf90744f4a504d4ab81276cba058bd1, type: 3}

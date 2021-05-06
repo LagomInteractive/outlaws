@@ -6,6 +6,7 @@ public class Battlefield : MonoBehaviour {
 
     public CosmicAPI api;
     public Transform friendlyUnits, opponentUnits;
+    public EffectsManager effectsManager;
 
     List<WorldCard> unitsList = new List<WorldCard>();
 
@@ -71,6 +72,10 @@ public class Battlefield : MonoBehaviour {
         while (unitsList.Count > 0) unitsList.RemoveAt(0);
         while (friendlyUnits.childCount > 0) DestroyImmediate(friendlyUnits.GetChild(0).gameObject);
         while (opponentUnits.childCount > 0) DestroyImmediate(opponentUnits.GetChild(0).gameObject);
+    }
+
+    void PlayEffect(string name) {
+
     }
 
 
