@@ -264,6 +264,7 @@ public class CosmicAPI : MonoBehaviour {
     // Get client player in a game
     public Player GetPlayer() {
         foreach (Player player in game.players) {
+            if (player == null) return null;
             if (player.id == me.id) return player;
         }
         return null;

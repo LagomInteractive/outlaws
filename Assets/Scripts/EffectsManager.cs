@@ -12,7 +12,7 @@ public class Effect {
 
     public void Play(AudioSource source = null) {
         if (particles != null) PlayEffect();
-        if (sounds.Length != 0 && source != null) PlaySound(source);
+        if (sounds.Length > 0 && source != null) PlaySound(source);
     }
 
     public void PlayEffect() {
@@ -29,7 +29,7 @@ public class Effect {
     }
 
     public void PlaySound(AudioSource source) {
-        AudioClip sound = sounds[(int)Random.Range(0, sounds.Length - 1)];
+        AudioClip sound = sounds[Random.Range(0, sounds.Length - 1)];
         source.PlayOneShot(sound, 1);
     }
 }
@@ -51,7 +51,7 @@ public class EffectsManager : MonoBehaviour {
             foreach (Effect effect in effects) {
                 foreach (int id in effect.ids) {
                     if (id == playedCard) {
-                        effect.Play();
+                        effect.Play(audioSource);
                     }
                 }
             }
