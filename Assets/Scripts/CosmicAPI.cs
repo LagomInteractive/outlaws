@@ -145,17 +145,17 @@ public class GameEvent {
 [Serializable]
 public class CosmicAPI : MonoBehaviour {
 
-    public const string API_VERSION = "2.5";
+    public const string API_VERSION = "2.6";
 
     public GameObject cardPrefab;
+    bool searchingMatchmaking = false;
 
     public Dictionary<string, Color> elementColors = new Dictionary<string, Color>() {
-        {"lunar", new Color(0, 162, 255)},
-        {"solar", new Color(255, 38, 0)},
-        {"zenith", new Color(46, 255, 99)},
-        {"nova", new Color(147, 40, 246)},
-        {"taunt", new Color(230, 230, 230)},
-        {"rush", new Color(22, 22, 22)}
+        {"lunar", new Color32(0, 162, 255, 255)},
+        {"solar", new Color32(255, 38, 0, 255)},
+        {"zenith", new Color32(46, 255, 99, 255)},
+        {"nova", new Color32(147, 40, 247, 255)},
+        {"neutral", new Color32(230, 230, 230, 255)}
     };
 
     // Socket connection wit the server
@@ -233,9 +233,9 @@ public class CosmicAPI : MonoBehaviour {
     // a round for example.
     long timeDifference = 0;
 
-    public void StartTestGame() {
+    public void StartTestGame(string deckId = null) {
         ConcedeGame();
-        Send("start_test");
+        Send("start_test", deckId);
     }
 
     // Get client player in a game
@@ -431,8 +431,9 @@ public class CosmicAPI : MonoBehaviour {
         await ws.Connect();
     }
 
-    public void StartMatchMaking() {
-        Send("start_matchmaking");
+
+    public void StartMatchMaking(string deckId) {
+        Send("start_matchmaking", deckId);
     }
 
     public void StopMatchMaking() {

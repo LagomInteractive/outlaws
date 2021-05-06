@@ -20,8 +20,6 @@ public class WorldCard : MonoBehaviour {
     public Image frame, mask, image, banner;
     public Transform activeBorder, targetBorder, battlecryActiveBorder, manaContainer, hpContainer, damageContainer;
 
-
-
     bool isMinion;
 
     public void SetActive(bool active) {
@@ -59,6 +57,10 @@ public class WorldCard : MonoBehaviour {
         mask.sprite = isMinion ? minionMask : spellMask;
         frame.sprite = isMinion ? minionCard : spellCard;
         banner.sprite = isMinion ? minionBanner : spellBanner;
+
+        string elementName = origin.element.ToString().ToLower();
+        if (elementName == "rush" || elementName == "taunt") elementName = "neutral";
+        elementText.color = api.elementColors[elementName];
 
         if (!isMinion) {
             Destroy(hpContainer.gameObject);
@@ -126,9 +128,9 @@ public class WorldCard : MonoBehaviour {
             hpText.text = hp.ToString();
             damageText.text = damage.ToString();
 
-
             damageText.color = damage != origin.damage ? Color.green : Color.white;
-
+            if (hp == origin.hp) hpText.color = Color.white;
+            else hpText.color = hp > origin.hp ? Color.green : Color.red;
         }
     }
 

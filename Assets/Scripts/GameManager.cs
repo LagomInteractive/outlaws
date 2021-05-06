@@ -28,6 +28,8 @@ public class GameManager : MonoBehaviour {
 
     Game game;
 
+    public InputField deckIdInput;
+
 
     private void Update() {
         buttons.SetActive(game == null);
@@ -47,11 +49,20 @@ public class GameManager : MonoBehaviour {
         startMatchmakingButton.GetComponentInChildren<Text>().text = matchmaking ? "Searching game..." : "Start match making";
     }
 
+    void SaveLatestCardDeckId() {
+        PlayerPrefs.SetString("lastUsedDeck", deckIdInput.text);
+    }
+
     void Start() {
+
+        if (PlayerPrefs.HasKey("lastUsedDeck")) {
+            deckIdInput.text = PlayerPrefs.GetString("lastUsedDeck");
+        }
 
         startMatchmakingButton.onClick.AddListener(() => {
             matchmaking = !matchmaking;
-            if (matchmaking) api.StartMatchMaking();
+            SaveLatestCardDeckId();
+            if (matchmaking) api.StartMatchMaking(deckIdInput.text);
             else api.StopMatchMaking();
             UpdateMatchmakingButton();
         });
@@ -101,6 +112,7 @@ public class GameManager : MonoBehaviour {
         api.OnClientOutdated += (server_version, client_version) => {
             GameClientOutOfDateWarning.gameObject.SetActive(true);
         };
+
     }
 
     public void UpdateManaBar() {
@@ -113,7 +125,8 @@ public class GameManager : MonoBehaviour {
 
     public void StartTest() {
         if (!matchmaking) {
-            api.StartTestGame();
+            SaveLatestCardDeckId();
+            api.StartTestGame(deckIdInput.text);
         }
     }
 }

@@ -11765,6 +11765,7 @@ MonoBehaviour:
   GameClientOutOfDateWarning: {fileID: 1642943226}
   playerUI: {fileID: 6583823805011511623}
   opponentUI: {fileID: 6583823805011511622}
+  deckIdInput: {fileID: 6583823805011511625}
 --- !u!4 &308267426
 Transform:
   m_ObjectHideFlags: 0
@@ -45406,6 +45407,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6583823805011511625 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 161166579826671742, guid: 0b0b1a3d4b23a9f40931c566fd1c7adf, type: 3}
+  m_PrefabInstance: {fileID: 6583823805011511621}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d199490a83bb2b844b9695cbf13b01ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &6650558425002960520
