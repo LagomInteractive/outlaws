@@ -39,7 +39,7 @@ public class EffectsManager : MonoBehaviour {
 
     public void PlaySound(string name) {
         Effect effect = GetEffect(name);
-        AudioClip sound = effect.sounds[(int)Random.RandomRange(0, effect.sounds.Length - 1)];
+        AudioClip sound = effect.sounds[(int)Random.Range(0, effect.sounds.Length - 1)];
     }
 
     public Effect GetEffect(string name) {
@@ -61,9 +61,5 @@ public class EffectsManager : MonoBehaviour {
             particles.time = 0;
             particles.Play();
         }
-    }
-
-    void Update() {
-
     }
 }

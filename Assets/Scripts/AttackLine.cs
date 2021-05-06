@@ -83,8 +83,6 @@ public class AttackLine : MonoBehaviour {
 
     void Update() {
 
-
-
         if (!active && Input.GetMouseButtonDown(0)) {
 
             GameObject origin = GetTarget();

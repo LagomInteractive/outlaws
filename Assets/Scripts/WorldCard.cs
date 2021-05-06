@@ -29,6 +29,8 @@ public class WorldCard : MonoBehaviour {
 
     bool isMinion, isCard;
 
+    public Transform effectsSpawn;
+
     public void SetActive(bool active) {
         activeBorder.gameObject.SetActive(active);
     }
@@ -42,8 +44,7 @@ public class WorldCard : MonoBehaviour {
     }
 
     public void AnimateDamage(int damage) {
-        Debug.Log("ANIMATING DAMGE!!!");
-        onDamage.GetComponent<Text>().text = damage.ToString();
+        onDamage.gameObject.GetComponent<Text>().text = "-" + damage.ToString();
         onDamage.Rewind();
         onDamage.Play();
     }
@@ -52,7 +53,6 @@ public class WorldCard : MonoBehaviour {
         minionId = id;
         Setup(-1, api);
     }
-
 
     public void Setup(int id, CosmicAPI api) {
         Minion minion = null;

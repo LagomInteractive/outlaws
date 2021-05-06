@@ -118,7 +118,6 @@ public class GameManager : MonoBehaviour {
         api.OnClientOutdated += (server_version, client_version) => {
             GameClientOutOfDateWarning.gameObject.SetActive(true);
         };
-
     }
 
     public void UpdateManaBar() {

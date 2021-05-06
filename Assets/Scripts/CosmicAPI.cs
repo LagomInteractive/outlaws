@@ -501,7 +501,6 @@ public class CosmicAPI : MonoBehaviour {
                     break;
                 case "player_deal_card":
                     yield return OnPlayerDealCard(gameEvent.values);
-
                     break;
                 case "minion_spawned":
                     OnMinionSpawned?.Invoke(gameEvent.values["id"]);
@@ -511,6 +510,7 @@ public class CosmicAPI : MonoBehaviour {
                         OnCardUsed?.Invoke(Int32.Parse(gameEvent.values["index"]));
                     } else {
                         OnOpponentUsedCard?.Invoke(int.Parse(gameEvent.values["card"]));
+                        yield return new WaitForSeconds(1.5f);
                     }
                     break;
                 case "game_over":
