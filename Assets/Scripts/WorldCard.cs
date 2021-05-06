@@ -16,11 +16,16 @@ public class WorldCard : MonoBehaviour {
     public TextMeshProUGUI minionTitle, spellTitle;
     public Text descriptionText, elementText, damageText, hpText, manaText;
 
+    public Text minionHp, minionDamage;
+
     public Sprite minionCard, spellCard, minionMask, spellMask, minionBanner, spellBanner;
     public Image frame, mask, image, banner;
-    public Transform activeBorder, targetBorder, battlecryActiveBorder, manaContainer, hpContainer, damageContainer;
+    public Transform activeBorder, targetBorder, battlecryActiveBorder, manaContainer, hpContainer, damageContainer, tauntBorder, minionFrame;
+    public Transform activeBorderMinion, targetBorderMinion;
 
-    bool isMinion;
+    public Sprite deathrattleBorder, lunarBorder, novaBorder, ripsoteBorder, solarBorder, zenithBorder;
+
+    bool isMinion, isCard;
 
     public void SetActive(bool active) {
         activeBorder.gameObject.SetActive(active);
@@ -41,44 +46,77 @@ public class WorldCard : MonoBehaviour {
 
 
     public void Setup(int id, CosmicAPI api) {
+        Minion minion = null;
+        isCard = true;
         if (id != -1) {
             this.id = id;
             origin = api.GetCard(id);
         } else {
-            Minion minion = (Minion)api.GetCharacter(minionId);
+            minion = (Minion)api.GetCharacter(minionId);
             origin = api.GetCard(minion.origin);
+            isCard = false;
         }
 
-        isMinion = origin.type == CardType.Minion;
-
-        minionTitle.gameObject.SetActive(isMinion);
-        spellTitle.gameObject.SetActive(!isMinion);
-
-        mask.sprite = isMinion ? minionMask : spellMask;
-        frame.sprite = isMinion ? minionCard : spellCard;
-        banner.sprite = isMinion ? minionBanner : spellBanner;
-
-        string elementName = origin.element.ToString().ToLower();
-        if (elementName == "rush" || elementName == "taunt") elementName = "neutral";
-        elementText.color = api.elementColors[elementName];
-
-        if (!isMinion) {
-            Destroy(hpContainer.gameObject);
-            Destroy(damageContainer.gameObject);
-        }
-
-        descriptionText.text = origin.description;
-        elementText.text = origin.element.ToString().ToUpper();
 
         image.sprite = origin.image;
 
-        if (!isMinion) {
-            hpText.gameObject.SetActive(false);
-            damageText.gameObject.SetActive(false);
-            spellTitle.text = origin.name;
+
+        if (isCard) {
+            isMinion = origin.type == CardType.Minion;
+            mask.sprite = isMinion ? minionMask : spellMask;
+            frame.sprite = isMinion ? minionCard : spellCard;
+
+            minionTitle.gameObject.SetActive(isMinion);
+            spellTitle.gameObject.SetActive(!isMinion);
+
+
+            banner.sprite = isMinion ? minionBanner : spellBanner;
+
+            string elementName = origin.element.ToString().ToLower();
+            if (elementName == "rush" || elementName == "taunt") elementName = "neutral";
+            elementText.color = api.elementColors[elementName];
+
+            if (!isMinion) {
+                Destroy(hpContainer.gameObject);
+                Destroy(damageContainer.gameObject);
+            }
+
+            descriptionText.text = origin.description;
+            elementText.text = origin.element.ToString().ToUpper();
+
+
+
+            if (!isMinion) {
+                hpText.gameObject.SetActive(false);
+                damageText.gameObject.SetActive(false);
+                spellTitle.text = origin.name;
+            } else {
+                minionTitle.text = origin.name;
+            }
         } else {
-            minionTitle.text = origin.name;
+            // This is a board minion
+            minionFrame.gameObject.SetActive(true);
+            Destroy(frame.gameObject);
+            hpText = minionHp;
+            damageText = minionDamage;
+
+            if (origin.element == Element.Taunt) tauntBorder.gameObject.SetActive(true);
+
+            Image minionFrameImage = minionFrame.GetComponent<Image>();
+
+            if (minion.deathrattle)
+                minionFrameImage.sprite = deathrattleBorder;
+            else if (minion.riposte) minionFrameImage.sprite = ripsoteBorder;
+            else if (origin.element == Element.Nova) minionFrameImage.sprite = novaBorder;
+            else if (origin.element == Element.Lunar) minionFrameImage.sprite = lunarBorder;
+            else if (origin.element == Element.Solar) minionFrameImage.sprite = solarBorder;
+            else if (origin.element == Element.Zenith) minionFrameImage.sprite = zenithBorder;
+
+            activeBorder = activeBorderMinion;
+
+            targetBorder = targetBorderMinion;
         }
+
 
         hp = origin.hp;
         damage = origin.damage;

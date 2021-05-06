@@ -18,6 +18,7 @@ public class Character {
 public class Minion : Character {
     public int origin, spawnRound, damage;
     public bool battlecryActive, hasEverAttacked;
+    public bool riposte, deathrattle;
     public string owner;
     Player GetOwner(CosmicAPI api) {
         return (Player)api.GetCharacter(owner);
@@ -259,6 +260,20 @@ public class CosmicAPI : MonoBehaviour {
     // Get my user profile
     public Profile GetProfile() {
         return me;
+    }
+
+    public bool IsElemental(Element element) {
+        switch (element) {
+            case Element.Lunar:
+                return true;
+            case Element.Nova:
+                return true;
+            case Element.Zenith:
+                return true;
+            case Element.Solar:
+                return true;
+        }
+        return false;
     }
 
     public Player GetOpponent() {
@@ -591,15 +606,12 @@ public class CosmicAPI : MonoBehaviour {
 
         WorldCard wc = card.GetComponent<WorldCard>();
 
-        if (minion.canAttack(this)) wc.SetActive(true);
-        if (minion.battlecryActive) wc.SetBattlecryActive(true);
-
-        Card origin = GetCard(minion.origin);
-
         wc.Setup(minion.id, this);
         wc.SetDamage(minion.damage);
         wc.SetHp(minion.hp);
 
+        if (minion.canAttack(this)) wc.SetActive(true);
+        if (minion.battlecryActive) wc.SetBattlecryActive(true);
         return card;
     }
 

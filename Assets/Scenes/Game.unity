@@ -149147,6 +149147,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AOE 09
       objectReference: {fileID: 0}
+    - target: {fileID: 8284765345574701450, guid: acf90744f4a504d4ab81276cba058bd1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: acf90744f4a504d4ab81276cba058bd1, type: 3}
 --- !u!4 &6727608281797813128
