@@ -55,6 +55,8 @@ public class Player : Character {
     public int level, manaLeft, totalMana;
     public int[] cards;
     public int[] deck;
+    public int passive;
+    public string outlaw;
     public Minion[] minions;
     public Profile profile;
     public Buff buff;
@@ -69,6 +71,11 @@ public class Player : Character {
     public bool canAttack(CosmicAPI api) {
         return hasAttacked;
     }
+}
+
+[Serializable]
+public enum Outlaw {
+    Necromancer, Mercenary
 }
 
 [Serializable]

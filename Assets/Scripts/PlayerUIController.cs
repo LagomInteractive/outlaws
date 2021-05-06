@@ -23,8 +23,10 @@ public class PlayerUIController : MonoBehaviour {
             sacrificeCrystal.GetComponent<Image>().sprite = active ? sacrificeFilled : sacrificeEmpty;
         }
 
-        /*SetMana(10, 11);
-        return;*/
+        for (int i = 0; i < passives.childCount; i++) {
+            passives.GetChild(i).GetComponent<Image>().color = player.passive >= i + 1 ? Color.white : Color.black;
+        }
+
         if (!player.turn) {
             SetMana(0, player.totalMana);
             DisableMana();
@@ -43,12 +45,21 @@ public class PlayerUIController : MonoBehaviour {
     }
 
     public void SetMana(int manaAmount, int totalAmount) {
-        int defaultAmount = 9;
+
         Transform crystals = mana.Find("Mana");
-        for (int i = 0; i < totalAmount; i++) {
-            int index = i % 9;
-            bool active = (i + 1) <= manaAmount;
-            crystals.GetChild(i).GetComponent<Image>().color = active ? Color.white : Color.black;
+        int maxManaDefault = 9;
+        // Max amount of mana that can be visualized is 18 (9 is default max amount)
+        for (int i = 0; i < maxManaDefault * 2; i++) {
+            int index = i % maxManaDefault; // It goes over the 9 mana crystals two times, but the index will always be between 0-9
+            if (i >= maxManaDefault && i >= manaAmount) break; // Stop rendering after first round of mana crystals if the user has less than 9 mana.
+
+            bool active = (i + 1) <= manaAmount; // If this index mana is active
+            bool extra = i >= maxManaDefault; // If the mana is active above the default max
+            Color color = Color.black; // Color of an inactive mana crystal
+            if (active) color = Color.white;
+            if (extra) color = Color.red;
+
+            crystals.GetChild(index).GetComponent<Image>().color = color;
             GetComponentInChildren<Text>().text = $"{manaAmount}/{totalAmount}";
         }
     }
