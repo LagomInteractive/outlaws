@@ -28,7 +28,8 @@ public class WorldCard : MonoBehaviour {
 
     bool isMinion, isCard;
 
-    public Transform effectsSpawn;
+    public Transform effectsSpawn, previewCard;
+    public Animation showPreviewCard;
 
     public void SetActive(bool active) {
         activeBorder.gameObject.SetActive(active);
@@ -40,6 +41,31 @@ public class WorldCard : MonoBehaviour {
 
     public void SetBattlecryActive(bool active) {
         battlecryActiveBorder.gameObject.SetActive(active);
+    }
+
+    public void ShowPreviewCard(CosmicAPI api) {
+        if (previewCard.childCount == 0) {
+            api.InstantiateCard(id, previewCard);
+        } else {
+            previewCard.gameObject.SetActive(true);
+        }
+        showPreviewCard.clip = showPreviewCard["ShowMinionsOriginAnimation"].clip;
+        showPreviewCard["ShowMinionsOriginAnimation"].speed = 1;
+        showPreviewCard["ShowMinionsOriginAnimation"].time = 0;
+        showPreviewCard.Play();
+    }
+
+    public void HidePreviewCard() {
+        showPreviewCard.clip = showPreviewCard["ShowMinionsOriginAnimation"].clip;
+        showPreviewCard["ShowMinionsOriginAnimation"].speed = -1;
+        showPreviewCard["ShowMinionsOriginAnimation"].time = showPreviewCard["ShowMinionsOriginAnimation"].time;
+        showPreviewCard.Play();
+        StartCoroutine(DisablePreviewCard());
+    }
+
+    public IEnumerator DisablePreviewCard() {
+        yield return new WaitForSeconds(.02f);
+        previewCard.gameObject.SetActive(false);
     }
 
     public void AnimateDamage(int damage) {

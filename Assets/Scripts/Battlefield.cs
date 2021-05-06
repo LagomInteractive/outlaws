@@ -10,6 +10,8 @@ public class Battlefield : MonoBehaviour {
 
     List<WorldCard> unitsList = new List<WorldCard>();
 
+    GameObject previewCard;
+
     WorldCard GetMinion(string id) {
         foreach (WorldCard wc in unitsList) {
             if (wc.GetMinionId() == id) {
@@ -72,9 +74,6 @@ public class Battlefield : MonoBehaviour {
         while (opponentUnits.childCount > 0) DestroyImmediate(opponentUnits.GetChild(0).gameObject);
     }
 
-    void PlayEffect(string name) {
-
-    }
 
 
     IEnumerator RemoveMinion(string id, float delay = 0) {
@@ -84,6 +83,29 @@ public class Battlefield : MonoBehaviour {
         CenterBoards();
     }
 
+    private void Update() {
+        RaycastHit hit;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Physics.Raycast(ray, out hit, Mathf.Infinity, LayerMask.GetMask("ArrowTarget"));
+        bool activePreview = false;
+        if (hit.collider) {
+            if (hit.collider.gameObject.tag == "Minion") {
+                activePreview = true;
+                if (previewCard != hit.collider.gameObject) {
+                    if (previewCard != null) previewCard.GetComponent<WorldCard>().HidePreviewCard();
+
+                    previewCard = hit.collider.gameObject;
+                    previewCard.GetComponent<WorldCard>().ShowPreviewCard(api);
+
+                }
+            }
+        }
+        if (!activePreview && previewCard != null) {
+            previewCard.GetComponent<WorldCard>().HidePreviewCard();
+            previewCard = null;
+        }
+
+    }
 
 
     void Start() {

@@ -29,12 +29,16 @@ public class GameManager : MonoBehaviour {
 
     Game game;
 
+    public AudioClip gameMusic;
+    public AudioSource musicPlayer;
+
     public InputField deckIdInput;
 
 
     private void Update() {
         buttons.SetActive(game == null);
-        if (game != null) {
+        if (!api.IsLoggedIn()) infoText.text = "No connection";
+        if (game != null && api.IsLoggedIn()) {
             roundTimer -= Time.deltaTime;
             infoText.text = $"V{CosmicAPI.API_VERSION} outlaws.ygstr.com\n---\nRound: {game.round}\nTurn: {(api.GetPlayer().turn ? "You" : "Opponent")}\nTime left: {Mathf.Round(roundTimer)}\nOpponent: {api.GetOpponent().name}\nOutlaw: {api.GetPlayer().outlaw} (You) vs. {api.GetOpponent().outlaw}";
         } else {
@@ -65,6 +69,11 @@ public class GameManager : MonoBehaviour {
         if (PlayerPrefs.HasKey("lastUsedDeck")) {
             deckIdInput.text = PlayerPrefs.GetString("lastUsedDeck");
         }
+
+        musicPlayer.clip = gameMusic;
+        musicPlayer.loop = true;
+        musicPlayer.Play();
+
 
         startMatchmakingButton.onClick.AddListener(() => {
             matchmaking = !matchmaking;

@@ -25,7 +25,7 @@ public class Minion : Character {
     }
 
     public bool canSacrifice(CosmicAPI api) {
-        if (!hasEverAttacked && api.GetGame().round != spawnRound) {
+        if (!hasEverAttacked && api.GetGame().round != spawnRound && api.IsElemental(api.GetCard(origin).element)) {
             return true;
         }
         return false;
@@ -242,7 +242,7 @@ public class CosmicAPI : MonoBehaviour {
     // If the cards are loaded
     bool cardsLoaded;
     // If the user is connected and logged in
-    bool loggedIn;
+    bool loggedIn = false;
 
     // The user login token, stored in PlayerPrefs.String("token")
     string token;
@@ -264,7 +264,6 @@ public class CosmicAPI : MonoBehaviour {
     // Get client player in a game
     public Player GetPlayer() {
         foreach (Player player in game.players) {
-            if (player == null) return null;
             if (player.id == me.id) return player;
         }
         return null;
@@ -287,6 +286,10 @@ public class CosmicAPI : MonoBehaviour {
                 return true;
         }
         return false;
+    }
+
+    public bool IsLoggedIn() {
+        return loggedIn;
     }
 
     public Player GetOpponent() {
@@ -489,7 +492,7 @@ public class CosmicAPI : MonoBehaviour {
 
     // Game update from the server
     void GameUpdate(string json) {
-
+        if (me == null) return;
         Game update = JsonConvert.DeserializeObject<Game>(json);
         game = update;
 

@@ -26726,6 +26726,8 @@ MonoBehaviour:
   GameClientOutOfDateWarning: {fileID: 1642943226}
   playerUI: {fileID: 6583823805011511623}
   opponentUI: {fileID: 6583823805011511622}
+  gameMusic: {fileID: 8300000, guid: a8440a64086c4ed429d80e837823562b, type: 3}
+  musicPlayer: {fileID: 308267427}
   deckIdInput: {fileID: 6583823805011511625}
 --- !u!4 &308267426
 Transform:
@@ -26753,7 +26755,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.082
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -84311,8 +84313,6 @@ MonoBehaviour:
   api: {fileID: 1400600605}
   enemyCardEnter: {fileID: 259891728}
   cardDrawPlayer: {fileID: 566411408}
-  animatorController: {fileID: 9100000, guid: c471916af13aa274c8977c317262a86d, type: 2}
-  animatorController2: {fileID: 9100000, guid: c7dd937d3c2275b4ebc2506efbd27433, type: 2}
 --- !u!4 &1272806226
 Transform:
   m_ObjectHideFlags: 0

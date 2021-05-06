@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Animations;
+/*using UnityEditor.Animations;*/
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,8 +9,8 @@ public class AnimationManager : MonoBehaviour {
     public CosmicAPI api;
     public Transform enemyCardEnter;
     public Transform cardDrawPlayer;
-    public AnimatorController animatorController;
-    public AnimatorController animatorController2;
+    /*public AnimatorController animatorController;
+    public AnimatorController animatorController2;*/
 
     private void Start() {
         api = FindObjectOfType<CosmicAPI>();
@@ -19,7 +19,8 @@ public class AnimationManager : MonoBehaviour {
             enemyCardUsed.transform.localScale *= 0.2f;
             enemyCardUsed.AddComponent<Animations>();
             Animator animator = enemyCardUsed.AddComponent<Animator>();
-            animator.runtimeAnimatorController = animatorController;
+            // Bad solution, needs to fix
+            animator.runtimeAnimatorController = Resources.Load("Card") as RuntimeAnimatorController;
             animator.SetTrigger("OnOpponentCard");
         };
 
@@ -29,7 +30,8 @@ public class AnimationManager : MonoBehaviour {
             enemyCardUsed.transform.Rotate(90f, 0f, 62.473f);
             enemyCardUsed.AddComponent<Animations>();
             Animator animator = enemyCardUsed.AddComponent<Animator>();
-            animator.runtimeAnimatorController = animatorController2;
+            // Bad solution, needs to fix
+            animator.runtimeAnimatorController = Resources.Load("OnCard") as RuntimeAnimatorController;
         };
     }
     void Update() {
