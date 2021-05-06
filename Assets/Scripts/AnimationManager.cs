@@ -9,7 +9,9 @@ public class AnimationManager : MonoBehaviour
 {
     public CosmicAPI api;
     public Transform enemyCardEnter;
+    public Transform cardDrawPlayer;
     public AnimatorController animatorController;
+    public AnimatorController animatorController2;
 
     private void Start()
     {
@@ -21,8 +23,18 @@ public class AnimationManager : MonoBehaviour
             enemyCardUsed.AddComponent<Animations>();
             Animator animator = enemyCardUsed.AddComponent<Animator>();
             animator.runtimeAnimatorController = animatorController;
-            //GameObject enemyCard = api.InstantiateCard(cardID, enemyCardEnter, false);
-            //anim.SetTrigger("OnOpponentCardExit");
+            animator.SetTrigger("OnOpponentCard");
+        };
+        
+        api.OnCard += (cardID) =>
+        {
+            Debug.Log("drawncard");
+            GameObject enemyCardUsed = api.InstantiateCard(cardID, cardDrawPlayer, false);
+            enemyCardUsed.transform.localScale *= 0.2f;
+            enemyCardUsed.transform.Rotate(90f, 0f, 62.473f);
+            enemyCardUsed.AddComponent<Animations>();
+            Animator animator = enemyCardUsed.AddComponent<Animator>();
+            animator.runtimeAnimatorController = animatorController2;
         };
     }
     void Update()

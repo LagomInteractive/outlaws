@@ -10901,6 +10901,39 @@ Transform:
   m_Father: {fileID: 357986838}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 38.717117, y: 0, z: 0}
+--- !u!1 &156988897
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 156988898}
+  m_Layer: 0
+  m_Name: AnimationPoints
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &156988898
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 156988897}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 2050045075}
+  - {fileID: 465760411}
+  - {fileID: 698838220}
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &177972669
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11722,6 +11755,7 @@ MonoBehaviour:
   GameClientOutOfDateWarning: {fileID: 1642943226}
   playerUI: {fileID: 6583823805011511623}
   opponentUI: {fileID: 6583823805011511622}
+  deckIdInput: {fileID: 449696271}
 --- !u!4 &308267426
 Transform:
   m_ObjectHideFlags: 0
@@ -12270,6 +12304,17 @@ Transform:
   m_Father: {fileID: 1808714224}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 38.717117, y: 0, z: 0}
+--- !u!114 &449696271 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 161166579826671742, guid: 0b0b1a3d4b23a9f40931c566fd1c7adf, type: 3}
+  m_PrefabInstance: {fileID: 6583823805011511621}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d199490a83bb2b844b9695cbf13b01ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &465760410
 GameObject:
   m_ObjectHideFlags: 0
@@ -12297,8 +12342,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_Father: {fileID: 156988898}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &466051923
 GameObject:
@@ -12331,7 +12376,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   api: {fileID: 1400600605}
   enemyCardEnter: {fileID: 465760411}
+  cardDrawPlayer: {fileID: 698838220}
   animatorController: {fileID: 9100000, guid: c471916af13aa274c8977c317262a86d, type: 2}
+  animatorController2: {fileID: 9100000, guid: c7dd937d3c2275b4ebc2506efbd27433, type: 2}
 --- !u!4 &466051925
 Transform:
   m_ObjectHideFlags: 0
@@ -13119,6 +13166,36 @@ Transform:
   m_Children: []
   m_Father: {fileID: 357986838}
   m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &698838219
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 698838220}
+  m_Layer: 0
+  m_Name: CardDrawPlayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &698838220
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 698838219}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 156988898}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &702326964
 GameObject:
@@ -20875,6 +20952,7 @@ MonoBehaviour:
   api: {fileID: 1400600605}
   playerCards: {fileID: 1807909049}
   opponentCards: {fileID: 1394979586}
+  battlefield: []
 --- !u!1001 &1446198801
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -42906,12 +42984,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2050045074}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.51, y: 3.01, z: 4.23}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_Father: {fileID: 156988898}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2065813805
 GameObject:
