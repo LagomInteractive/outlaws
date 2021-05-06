@@ -11741,6 +11741,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   api: {fileID: 1400600605}
   hand: {fileID: 358674616}
+  battlefield: {fileID: 0}
   manaBar: {fileID: 1098600003}
   playerStats: {fileID: 936223073}
   opponentStats: {fileID: 975656144}
@@ -20950,9 +20951,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   api: {fileID: 1400600605}
-  playerCards: {fileID: 1807909049}
-  opponentCards: {fileID: 1394979586}
-  battlefield: []
+  friendlyUnits: {fileID: 1807909049}
+  opponentUnits: {fileID: 1394979586}
+  effectsManager: {fileID: 0}
 --- !u!1001 &1446198801
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21459,6 +21460,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4291002708289518, guid: b4d927a888840594da314c75d4d58334, type: 3}
   m_PrefabInstance: {fileID: 1578174529}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1578745852 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4313869958462043048, guid: 0b0b1a3d4b23a9f40931c566fd1c7adf, type: 3}
+  m_PrefabInstance: {fileID: 6583823805011511621}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1580238357
 GameObject:
   m_ObjectHideFlags: 0
@@ -26698,7 +26710,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   api: {fileID: 1400600605}
   active: 0
-  sacrificeButton: {fileID: 0}
+  sacrificeButton: {fileID: 1578745852}
   player: {fileID: 6583823805011511623}
   opponent: {fileID: 6583823805011511622}
 --- !u!114 &1633089079 stripped
