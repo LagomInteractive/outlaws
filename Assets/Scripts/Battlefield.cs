@@ -12,7 +12,7 @@ public class Battlefield : MonoBehaviour {
 
     GameObject previewCard;
 
-    WorldCard GetMinion(string id) {
+    public WorldCard GetMinion(string id) {
         foreach (WorldCard wc in unitsList) {
             if (wc.GetMinionId() == id) {
                 return wc;
