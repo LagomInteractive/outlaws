@@ -184,7 +184,8 @@ public class CosmicAPI : MonoBehaviour {
     public Action OnLoginFail { get; set; }
     // On every game update from the server, not specifik
     public Action OnUpdate { get; set; }
-    // (int index) When one of the players cards from the hand is used (removed)
+
+    // (int id) When one of the players cards from the hand is used (removed)
     public Action<int> OnFriendlyCardUsed { get; set; }
     public Action<int> OnCardUsed { get; set; }
     // When a new game starts (from main menu)
@@ -367,6 +368,7 @@ public class CosmicAPI : MonoBehaviour {
     /// Play a minion card from the hand
     /// </summary>
     public void PlayMinion(int id) {
+        Debug.Log("ID: " + id);
         Send("play_minion", id.ToString());
     }
 
@@ -526,7 +528,7 @@ public class CosmicAPI : MonoBehaviour {
                 case "card_used":
                     OnCardUsed?.Invoke(int.Parse(gameEvent.values["card"]));
                     if (gameEvent.values["player"] == me.id) {
-                        OnFriendlyCardUsed?.Invoke(int.Parse(gameEvent.values["index"]));
+                        OnFriendlyCardUsed?.Invoke(int.Parse(gameEvent.values["card"]));
                     } else {
                         OnOpponentUsedCard?.Invoke(int.Parse(gameEvent.values["card"]));
                         yield return new WaitForSeconds(1.8f);

@@ -88,9 +88,6 @@ public class GameManager : MonoBehaviour {
             roundTimer = game.roundTimeLeft;
         };
 
-        api.OnCard += (id) => {
-            hand.DealCard(id);
-        };
 
 
         api.OnUpdate += () => {

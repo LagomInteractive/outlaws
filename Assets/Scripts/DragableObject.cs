@@ -92,10 +92,10 @@ public class DragableObject : MonoBehaviour {
             WorldCard card = GetComponent<WorldCard>();
             switch (api.GetCard(card.GetId()).type) {
                 case CardType.Minion:
-                    api.PlayMinion(GetComponent<WorldCard>().handIndex);
+                    api.PlayMinion(id);
                     break;
                 case CardType.AOESpell:
-                    api.PlaySpell(GetComponent<WorldCard>().handIndex);
+                    api.PlaySpell(id);
                     break;
             }
 

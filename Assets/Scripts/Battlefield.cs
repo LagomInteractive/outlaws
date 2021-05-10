@@ -110,6 +110,7 @@ public class Battlefield : MonoBehaviour {
 
     void Start() {
         api.OnMinionSpawned += (id) => {
+            Debug.Log("MINION SPAWNED!!");
             AddMinion(id);
         };
 

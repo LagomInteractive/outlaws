@@ -19,6 +19,14 @@ public class HandPlacement : MonoBehaviour {
         api.OnEverythingLoaded += () => {
             RearrangeCards();
         };
+
+        api.OnCard += id => {
+            DealCard(id);
+        };
+
+        api.OnFriendlyCardUsed += (id) => {
+            DeleteCard(id);
+        };
     }
 
     public void SetActiveCards() {
@@ -34,8 +42,17 @@ public class HandPlacement : MonoBehaviour {
         }
     }
 
-    void DeleteCard(int index) {
-        DestroyImmediate(cards[index].gameObject);
+    WorldCard GetCard(int id) {
+        foreach (WorldCard card in cards) {
+            if (card.GetId() == id) return card;
+        }
+        return null;
+    }
+
+    void DeleteCard(int id) {
+        WorldCard card = GetCard(id);
+        DestroyImmediate(card.gameObject);
+        cards.Remove(card);
         RearrangeCards();
     }
 

@@ -164,7 +164,7 @@ public class AttackLine : MonoBehaviour {
                     if (attackMode) api.Attack(attackerCard.GetMinionId(), targetId);
                     else api.Battlecry(attackerCard.GetMinionId(), targetId);
                 } else if (activeSpellCard) {
-                    api.PlaySpell(activeSpellCard.handIndex, targetId);
+                    api.PlaySpell(activeSpellCard.GetId(), targetId);
                 }
             }
 
