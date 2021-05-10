@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour {
     public AudioSource musicPlayer;
 
     public InputField deckIdInput;
+    public MenuSystem menus;
 
     private void Update() {
         buttons.SetActive(game == null);
@@ -40,6 +41,11 @@ public class GameManager : MonoBehaviour {
         if (game != null && api.IsLoggedIn()) {
             roundTimer -= Time.deltaTime;
             infoText.text = $"V{CosmicAPI.API_VERSION} outlaws.ygstr.com\n---\nRound: {game.round}\nTurn: {(api.GetPlayer().turn ? "You" : "Opponent")}\nTime left: {Mathf.Round(roundTimer)}\nOpponent: {api.GetOpponent().name}\nOutlaw: {api.GetPlayer().outlaw} (You) vs. {api.GetOpponent().outlaw}";
+            if (Input.GetKeyDown(KeyCode.Escape)) {
+                // Show pause menu
+                if (menus.IsMenusOpen()) menus.CloseMenu();
+                else menus.NavigateTo("in_game_options");
+            }
         } else {
             infoText.text = $"V{CosmicAPI.API_VERSION} outlaws.ygstr.com\n---\nReady for a game!";
         }
@@ -112,6 +118,7 @@ public class GameManager : MonoBehaviour {
         api.OnGameStart += () => {
             endGameTitle.gameObject.SetActive(false);
             matchmaking = false;
+            menus.CloseMenu();
             UpdateMatchmakingButton();
         };
 
