@@ -38,7 +38,7 @@ public class AttackLine : MonoBehaviour {
         if (attackerCard) attackerCard.SetTargeted(false);
         if (activeSpellCard) {
             activeSpellCard.SetTargeted(false);
-            activeSpellCard.GetComponent<DragableObject>().SetActivePosition(false);
+            activeSpellCard.GetComponent<DragableObject>().SetActivePositionOverwrite(false);
         }
         attackerCard = null;
         activeSpellCard = null;
@@ -108,7 +108,7 @@ public class AttackLine : MonoBehaviour {
                         attackMode = false;
                         activeSpellCard = spellCard;
                         activeSpellCard.SetTargeted(true);
-                        activeSpellCard.GetComponent<DragableObject>().SetActivePosition(true);
+                        activeSpellCard.GetComponent<DragableObject>().SetActivePositionOverwrite(true);
                         SetStart();
                     }
                 }

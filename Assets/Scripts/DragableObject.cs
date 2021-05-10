@@ -18,7 +18,7 @@ public class DragableObject : MonoBehaviour {
     bool dragging = false;
 
     bool animatingBack = false;
-    float activeOffset = .8f;
+    float activeOffset = .5f;
 
     Vector3 originalPosition;
 
@@ -27,6 +27,10 @@ public class DragableObject : MonoBehaviour {
     bool activeOverwrite = false;
 
     private void Start() {
+        SetOriginalPosition();
+    }
+
+    public void SetOriginalPosition() {
         originalPosition = transform.position;
     }
 
@@ -50,12 +54,16 @@ public class DragableObject : MonoBehaviour {
 
     private void OnMouseEnter() {
         if ((dragging || animatingBack)) return;
-        StartCoroutine(MoveOverSeconds(gameObject, originalPosition + new Vector3(0, 0, activeOffset), .1f));
+        MoveCardPosition(true);
     }
 
-    public void SetActivePosition(bool active) {
+    public void SetActivePositionOverwrite(bool active) {
         activeOverwrite = active;
-        StartCoroutine(MoveOverSeconds(gameObject, active ? (originalPosition + new Vector3(0, 0, activeOffset)) : originalPosition, .1f));
+        MoveCardPosition(active);
+    }
+
+    public void MoveCardPosition(bool active) {
+        StartCoroutine(MoveOverSeconds(gameObject, active ? (originalPosition + new Vector3(0, .2f, 0) + transform.TransformDirection(Vector3.up) * activeOffset) : originalPosition, .1f));
     }
 
     private void OnMouseExit() {

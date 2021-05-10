@@ -155,7 +155,7 @@ public class GameEvent {
 [Serializable]
 public class CosmicAPI : MonoBehaviour {
 
-    public const string API_VERSION = "2.6";
+    public const string API_VERSION = "2.7";
 
     public GameObject cardPrefab;
     bool searchingMatchmaking = false;
@@ -366,17 +366,17 @@ public class CosmicAPI : MonoBehaviour {
     /// <summary>
     /// Play a minion card from the hand
     /// </summary>
-    public void PlayMinion(int index) {
-        Send("play_minion", index.ToString());
+    public void PlayMinion(int id) {
+        Send("play_minion", id.ToString());
     }
 
     /// <summary>
     /// Play a spell card, only if the card is a targeted spell provide a target player or minion
     /// </summary>
-    /// <param name="index">Index in the hand of the card you want to play</param>
+    /// <param name="id"> ID of the card to play</param>
     /// <param name="target">Spell target (Optional, only if the spell is a TargetSpell)</param>
-    public void PlaySpell(int index, string target = null) {
-        Send("play_spell", JsonConvert.SerializeObject(new Dictionary<string, string>() { { "index", index.ToString() }, { "target", target } }));
+    public void PlaySpell(int id, string target = null) {
+        Send("play_spell", JsonConvert.SerializeObject(new Dictionary<string, string>() { { "id", id.ToString() }, { "target", target } }));
     }
 
     /// <summary>

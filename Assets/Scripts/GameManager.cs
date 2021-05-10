@@ -89,7 +89,7 @@ public class GameManager : MonoBehaviour {
         };
 
         api.OnCard += (id) => {
-            hand.UpdateHand();
+            hand.DealCard(id);
         };
 
 
@@ -112,7 +112,7 @@ public class GameManager : MonoBehaviour {
         };
 
         api.OnFriendlyCardUsed += (index) => {
-            hand.UpdateHand();
+
         };
 
         api.OnDamage += (id, damage) => {
@@ -121,7 +121,7 @@ public class GameManager : MonoBehaviour {
         };
 
         api.OnMinionSpawned += (id) => {
-            hand.UpdateHand();
+
         };
 
         api.OnGameEnd += (winningPlayer) => {

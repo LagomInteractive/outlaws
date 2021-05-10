@@ -115,6 +115,7 @@ public class Battlefield : MonoBehaviour {
 
         api.OnMinionDamage += (id, damage) => {
             WorldCard minion = GetMinion(id);
+            if (minion == null) return;
             minion.AnimateDamage(damage);
             minion.SetHp(minion.GetHp() - damage);
             minion.PlayEffect(effectsManager.GetEffect("ON_HIT"), effectsManager.audioSource);
