@@ -14,7 +14,7 @@ PlayerSettings:
   accelerometerFrequency: 60
   companyName: LagomInteractive AB
   productName: Outlaws
-  defaultCursor: {fileID: 0}
+  defaultCursor: {fileID: 2800000, guid: 282a5bbed58f5804886b8256ee37d9da, type: 3}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
   m_ShowUnitySplashScreen: 1
@@ -146,7 +146,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Standalone: com.LagomInteractiveAB.ProjectCosmic
+    Standalone: com.LagomInteractiveAB.Outlaws
   buildNumber:
     Standalone: 0
     iPhone: 0
@@ -261,7 +261,7 @@ PlayerSettings:
   - m_BuildTarget: Standalone
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: 34a6e7a9206706a44b044cfd88e1e7bb, type: 3}
+      m_Icon: {fileID: 2800000, guid: 05ab8e4f1e54a0343bc39053ad322ccc, type: 3}
       m_Width: 1024
       m_Height: 1024
       m_Kind: 0
