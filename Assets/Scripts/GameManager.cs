@@ -34,7 +34,6 @@ public class GameManager : MonoBehaviour {
 
     public InputField deckIdInput;
 
-
     private void Update() {
         buttons.SetActive(game == null);
         if (!api.IsLoggedIn()) infoText.text = "No connection";
@@ -88,6 +87,16 @@ public class GameManager : MonoBehaviour {
             roundTimer = game.roundTimeLeft;
         };
 
+        api.OnEventsStarted += () => {
+            SetEndRoundButtonState(false);
+        };
+
+        api.OnEventsDone += () => {
+            if (!api.IsRunningEvents() && api.GetPlayer().turn) {
+                SetEndRoundButtonState(true);
+            }
+        };
+
 
 
         api.OnUpdate += () => {
@@ -98,8 +107,6 @@ public class GameManager : MonoBehaviour {
             opponentUI.UpdateUI(api.GetOpponent());
 
             SetEndRoundButtonState(player.turn);
-
-
         };
 
         api.OnGameStart += () => {
@@ -110,11 +117,6 @@ public class GameManager : MonoBehaviour {
 
         api.OnFriendlyCardUsed += (index) => {
 
-        };
-
-        api.OnDamage += (id, damage) => {
-            //battlefield.AnimateDamage(id, damage);
-            Debug.Log("On damage called!");
         };
 
         api.OnMinionSpawned += (id) => {

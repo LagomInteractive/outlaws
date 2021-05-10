@@ -212,6 +212,7 @@ public class WorldCard : MonoBehaviour {
     void UpdateCardValues() {
         manaText.text = mana.ToString();
         if (isMinion) {
+            if (hpText == null) return;
             hpText.text = hp.ToString();
             damageText.text = damage.ToString();
 

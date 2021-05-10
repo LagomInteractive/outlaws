@@ -27249,7 +27249,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 358674614}
   m_LocalRotation: {x: 0.72562546, y: -0, z: -0, w: 0.68808997}
-  m_LocalPosition: {x: 0.15, y: 7.14, z: -9.94}
+  m_LocalPosition: {x: 0.15, y: 7.13, z: -9.8}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -27271,6 +27271,9 @@ MonoBehaviour:
   draggableCardLayerMask:
     serializedVersion: 2
     m_Bits: 64
+  cards: []
+  cardBack: {fileID: 0}
+  opponent: 0
 --- !u!4 &360960976 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 439240, guid: 548a40efc092c6f408cc4d1691b171cc, type: 3}
@@ -115933,6 +115936,56 @@ Transform:
   m_Father: {fileID: 636618441}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1653733855
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1653733857}
+  - component: {fileID: 1653733856}
+  m_Layer: 0
+  m_Name: OpponentHand
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1653733856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1653733855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ef15fedc2cd14844ae4dd2bed13ede9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  api: {fileID: 1400600605}
+  draggableCardLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  cards: []
+  cardBack: {fileID: 7192518091696439404, guid: e51a942462c218f458395cc0045e860b, type: 3}
+  opponent: 1
+--- !u!4 &1653733857
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1653733855}
+  m_LocalRotation: {x: 0.7256266, y: 0, z: 0, w: 0.6880888}
+  m_LocalPosition: {x: -0.19, y: 6.64, z: 4.9}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 93.04199, y: 0, z: 0}
 --- !u!4 &1668612841 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 449830, guid: 04109e82c0d966447966dba624e3821b, type: 3}

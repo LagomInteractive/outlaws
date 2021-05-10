@@ -159,6 +159,9 @@ public class CosmicAPI : MonoBehaviour {
 
     public GameObject cardPrefab;
     bool searchingMatchmaking = false;
+    bool runningEvents = false;
+
+    List<GameEvent> events = new List<GameEvent>();
 
     public Dictionary<string, Color> elementColors = new Dictionary<string, Color>() {
         {"lunar", new Color32(0, 162, 255, 255)},
@@ -184,6 +187,22 @@ public class CosmicAPI : MonoBehaviour {
     public Action OnLoginFail { get; set; }
     // On every game update from the server, not specifik
     public Action OnUpdate { get; set; }
+
+    /// <summary>
+    /// Every time an Game event has run
+    /// </summary>
+    public Action OnEventFinished { get; set; }
+
+    /// <summary>
+    /// When all Game events have finished running
+    /// </summary>
+    public Action OnEventsDone { get; set; }
+
+    /// <summary>
+    /// When an event starts to run
+    /// </summary>
+    public Action OnEventsStarted { get; set; }
+
 
     // (int id) When one of the players cards from the hand is used (removed)
     public Action<int> OnFriendlyCardUsed { get; set; }
@@ -392,7 +411,12 @@ public class CosmicAPI : MonoBehaviour {
     /// End the turn early
     /// </summary>
     public void EndTurn() {
+        if (runningEvents) return;
         Send("end_turn");
+    }
+
+    public bool IsRunningEvents() {
+        return runningEvents;
     }
 
     // Try to reconnect if it loses conection to the server
@@ -424,6 +448,10 @@ public class CosmicAPI : MonoBehaviour {
         OnDamage += (id, amount) => {
             Character target = GetCharacter(id);
             if (target is Minion || target == null) OnMinionDamage?.Invoke(id, amount);
+        };
+
+        OnEventFinished += () => {
+            if (!runningEvents) OnEventsDone?.Invoke();
         };
 
         OnHeal += (id, amount) => {
@@ -498,8 +526,43 @@ public class CosmicAPI : MonoBehaviour {
         Game update = JsonConvert.DeserializeObject<Game>(json);
         game = update;
 
-        // Coroutine because the events have a spacer delay
-        StartCoroutine(RunEvents(game.events));
+        foreach (GameEvent e in game.events) {
+            switch (e.identifier) {
+                case "game_start":
+                    OnGameStart?.Invoke();
+                    break;
+                case "next_turn":
+                    OnTurn?.Invoke(e.values["attacking_player"]);
+                    break;
+                case "minion_spawned":
+                    OnMinionSpawned?.Invoke(e.values["id"]);
+                    break;
+                case "card_used":
+                    OnCardUsed?.Invoke(int.Parse(e.values["card"]));
+                    if (e.values["player"] == me.id) {
+                        OnFriendlyCardUsed?.Invoke(int.Parse(e.values["card"]));
+                    } else {
+                        events.Add(e);
+                    }
+                    break;
+                case "game_over":
+                    OnGameEnd?.Invoke(e.values["winner"]);
+                    break;
+                case "attack":
+                    OnAttack?.Invoke(e.values["from"], e.values["to"]);
+                    break;
+                case "minion_sacrificed":
+                    OnMinionSacrificed?.Invoke(e.values["id"]);
+                    break;
+                default:
+                    // Events that should be run with a delay, in order
+                    events.Add(e);
+                    break;
+            }
+        }
+
+        // Start the event running callback loop
+        RunEvents();
 
         // Clear events for next update
         game.events = new GameEvent[0];
@@ -507,59 +570,50 @@ public class CosmicAPI : MonoBehaviour {
         OnUpdate?.Invoke();
     }
 
-    // Runs all events (Usually just 1 event in total)
-    // If there are more than 1 event, a delay is placed between each
-    IEnumerator RunEvents(GameEvent[] events) {
-        foreach (GameEvent gameEvent in events) {
-            //Debug.Log("Handling event " + gameEvent.identifier);
-            switch (gameEvent.identifier) {
-                case "game_start":
-                    OnGameStart?.Invoke();
-                    break;
-                case "next_turn":
-                    OnTurn?.Invoke(gameEvent.values["attacking_player"]);
-                    break;
-                case "player_deal_card":
-                    yield return OnPlayerDealCard(gameEvent.values);
-                    break;
-                case "minion_spawned":
-                    OnMinionSpawned?.Invoke(gameEvent.values["id"]);
-                    break;
-                case "card_used":
-                    OnCardUsed?.Invoke(int.Parse(gameEvent.values["card"]));
-                    if (gameEvent.values["player"] == me.id) {
-                        OnFriendlyCardUsed?.Invoke(int.Parse(gameEvent.values["card"]));
-                    } else {
-                        OnOpponentUsedCard?.Invoke(int.Parse(gameEvent.values["card"]));
-                        yield return new WaitForSeconds(1.8f);
-                    }
-                    break;
-                case "game_over":
-                    OnGameEnd?.Invoke(gameEvent.values["winner"]);
-                    break;
-                case "minion_death":
-                    OnMinionDeath?.Invoke(gameEvent.values["minion"]);
-                    yield return new WaitForSeconds(.5f);
-                    break;
-                case "damage":
-                    OnDamage?.Invoke(gameEvent.values["id"], int.Parse(gameEvent.values["damage"]));
-                    yield return new WaitForSeconds(.5f);
-                    break;
-                case "attack":
-                    OnAttack?.Invoke(gameEvent.values["from"], gameEvent.values["to"]);
-                    break;
-                case "minion_sacrificed":
-                    OnMinionSacrificed?.Invoke(gameEvent.values["id"]);
-                    break;
-                case "heal":
-                    OnHeal?.Invoke(gameEvent.values["id"], int.Parse(gameEvent.values["hp"]));
-                    yield return new WaitForSeconds(.3f);
-                    break;
-            }
-            yield return new WaitForSeconds(.2f);
+    void RunEvents() {
+        if (runningEvents) return;
+        if (events.Count > 0) {
+            StartCoroutine(RunEvent(events[0]));
         }
+        OnEventsDone?.Invoke();
     }
 
+    // Runs all events (Usually just 1 event in total)
+    // If there are more than 1 event, a delay is placed between each
+    IEnumerator RunEvent(GameEvent e) {
+        runningEvents = true;
+        OnEventsStarted?.Invoke();
+
+        //Debug.Log("Handling event " + gameEvent.identifier);
+        switch (e.identifier) {
+            case "card_used":
+                OnCardUsed?.Invoke(int.Parse(e.values["card"]));
+                if (e.values["player"] != me.id) {
+                    OnOpponentUsedCard?.Invoke(int.Parse(e.values["card"]));
+                    yield return new WaitForSeconds(1.8f);
+                }
+                break;
+            case "minion_death":
+                OnMinionDeath?.Invoke(e.values["minion"]);
+                yield return new WaitForSeconds(.3f);
+                break;
+            case "damage":
+                OnDamage?.Invoke(e.values["id"], int.Parse(e.values["damage"]));
+                yield return new WaitForSeconds(.2f);
+                break;
+            case "player_deal_card":
+                yield return OnPlayerDealCard(e.values);
+                break;
+            case "heal":
+                OnHeal?.Invoke(e.values["id"], int.Parse(e.values["hp"]));
+                yield return new WaitForSeconds(.2f);
+                break;
+        }
+        yield return new WaitForSeconds(.1f);
+        runningEvents = false;
+        events.Remove(e);
+        RunEvents();
+    }
 
     WaitForSeconds OnPlayerDealCard(Dictionary<string, string> info) {
         if (info["player"] == me.id) {
