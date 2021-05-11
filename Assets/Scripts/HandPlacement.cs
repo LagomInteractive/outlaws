@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class HandPlacement : MonoBehaviour {
 
     public CosmicAPI api;
+    public GameManager gm;
     public LayerMask draggableCardLayerMask;
     public List<WorldCard> cards = new List<WorldCard>();
     int lastCardPlayedIndex = -1;
@@ -96,6 +97,7 @@ public class HandPlacement : MonoBehaviour {
 
             DragableObject draggable = cardObject.AddComponent<DragableObject>();
             draggable.api = api;
+            draggable.gm = gm;
             draggable.id = id;
             draggable.layermask = draggableCardLayerMask;
         } else {

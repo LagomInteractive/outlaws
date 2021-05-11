@@ -9,6 +9,7 @@ public class DragableObject : MonoBehaviour {
     private float mZCoord;
     private RaycastHit hit;
     public CosmicAPI api;
+    public GameManager gm;
 
     public float cardSpeed;
     public float cardRotation;
@@ -25,6 +26,9 @@ public class DragableObject : MonoBehaviour {
     public LayerMask layermask;
 
     bool activeOverwrite = false;
+
+    float lastClick = 0;
+    float doubleClickTime = .5f;
 
     private void Start() {
         SetOriginalPosition();
@@ -44,6 +48,10 @@ public class DragableObject : MonoBehaviour {
     }
 
     void OnMouseDown() {
+        if (Time.time - lastClick < doubleClickTime) {
+            gm.PreviewCard(id);
+        }
+        lastClick = Time.time;
         if (GetComponent<WorldCard>().GetMana() <= api.GetPlayer().manaLeft && api.GetPlayer().turn && api.GetCard(id).type != CardType.TargetSpell) {
             dragging = true;
             mZCoord = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;

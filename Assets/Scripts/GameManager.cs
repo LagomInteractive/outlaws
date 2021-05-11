@@ -35,6 +35,8 @@ public class GameManager : MonoBehaviour {
     public InputField deckIdInput;
     public MenuSystem menus;
 
+    public Transform cardPreview;
+
     private void Update() {
         buttons.SetActive(game == null);
         if (!api.IsLoggedIn()) infoText.text = "No connection";
@@ -141,6 +143,12 @@ public class GameManager : MonoBehaviour {
         };
     }
 
+    public void PreviewCard(int id) {
+        while (cardPreview.childCount > 0) DestroyImmediate(cardPreview.GetChild(0).gameObject);
+
+        GameObject card = api.InstantiateCard(id, cardPreview);
+        menus.NavigateTo("card_preview");
+    }
     public void UpdateManaBar() {
         int manaLeft = api.GetPlayer().manaLeft;
         if (!api.GetPlayer().turn) manaLeft = 0;
