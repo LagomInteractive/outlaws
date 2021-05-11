@@ -278,7 +278,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 28986290}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.3249297, y: 1.5409756, z: -5.94}
+  m_LocalPosition: {x: -0.22, y: 1.5409756, z: -5.94}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1438055321}
@@ -52414,23 +52414,23 @@ MonoBehaviour:
     ids: 
     particles: {fileID: 507956074}
     sounds:
-    - {fileID: 8300000, guid: d76a6956142786f46bb99aaa9034c7d1, type: 3}
+    - {fileID: 8300000, guid: 9ad9f35ddf576424ba1f1790c0e1d5da, type: 3}
     - {fileID: 8300000, guid: ac24a2df057b6414aa04c686ccf538c2, type: 3}
   - name: ON_HIT
     ids: 
     particles: {fileID: 1145181245}
     sounds:
-    - {fileID: 8300000, guid: 4035b92e6eff1b74f8a6dc35017ce461, type: 3}
-    - {fileID: 8300000, guid: a3e0674c8fe26e440aa05f7fdf37e9a7, type: 3}
-    - {fileID: 8300000, guid: c94d3fc85e996094f83415da31ea752d, type: 3}
+    - {fileID: 8300000, guid: 6fa5df1c0690c5942a538e62c17f0988, type: 3}
+    - {fileID: 8300000, guid: 94df0b9f4a398de40b655bcdbac9dcd3, type: 3}
+    - {fileID: 8300000, guid: 7e07a0a38cdfcae44ad3e0f7a0763e3a, type: 3}
   - name: ARROW_AOE
     ids: 790000007f000000730000007d000000
     particles: {fileID: 28986290}
     sounds:
     - {fileID: 8300000, guid: 37e1c1ffd147b2648857ab759f896541, type: 3}
-    - {fileID: 8300000, guid: 409ffbd3b0321a14ea49328e7b902f96, type: 3}
+    - {fileID: 8300000, guid: 7655bfac7932a454fbc7a79f1e38a4d3, type: 3}
     - {fileID: 8300000, guid: 765ea9ff3580b3743813f5f24f34883e, type: 3}
-    - {fileID: 8300000, guid: a5aecc16c9e78bb4ab44b07a680f2b22, type: 3}
+    - {fileID: 8300000, guid: 6416ea64948e54b40a5ca916feb2cfeb, type: 3}
   - name: AOE_1
     ids: 810000008500000084000000
     particles: {fileID: 1432219793}
@@ -52441,10 +52441,10 @@ MonoBehaviour:
     ids: 7a00000075000000
     particles: {fileID: 1526430869}
     sounds:
-    - {fileID: 8300000, guid: 103ffcc05226d944ab01beeaa76956fa, type: 3}
+    - {fileID: 8300000, guid: d4a23b89a30fa4740be95a964dccc1ac, type: 3}
     - {fileID: 8300000, guid: 236d37d48f99a8a4e9e14375ec5450ec, type: 3}
     - {fileID: 8300000, guid: ad009d4661857784d8946be5c69795bc, type: 3}
-    - {fileID: 8300000, guid: f98eae3938dd06442a2e362639d32036, type: 3}
+    - {fileID: 8300000, guid: 9e7f849173253e54d9254440573518b5, type: 3}
     - {fileID: 8300000, guid: 0898351cbbdb3a944b0e3b1326e51f4d, type: 3}
     - {fileID: 8300000, guid: 16111c165c2529e46b323ec97d8952ce, type: 3}
   - name: SINGLE_1
@@ -52456,7 +52456,7 @@ MonoBehaviour:
     ids: 8a000000
     particles: {fileID: 1481834615}
     sounds:
-    - {fileID: 8300000, guid: 9c556a1bbadf80a43820cf386bf11c29, type: 3}
+    - {fileID: 8300000, guid: 4bd99c79a08b2714fba5f03c61370ee9, type: 3}
   - name: AOE_3
     ids: 7e000000
     particles: {fileID: 1806410856}
@@ -52471,15 +52471,15 @@ MonoBehaviour:
     ids: 15000000
     particles: {fileID: 1596603486}
     sounds:
-    - {fileID: 8300000, guid: 20dd03970291e77489154afd38c25330, type: 3}
+    - {fileID: 8300000, guid: 5b46a6529d50f2b43be6fbc005dc7c86, type: 3}
   - name: AOE_6
     ids: 7200000078000000
     particles: {fileID: 1596749603}
     sounds:
-    - {fileID: 8300000, guid: 4d2c92027b9c5364a9a2114cbdd1df25, type: 3}
-    - {fileID: 8300000, guid: fbea45e83c898894fb77fa2afe5d42e5, type: 3}
-    - {fileID: 8300000, guid: c6f47a4aff4950f45a2d66cd0696eaa3, type: 3}
-    - {fileID: 8300000, guid: ff3cf74b4cbceac4a997ad82a47d4089, type: 3}
+    - {fileID: 8300000, guid: 703c83e0acdbe574bb3446512d73a6e5, type: 3}
+    - {fileID: 8300000, guid: b95faa20e25fdef4da78cf31f05b30bb, type: 3}
+    - {fileID: 8300000, guid: 6e57a41afc01519499dc48ac802d15ee, type: 3}
+    - {fileID: 8300000, guid: af7397de8e5d9364dbec213927beda79, type: 3}
   - name: AOE_7
     ids: b3000000
     particles: {fileID: 1642608951}
@@ -52489,13 +52489,19 @@ MonoBehaviour:
     ids: 890000008b000000
     particles: {fileID: 1421682992}
     sounds:
-    - {fileID: 8300000, guid: c7de267775ea1f64f99adf9229b9d7ca, type: 3}
+    - {fileID: 8300000, guid: 4dc48ecad7332a04fb20a9aeb30fc8ed, type: 3}
   - name: AOE_8
     ids: 8000000077000000
     particles: {fileID: 1846603276}
     sounds:
-    - {fileID: 8300000, guid: 8491aad5fc8c04d4f9713fbafe6436e6, type: 3}
+    - {fileID: 8300000, guid: fc87f99d1822dac4d82e56c2169fdaa0, type: 3}
     - {fileID: 8300000, guid: 808eca0ce16c6ee42a11f71effc6e45e, type: 3}
+  - name: Attack up
+    ids: 7c00000087000000
+    particles: {fileID: 8888266387795144251, guid: 81c9de9a8b8a2e94f9815f9511b00a6f, type: 3}
+    sounds:
+    - {fileID: 8300000, guid: f34e60fd46f126a409ae848ad704ec95, type: 3}
+    - {fileID: 8300000, guid: b6f12c33235ab34419333234f3eab026, type: 3}
   audioSource: {fileID: 533724125}
 --- !u!82 &533724125
 AudioSource:
@@ -59296,7 +59302,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 923682727}
   m_LocalRotation: {x: 0.54303896, y: -0.18543795, z: 0.16582756, w: 0.80201167}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalPosition: {x: 0, y: 3.557, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1399312519}
@@ -96461,7 +96467,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1438055320}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.59, y: 0, z: 0.73}
+  m_LocalPosition: {x: -1.4, y: 0, z: 0.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 28986291}
@@ -96542,7 +96548,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1438055320}
   serializedVersion: 7
-  lengthInSec: 8
+  lengthInSec: 3
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 3
@@ -97589,7 +97595,7 @@ ParticleSystem:
       repeatInterval: 0.01
       probability: 1
     - serializedVersion: 2
-      time: 5
+      time: 3
       countCurve:
         serializedVersion: 2
         minMaxState: 3
@@ -97647,7 +97653,7 @@ ParticleSystem:
       repeatInterval: 0.01
       probability: 1
     - serializedVersion: 2
-      time: 6.5
+      time: 3
       countCurve:
         serializedVersion: 2
         minMaxState: 3
@@ -97705,7 +97711,7 @@ ParticleSystem:
       repeatInterval: 0.01
       probability: 1
     - serializedVersion: 2
-      time: 8
+      time: 3
       countCurve:
         serializedVersion: 2
         minMaxState: 3
@@ -133108,7 +133114,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 368460116071173880, guid: c360cc69b27ba624cb87ea5df02191a8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.3249297
+      value: -1.17
       objectReference: {fileID: 0}
     - target: {fileID: 368460116071173880, guid: c360cc69b27ba624cb87ea5df02191a8, type: 3}
       propertyPath: m_LocalPosition.y
@@ -133116,7 +133122,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 368460116071173880, guid: c360cc69b27ba624cb87ea5df02191a8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.042466164
+      value: -2.35
       objectReference: {fileID: 0}
     - target: {fileID: 368460116071173880, guid: c360cc69b27ba624cb87ea5df02191a8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -133160,7 +133166,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1149215262751576239, guid: c360cc69b27ba624cb87ea5df02191a8, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1449632438610766922, guid: c360cc69b27ba624cb87ea5df02191a8, type: 3}
       propertyPath: m_Materials.Array.size
@@ -133384,6 +133390,10 @@ PrefabInstance:
     - target: {fileID: 7229681330848490522, guid: 69973c425ad0402428860b673f9ead14, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7229870813031965260, guid: 69973c425ad0402428860b673f9ead14, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7231871951640742334, guid: 69973c425ad0402428860b673f9ead14, type: 3}
       propertyPath: m_RootOrder
