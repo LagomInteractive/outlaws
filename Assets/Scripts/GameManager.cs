@@ -73,6 +73,8 @@ public class GameManager : MonoBehaviour {
 
     void Start() {
 
+        Input.simulateMouseWithTouches = true;
+
         if (PlayerPrefs.HasKey("lastUsedDeck")) {
             deckIdInput.text = PlayerPrefs.GetString("lastUsedDeck");
         }

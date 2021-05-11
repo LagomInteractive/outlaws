@@ -26,6 +26,7 @@ public class MenuSystem : MonoBehaviour {
             link.page.gameObject.SetActive(false);
         }
         at = null;
+        Debug.Log("Closed menus");
     }
 
     public bool IsMenusOpen() {
