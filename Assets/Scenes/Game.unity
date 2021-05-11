@@ -27310,6 +27310,7 @@ GameObject:
   m_Component:
   - component: {fileID: 326220034}
   - component: {fileID: 326220033}
+  - component: {fileID: 326220035}
   m_Layer: 0
   m_Name: MenuSystem
   m_TagString: Untagged
@@ -27351,6 +27352,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &326220035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 326220032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8477d6c417be6ee4f9a23b7a5651c13f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &335584777
 GameObject:
   m_ObjectHideFlags: 0
@@ -52496,6 +52509,11 @@ MonoBehaviour:
     sounds:
     - {fileID: 8300000, guid: 8491aad5fc8c04d4f9713fbafe6436e6, type: 3}
     - {fileID: 8300000, guid: 808eca0ce16c6ee42a11f71effc6e45e, type: 3}
+  - name: PLAYER_HIT
+    ids: 8000000077000000
+    particles: {fileID: 0}
+    sounds:
+    - {fileID: 8300000, guid: 6bc8ae92fe224e349b49b48bf7ce4968, type: 3}
   audioSource: {fileID: 533724125}
 --- !u!82 &533724125
 AudioSource:

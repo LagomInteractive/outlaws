@@ -61,6 +61,7 @@ public class EffectsManager : MonoBehaviour {
 
 
     public void PrepareEffect(Effect effect) {
+        if (!effect.particles) return;
         effect.particles.SetActive(true);
         foreach (ParticleSystem particles in effect.particles.GetComponentsInChildren<ParticleSystem>()) {
             ParticleSystem.MainModule main = particles.main;
