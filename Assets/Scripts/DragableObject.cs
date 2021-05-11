@@ -83,13 +83,15 @@ public class DragableObject : MonoBehaviour {
         if (!dragging) return;
         animatingBack = true;
         dragging = false;
+        transform.gameObject.layer = LayerMask.NameToLayer("Default");
         if (hit.collider == null || hit.collider.tag != "Board") {
             StartCoroutine(MoveOverSeconds(gameObject, originalPosition, 0.5f, () => {
                 animatingBack = false;
             }));
-            transform.gameObject.layer = LayerMask.NameToLayer("Default");
+
         } else if (hit.collider.tag == "Board") {
             WorldCard card = GetComponent<WorldCard>();
+            animatingBack = false;
             switch (api.GetCard(card.GetId()).type) {
                 case CardType.Minion:
                     api.PlayMinion(id);

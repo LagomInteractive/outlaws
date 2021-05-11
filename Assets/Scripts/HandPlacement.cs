@@ -14,8 +14,6 @@ public class HandPlacement : MonoBehaviour {
 
     public void Start() {
 
-
-
         if (!opponent) {
             api.OnCard += id => {
                 StartCoroutine(DealCardDelay(id, 1.8f));
@@ -67,8 +65,8 @@ public class HandPlacement : MonoBehaviour {
             Destroy(transform.GetChild(0).gameObject);
         } else {
             WorldCard card = GetCard(id);
-            DestroyImmediate(card.gameObject);
             cards.Remove(card);
+            DestroyImmediate(card.gameObject);
         }
 
         RearrangeCards();
