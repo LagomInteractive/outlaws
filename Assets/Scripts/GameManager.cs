@@ -1,7 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
+
 
 public class GameManager : MonoBehaviour {
 
@@ -11,9 +14,7 @@ public class GameManager : MonoBehaviour {
 
     public Transform manaBar;
 
-    public Transform playerStats, opponentStats;
 
-    public Text infoText;
     public float roundTimer;
 
     public Transform endTurnButton, endGameTitle;
@@ -28,6 +29,7 @@ public class GameManager : MonoBehaviour {
     public PlayerUIController playerUI, opponentUI;
 
     Game game;
+    public Transform deckPickList;
 
     public AudioClip gameMusic;
     public AudioSource musicPlayer;
@@ -37,19 +39,23 @@ public class GameManager : MonoBehaviour {
 
     public Transform cardPreview;
 
+    public MainMenu menu;
+    public GameObject deckPrefab;
+
+
+
+    SearchOptions searchOptions = new SearchOptions();
+
     private void Update() {
-        buttons.SetActive(game == null);
-        if (!api.IsLoggedIn()) infoText.text = "No connection";
+
         if (game != null && api.IsLoggedIn()) {
             roundTimer -= Time.deltaTime;
-            infoText.text = $"V{CosmicAPI.API_VERSION} outlaws.ygstr.com\n---\nRound: {game.round}\nTurn: {(api.GetPlayer().turn ? "You" : "Opponent")}\nTime left: {Mathf.Round(roundTimer)}\nOpponent: {api.GetOpponent().name}\nOutlaw: {api.GetPlayer().outlaw} (You) vs. {api.GetOpponent().outlaw}";
+            //infoText.text = $"V{CosmicAPI.API_VERSION} outlaws.ygstr.com\n---\nRound: {game.round}\nTurn: {(api.GetPlayer().turn ? "You" : "Opponent")}\nTime left: {Mathf.Round(roundTimer)}\nOpponent: {api.GetOpponent().name}\nOutlaw: {api.GetPlayer().outlaw} (You) vs. {api.GetOpponent().outlaw}";
             if (Input.GetKeyDown(KeyCode.Escape)) {
                 // Show pause menu
                 if (menus.IsMenusOpen()) menus.CloseMenu();
                 else menus.NavigateTo("in_game_options");
             }
-        } else {
-            infoText.text = $"V{CosmicAPI.API_VERSION} outlaws.ygstr.com\n---\nReady for a game!";
         }
     }
 
@@ -67,12 +73,50 @@ public class GameManager : MonoBehaviour {
         startMatchmakingButton.GetComponentInChildren<Text>().text = matchmaking ? "Searching game..." : "Start match making";
     }
 
+    public void PrepareForGame() {
+        if (api.IsSearchingGame()) {
+            api.CancelSearch();
+            menu.StoppedSearchingGame();
+        } else menus.NavigateTo("pick_gameplay");
+    }
+
+    public void PickGameType(string gameType) {
+        searchOptions.gameType = gameType;
+        menus.NavigateTo("pick_deck");
+        while (deckPickList.childCount > 0) DestroyImmediate(deckPickList.GetChild(0).gameObject);
+
+        foreach (Deck deck in api.GetProfile().decks) {
+            AddDeckToPickList(deck);
+        }
+        AddDeckToPickList(new Deck { id = "BCBMo6PXLEFqO5_rxv8Fh", title = "Starter deck" });
+    }
+
+    public void PickOutlaw(string outlaw) {
+        searchOptions.outlaw = outlaw;
+        api.SearchGame(searchOptions);
+        menus.NavigateTo("main");
+        menu.StartedSearchingGame();
+    }
+
+    void AddDeckToPickList(Deck deck) {
+        GameObject deckObj = Instantiate(deckPrefab, deckPickList);
+        deckObj.transform.Find("name").GetComponent<Text>().text = deck.title;
+        deckObj.transform.Find("size").GetComponent<Text>().text = deck.cards != null ? deck.GetSize() + "/30" : "30/30";
+        deckObj.GetComponent<Button>().onClick.AddListener(() => {
+            searchOptions.deck = deck.id;
+            menus.NavigateTo("pick_outlaw");
+        });
+    }
+
     void SaveLatestCardDeckId() {
         PlayerPrefs.SetString("lastUsedDeck", deckIdInput.text);
     }
 
     void Start() {
 
+
+
+        menus.NavigateTo("loading");
         Input.simulateMouseWithTouches = true;
 
         if (PlayerPrefs.HasKey("lastUsedDeck")) {
@@ -91,6 +135,15 @@ public class GameManager : MonoBehaviour {
             else api.StopMatchMaking();
             UpdateMatchmakingButton();
         });
+
+        api.OnNoToken += () => {
+            menus.NavigateTo("login");
+        };
+
+        api.OnLogin += () => {
+            menus.NavigateTo("main");
+            menu.Setup();
+        };
 
         api.OnUpdate += () => {
             game = api.GetGame();
@@ -152,10 +205,10 @@ public class GameManager : MonoBehaviour {
     }
 
 
-    public void StartTest() {
+    /*public void StartTest() {
         if (!matchmaking) {
             SaveLatestCardDeckId();
-            api.StartTestGame(deckIdInput.text);
+            //api.PlayVsBot(deckIdInput.text);
         }
-    }
+    }*/
 }

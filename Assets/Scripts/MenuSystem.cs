@@ -14,9 +14,25 @@ public class MenuSystem : MonoBehaviour {
     public List<Link> links = new List<Link>();
     public string at = null;
 
+    /// <summary>
+    /// Go to a menu page, hides all other pages
+    /// </summary>
+    /// <param name="key">Key to the page</param>
     public void NavigateTo(string key) {
         foreach (Link link in links) {
             link.page.gameObject.SetActive(link.key == key);
+        }
+        at = key;
+    }
+
+    /// <summary>
+    /// Ovarlay a page ontop of the current one. Does not hide any other page
+    /// Make sure the page to overlay is above in the higharcy
+    /// </summary>
+    /// <param name="key">Key to the page</param>
+    public void Overlay(string key) {
+        foreach (Link link in links) {
+            if (link.key == key) link.page.gameObject.SetActive(true);
         }
         at = key;
     }
@@ -26,11 +42,9 @@ public class MenuSystem : MonoBehaviour {
             link.page.gameObject.SetActive(false);
         }
         at = null;
-        Debug.Log("Closed menus");
     }
 
     public bool IsMenusOpen() {
-        Debug.Log("Returning " + at != null);
         return at != null;
     }
 

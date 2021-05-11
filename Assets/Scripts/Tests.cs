@@ -57,10 +57,6 @@ public class Tests : MonoBehaviour {
             api.Login(usernameInput.text, passwordInput.text);
         });
 
-        api.OnLoginFail += () => {
-            wrongPasswordWarning.gameObject.SetActive(true);
-        };
-
         api.OnGameStart += () => {
             Debug.Log("New game started!");
         };

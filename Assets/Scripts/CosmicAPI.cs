@@ -75,6 +75,11 @@ public class Player : Character {
 }
 
 [Serializable]
+public class SearchOptions {
+    public string gameType, deck, outlaw;
+}
+
+[Serializable]
 public enum Outlaw {
     Necromancer, Mercenary
 }
@@ -88,7 +93,7 @@ public class Buff {
 [Serializable]
 public class Card {
     public int id, mana, damage, hp;
-    public string rarity;
+    public Rarity rarity;
     public Sprite image = null;
     public string name, description;
     public CardType type;
@@ -108,7 +113,21 @@ public enum Rarity {
     Uncommon,
     Rare,
     Epic,
-    Legendary
+    Celestial
+}
+
+
+[Serializable]
+public class Deck {
+    public string title, owner, owner_username, id;
+    public Dictionary<int, int> cards;
+    public int GetSize() {
+        int size = 0;
+        foreach (KeyValuePair<int, int> card in this.cards) {
+            size += card.Value;
+        }
+        return size;
+    }
 }
 
 [Serializable]
@@ -116,6 +135,7 @@ public class Profile {
     public string id, username;
     public int level, xp;
     public int[] cards;
+    public Deck[] decks;
     public bool admin;
     public Record record;
 }
@@ -155,10 +175,9 @@ public class GameEvent {
 [Serializable]
 public class CosmicAPI : MonoBehaviour {
 
-    public const string API_VERSION = "2.7";
+    public const string API_VERSION = "2.8";
 
     public GameObject cardPrefab;
-    bool searchingMatchmaking = false;
     bool runningEvents = false;
 
     List<GameEvent> events = new List<GameEvent>();
@@ -183,10 +202,19 @@ public class CosmicAPI : MonoBehaviour {
     public Action OnDisconnected { get; set; }
     // On User info
     public Action OnLogin { get; set; }
-    // When the login attempt fails
-    public Action OnLoginFail { get; set; }
+    /// <summary>
+    /// When a login attempt with password fails, 
+    /// string: reason for fail
+    /// </summary>
+    public Action<string> OnLoginFail { get; set; }
     // On every game update from the server, not specifik
     public Action OnUpdate { get; set; }
+
+    /// <summary>
+    /// When the user logs in with a token that doesnt exists or token is null
+    /// The user should be redirect to the login system.
+    /// </summary>
+    public Action OnNoToken { get; set; }
 
     /// <summary>
     /// Every time an Game event has run
@@ -269,16 +297,30 @@ public class CosmicAPI : MonoBehaviour {
     // Used to track ping delay
     System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
 
+    bool searchingGame = false;
+
 
     // The time difference between the local clock on this clien and the server clock
     // Game times are tracked in date time, since the clock on the server and client will sometimes not
     // line up on the millisecond, this gives us the diffrence and is used to calculate time left on 
     // a round for example.
-    long timeDifference = 0;
+    // Currently not used because the timer is updated on every game update
+    /*long timeDifference = 0;*/
 
-    public void StartTestGame(string deckId = null) {
-        ConcedeGame();
-        Send("start_test", deckId);
+    public void SearchGame(SearchOptions search) {
+        //ConcedeGame();
+        if (searchingGame) return;
+        searchingGame = true;
+        Send("search_game", JsonConvert.SerializeObject(search));
+    }
+
+    public void CancelSearch() {
+        Send("cancel_search");
+        searchingGame = false;
+    }
+
+    public bool IsSearchingGame() {
+        return searchingGame;
     }
 
     // Get client player in a game
@@ -310,6 +352,12 @@ public class CosmicAPI : MonoBehaviour {
 
     public bool IsLoggedIn() {
         return loggedIn;
+    }
+
+    public void Logout() {
+        PlayerPrefs.DeleteKey("token");
+        token = null;
+        OnNoToken?.Invoke();
     }
 
     public Player GetOpponent() {
@@ -461,7 +509,8 @@ public class CosmicAPI : MonoBehaviour {
 
         ws.OnOpen += () => {
             OnConnected?.Invoke();
-            Login();
+            if (token == null) OnNoToken?.Invoke();
+            else Login();
         };
 
         ws.OnMessage += (bytes) => {
@@ -470,6 +519,9 @@ public class CosmicAPI : MonoBehaviour {
             SocketPackage package = JsonUtility.FromJson<SocketPackage>(message);
 
             switch (package.identifier) {
+                case "user_not_found":
+                    Logout();
+                    break;
                 case "version":
                     if (package.packet != API_VERSION) OnClientOutdated?.Invoke(package.packet, API_VERSION);
                     break;
@@ -489,7 +541,8 @@ public class CosmicAPI : MonoBehaviour {
                     OnUser(package.packet);
                     break;
                 case "login_fail":
-                    OnLoginFail?.Invoke();
+                    Debug.Log(package.packet);
+                    OnLoginFail?.Invoke(package.packet);
                     loggedIn = false;
                     break;
                 case "game_update":
@@ -504,7 +557,8 @@ public class CosmicAPI : MonoBehaviour {
             Debug.Log("Connection closed");
             loggedIn = false;
             OnDisconnected?.Invoke();
-            StartCoroutine(Reconnect());
+            // Without this nullcheck, it causes an error every time you quit the application.
+            if (this != null) StartCoroutine(Reconnect());
         };
 
         // Connect to the server

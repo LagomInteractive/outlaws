@@ -9,7 +9,6 @@ public class HandPlacement : MonoBehaviour {
     public GameManager gm;
     public LayerMask draggableCardLayerMask;
     public List<WorldCard> cards = new List<WorldCard>();
-    int lastCardPlayedIndex = -1;
     public GameObject cardBack;
     public bool opponent;
 
