@@ -459,6 +459,10 @@ public class CosmicAPI : MonoBehaviour {
             if (target is Minion || target == null) OnMinionHeal?.Invoke(id, amount);
         };
 
+        ws.OnError += error => {
+            Debug.Log("WS ERROR: " + error);
+        };
+
         ws.OnOpen += () => {
             OnConnected?.Invoke();
             Login();
