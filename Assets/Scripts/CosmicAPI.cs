@@ -164,10 +164,10 @@ public class CosmicAPI : MonoBehaviour {
     List<GameEvent> events = new List<GameEvent>();
 
     public Dictionary<string, Color> elementColors = new Dictionary<string, Color>() {
-        {"lunar", new Color32(0, 162, 255, 255)},
-        {"solar", new Color32(255, 38, 0, 255)},
-        {"zenith", new Color32(46, 255, 99, 255)},
-        {"nova", new Color32(147, 40, 247, 255)},
+        {"lunar", new Color32(0, 255, 249, 255)},
+        {"solar", new Color32(255, 209, 0, 255)},
+        {"zenith", new Color32(50, 255, 0, 255)},
+        {"nova", new Color32(255, 28, 0, 255)},
         {"neutral", new Color32(230, 230, 230, 255)}
     };
 

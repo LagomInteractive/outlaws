@@ -121,7 +121,7 @@ public class HandPlacement : MonoBehaviour {
             if (startIndex <= i && i - startIndex > -1 && index < amountOfCards) {
 
                 float angle = ((spacing * i) + 67.5f);
-                if (amountOfCards % 2 != 0) angle += -5;
+                if (!opponent && amountOfCards % 2 != 0) angle += -5;
                 else angle += -2;
 
                 if (opponent) angle += 180;

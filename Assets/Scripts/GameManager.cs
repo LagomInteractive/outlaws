@@ -110,7 +110,6 @@ public class GameManager : MonoBehaviour {
 
 
         api.OnUpdate += () => {
-            UpdateManaBar();
             Player player = api.GetPlayer();
 
             playerUI.UpdateUI(player);
@@ -151,13 +150,7 @@ public class GameManager : MonoBehaviour {
         GameObject card = api.InstantiateCard(id, cardPreview);
         menus.NavigateTo("card_preview");
     }
-    public void UpdateManaBar() {
-        int manaLeft = api.GetPlayer().manaLeft;
-        if (!api.GetPlayer().turn) manaLeft = 0;
-        for (int i = 0; i < manaBar.childCount; i++) {
-            manaBar.GetChild(i).GetComponent<Image>().color = manaLeft >= i + 1 ? Color.white : Color.black;
-        }
-    }
+
 
     public void StartTest() {
         if (!matchmaking) {
