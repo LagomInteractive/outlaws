@@ -30,6 +30,9 @@ public class WorldCard : MonoBehaviour {
 
     public Transform effectsSpawn, previewCard;
     public Animation showPreviewCard;
+    public Image rarity;
+
+    public Sprite common, uncommon, rare, epic, celestial, developer;
 
     public void SetActive(bool active) {
         activeBorder.gameObject.SetActive(active);
@@ -94,9 +97,35 @@ public class WorldCard : MonoBehaviour {
 
         image.sprite = origin.image;
 
+        if (isCard) {
+            switch (origin.rarity) {
+                case Rarity.Common:
+                    rarity.sprite = common;
+                    break;
+                case Rarity.Uncommon:
+                    rarity.sprite = uncommon;
+                    break;
+                case Rarity.Rare:
+                    rarity.sprite = rare;
+                    break;
+                case Rarity.Epic:
+                    rarity.sprite = epic;
+                    break;
+                case Rarity.Celestial:
+                    rarity.sprite = celestial;
+                    break;
+                case Rarity.Developer:
+                    rarity.sprite = developer;
+                    break;
+            }
+        } else {
+            rarity.gameObject.SetActive(false);
+        }
+
         onDamage.Play();
         onDamage.Sample();
         onDamage.Stop();
+
 
 
         if (isCard) {

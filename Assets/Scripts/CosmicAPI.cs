@@ -113,7 +113,8 @@ public enum Rarity {
     Uncommon,
     Rare,
     Epic,
-    Celestial
+    Celestial,
+    Developer
 }
 
 
