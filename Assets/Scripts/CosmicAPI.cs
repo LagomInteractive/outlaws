@@ -25,7 +25,7 @@ public class Minion : Character {
     }
 
     public bool canSacrifice(CosmicAPI api) {
-        if (!hasEverAttacked && api.GetGame().round != spawnRound && api.IsElemental(api.GetCard(origin).element)) {
+        if (api.GetGame().round != spawnRound && api.IsElemental(api.GetCard(origin).element)) {
             return true;
         }
         return false;
