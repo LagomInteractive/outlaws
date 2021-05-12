@@ -16,6 +16,10 @@ public class MainMenu : MonoBehaviour {
         searchingGameText.gameObject.SetActive(false);
     }
 
+    public void OpenWebsite() {
+        Application.OpenURL("https://outlaws.ygstr.com/");
+    }
+
     public void StartedSearchingGame() {
         searchingGameText.gameObject.SetActive(true);
         playButtonText.text = "CANCEL SEARCH!";
