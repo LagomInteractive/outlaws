@@ -35,6 +35,7 @@ public class MainMenu : MonoBehaviour {
 
     public void StartedSearchingGame() {
         searchingGame.SetActive(true);
+        gamemodeText.text = "Multiplayer";
         playButton.interactable = false;
 
     }

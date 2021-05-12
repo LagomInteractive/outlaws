@@ -135,10 +135,14 @@ public class Deck {
 public class Profile {
     public string id, username;
     public int level, xp;
-    public int[] cards;
+    public Dictionary<int, int> cards;
     public Deck[] decks;
     public bool admin;
     public Record record;
+    public int GetInventoryAmount(int cardId) {
+        if (!cards.ContainsKey(cardId)) return 0;
+        else return cards[cardId];
+    }
 }
 [Serializable]
 public class Record {
@@ -188,7 +192,9 @@ public class CosmicAPI : MonoBehaviour {
         {"solar", new Color32(255, 209, 0, 255)},
         {"zenith", new Color32(50, 255, 0, 255)},
         {"nova", new Color32(255, 28, 0, 255)},
-        {"neutral", new Color32(230, 230, 230, 255)}
+        {"neutral", new Color32(230, 230, 230, 255)},
+        {"rush", new Color32(230, 230, 230, 255)},
+        {"taunt", new Color32(230, 230, 230, 255)}
     };
 
     // Socket connection wit the server
@@ -196,6 +202,9 @@ public class CosmicAPI : MonoBehaviour {
 
     // On everything loaded (Logged in & Cards loaded)
     public Action OnEverythingLoaded { get; set; }
+
+    // Everytime the profile of the user updates (Deck edits, XP gain, Card pack gain)
+    public Action OnProfileUpdate { get; set; }
 
     // On connection with the cosmic game server
     public Action OnConnected { get; set; }
@@ -355,6 +364,29 @@ public class CosmicAPI : MonoBehaviour {
         return loggedIn;
     }
 
+    public void NewDeck() {
+        Send("new_deck");
+    }
+
+    public void RenameDeck(string deck, string name) {
+        Send("rename_deck", JsonConvert.SerializeObject(new Dictionary<string, string>() {
+            {"deck", deck},
+            {"name", name}
+        }));
+    }
+
+    public void ModifyCardInDeck(string deck, int card, bool add) {
+        Send("modify_card_in_deck", JsonConvert.SerializeObject(new Dictionary<string, string>() {
+            {"deck", deck},
+            {"card", card.ToString()},
+            {"add", add.ToString()}
+        }));
+    }
+
+    public void DeleteDeck(string id) {
+        Send("delete_deck", id);
+    }
+
     public void Logout() {
         PlayerPrefs.DeleteKey("token");
         token = null;
@@ -509,7 +541,6 @@ public class CosmicAPI : MonoBehaviour {
         };
 
         ws.OnOpen += () => {
-            OnConnected?.Invoke();
             if (token == null) OnNoToken?.Invoke();
             else Login();
         };
@@ -578,6 +609,7 @@ public class CosmicAPI : MonoBehaviour {
     // Game update from the server
     void GameUpdate(string json) {
         if (me == null) return;
+
         Game update = JsonConvert.DeserializeObject<Game>(json);
         game = update;
 
@@ -680,6 +712,10 @@ public class CosmicAPI : MonoBehaviour {
             OnOpponentCard?.Invoke();
             return new WaitForSeconds(0);
         }
+    }
+
+    public Card[] GetAllCards() {
+        return cards;
     }
 
     void LoadCards(string cardsJson) {
@@ -803,10 +839,14 @@ public class CosmicAPI : MonoBehaviour {
 
     void OnUser(string packet) {
         me = JsonConvert.DeserializeObject<Profile>(packet);
+        if (!loggedIn) {
+            OnLogin?.Invoke();
+            Debug.Log("Logged in as " + me.username);
+            CallEverythingLoaded();
+        }
+
         loggedIn = true;
-        Debug.Log("Logged in as " + me.username);
-        OnLogin?.Invoke();
-        CallEverythingLoaded();
+        OnProfileUpdate?.Invoke();
     }
 
     void Login() {
