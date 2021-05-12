@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour {
     public CosmicAPI api;
-    public Text username, level;
+    public Text username, level, version;
     public MenuSystem menus;
     public Text searchingGameText, playButtonText;
 
@@ -13,6 +13,7 @@ public class MainMenu : MonoBehaviour {
         Profile me = api.GetProfile();
         username.text = me.username;
         level.text = "Level " + me.level;
+        version.text = "V" + CosmicAPI.API_VERSION;
         searchingGameText.gameObject.SetActive(false);
     }
 
