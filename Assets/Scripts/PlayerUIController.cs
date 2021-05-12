@@ -11,7 +11,7 @@ public class PlayerUIController : MonoBehaviour {
 
     public Text hp;
 
-    public Text manaText;
+    public Text manaText, usernameText;
     public Image targeted;
     public Image passiveSlider, hpCircle;
 
@@ -22,6 +22,8 @@ public class PlayerUIController : MonoBehaviour {
         hp.text = player.hp.ToString();
         hpCircle.fillAmount = player.hp / 30f;
         passiveSlider.fillAmount = player.passive / 5f;
+
+        usernameText.text = player.name;
 
         for (int i = 0; i < sacrifices.childCount; i++) {
             GameObject sacrificeCrystal = sacrifices.GetChild(i).gameObject;

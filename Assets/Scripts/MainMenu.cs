@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,16 +6,27 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour {
     public CosmicAPI api;
+    public GameManager gm;
     public Text username, level, version;
     public MenuSystem menus;
-    public Text searchingGameText, playButtonText;
+
+    public Button playButton;
+    public GameObject searchingGame;
+    public Text gamemodeText, timeQueued;
 
     public void Setup() {
         Profile me = api.GetProfile();
         username.text = me.username;
         level.text = "Level " + me.level;
         version.text = "V" + CosmicAPI.API_VERSION;
-        searchingGameText.gameObject.SetActive(false);
+        searchingGame.SetActive(false);
+    }
+
+    void Update() {
+        TimeSpan t = TimeSpan.FromSeconds(gm.GetSearchTime());
+        timeQueued.text = string.Format("{0:D2}:{1:D2}",
+                                t.Minutes,
+                                t.Seconds);
     }
 
     public void OpenWebsite() {
@@ -22,14 +34,16 @@ public class MainMenu : MonoBehaviour {
     }
 
     public void StartedSearchingGame() {
-        searchingGameText.gameObject.SetActive(true);
-        playButtonText.text = "CANCEL SEARCH!";
+        searchingGame.SetActive(true);
+        playButton.interactable = false;
+
     }
 
     public void StoppedSearchingGame() {
-        searchingGameText.gameObject.SetActive(false);
-        playButtonText.text = "PLAY";
+        searchingGame.SetActive(false);
+        playButton.interactable = true;
     }
+
 
     public void QuitGame() {
         Application.Quit();

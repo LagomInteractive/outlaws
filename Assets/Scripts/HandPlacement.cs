@@ -62,7 +62,7 @@ public class HandPlacement : MonoBehaviour {
 
     void DeleteCard(int id = -1) {
         if (opponent) {
-            Destroy(transform.GetChild(0).gameObject);
+            DestroyImmediate(transform.GetChild(0).gameObject);
         } else {
             WorldCard card = GetCard(id);
             cards.Remove(card);
@@ -109,6 +109,7 @@ public class HandPlacement : MonoBehaviour {
     public void RearrangeCards() {
 
         int amountOfCards = !opponent ? cards.Count : transform.childCount;
+
         if (amountOfCards == 0) return;
         float positionScale = 50;
         float spacing = 7;
@@ -120,7 +121,7 @@ public class HandPlacement : MonoBehaviour {
             if (startIndex <= i && i - startIndex > -1 && index < amountOfCards) {
 
                 float angle = ((spacing * i) + 67.5f);
-                if (!opponent && amountOfCards % 2 != 0) angle += -5;
+                if (amountOfCards % 2 != 0) angle += -5;
                 else angle += -2;
 
                 if (opponent) angle += 180;

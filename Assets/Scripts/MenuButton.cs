@@ -7,9 +7,6 @@ public class MenuButton : MonoBehaviour {
     bool extended = false;
     Vector3 originalPosition;
 
-
-
-
     public void OnPointerEnter() {
         if (!extended) {
             extended = true;
@@ -17,6 +14,17 @@ public class MenuButton : MonoBehaviour {
         }
     }
 
+    void Start() {
+        originalPosition = transform.localPosition;
+    }
+
+    void OnEnable() {
+        if (extended) {
+            extended = false;
+            StartCoroutine(MoveOverSeconds(originalPosition, .1f));
+        }
+
+    }
 
     public void OnPointerExit() {
         extended = false;
@@ -33,7 +41,5 @@ public class MenuButton : MonoBehaviour {
         }
     }
 
-    void Start() {
-        originalPosition = transform.localPosition;
-    }
+
 }

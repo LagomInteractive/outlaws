@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class AttackLine : MonoBehaviour {
 
     LineRenderer line;
+    public UIHitboxes uiHitboxes;
 
     public CosmicAPI api;
 
@@ -125,24 +126,27 @@ public class AttackLine : MonoBehaviour {
             targetMinion = null;
             targetPlayer = null;
 
-            if (target) {
-                if (target.tag == "Action") {
-                    if (target.name == "Sacrifice") {
-                        SetSacrificeActive(true);
+            Hitbox uiHit = uiHitboxes.GetActiveUIHitbox();
+            if (uiHit != Hitbox.None) {
+                if (uiHit == Hitbox.Sacrifice)
+                    SetSacrificeActive(true);
+                else {
+                    bool isOpponent = uiHit == Hitbox.Opponent;
+                    if (isOpponent || !attackMode) {
+                        targetPlayer = isOpponent ? opponent : player;
+                        targetPlayer.id = isOpponent ? api.GetOpponent().id : api.GetPlayer().id;
+                        targetPlayer.targeted.gameObject.SetActive(true);
                     }
                 }
-                if (target.tag == "Player") {
-                    bool isOpponent = target.GetComponent<PlayerHit>().opponent;
-                    targetPlayer = isOpponent ? opponent : player;
-                    targetPlayer.id = isOpponent ? api.GetOpponent().id : api.GetPlayer().id;
-                    targetPlayer.targeted.gameObject.SetActive(true);
-                } else if (target.tag == "Minion") {
+            }
+
+            if (target) {
+                if (target.tag == "Minion") {
                     WorldCard wc = target.GetComponent<WorldCard>();
                     if (!attackerCard || wc.GetMinionId() != attackerCard.GetMinionId()) {
                         targetMinion = wc;
                         targetMinion.SetTargeted(true);
                     }
-
                 }
             }
         }

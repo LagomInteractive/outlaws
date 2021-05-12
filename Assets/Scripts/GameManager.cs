@@ -42,12 +42,16 @@ public class GameManager : MonoBehaviour {
     public MainMenu menu;
     public GameObject deckPrefab;
 
+    float searchingForSeconds = 0;
+
 
 
     SearchOptions searchOptions = new SearchOptions();
 
     private void Update() {
-
+        if (api.IsSearchingGame()) {
+            searchingForSeconds += Time.deltaTime;
+        }
         if (game != null && api.IsLoggedIn()) {
             roundTimer -= Time.deltaTime;
             //infoText.text = $"V{CosmicAPI.API_VERSION} outlaws.ygstr.com\n---\nRound: {game.round}\nTurn: {(api.GetPlayer().turn ? "You" : "Opponent")}\nTime left: {Mathf.Round(roundTimer)}\nOpponent: {api.GetOpponent().name}\nOutlaw: {api.GetPlayer().outlaw} (You) vs. {api.GetOpponent().outlaw}";
@@ -57,6 +61,10 @@ public class GameManager : MonoBehaviour {
                 else menus.NavigateTo("in_game_options");
             }
         }
+    }
+
+    public float GetSearchTime() {
+        return searchingForSeconds;
     }
 
     public void ReportBug() {
@@ -75,9 +83,13 @@ public class GameManager : MonoBehaviour {
 
     public void PrepareForGame() {
         if (api.IsSearchingGame()) {
-            api.CancelSearch();
-            menu.StoppedSearchingGame();
+            return;
         } else menus.NavigateTo("pick_gameplay");
+    }
+
+    public void StopSearching() {
+        api.CancelSearch();
+        menu.StoppedSearchingGame();
     }
 
     public void PickGameType(string gameType) {
@@ -94,8 +106,13 @@ public class GameManager : MonoBehaviour {
     public void PickOutlaw(string outlaw) {
         searchOptions.outlaw = outlaw;
         api.SearchGame(searchOptions);
+        searchingForSeconds = 0;
         menus.NavigateTo("main");
         menu.StartedSearchingGame();
+    }
+
+    public SearchOptions GetSearchOptions() {
+        return searchOptions;
     }
 
     void AddDeckToPickList(Deck deck) {
@@ -128,13 +145,7 @@ public class GameManager : MonoBehaviour {
         musicPlayer.Play();
 
 
-        startMatchmakingButton.onClick.AddListener(() => {
-            matchmaking = !matchmaking;
-            SaveLatestCardDeckId();
-            if (matchmaking) api.StartMatchMaking(deckIdInput.text);
-            else api.StopMatchMaking();
-            UpdateMatchmakingButton();
-        });
+
 
         api.OnNoToken += () => {
             menus.NavigateTo("login");
