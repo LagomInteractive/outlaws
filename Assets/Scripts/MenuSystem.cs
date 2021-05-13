@@ -13,12 +13,32 @@ public class MenuSystem : MonoBehaviour {
 
     public List<Link> links = new List<Link>();
     public string at = null;
+    // If the client is out of date
+    bool outOfDate = false;
+
+    public AudioClip click;
+
+    public AudioSource audioPlayer;
+
+    public void PlaySoundEffect(AudioClip effect) {
+        audioPlayer.Stop();
+        audioPlayer.clip = effect;
+        audioPlayer.time = 0;
+        audioPlayer.Play();
+    }
 
     /// <summary>
     /// Go to a menu page, hides all other pages
     /// </summary>
     /// <param name="key">Key to the page</param>
     public void NavigateTo(string key) {
+        PlaySoundEffect(click);
+        NavigateSilent(key);
+    }
+
+    public void NavigateSilent(string key) {
+        if (outOfDate) return;
+        if (key == "out_of_date_warning") outOfDate = true;
         foreach (Link link in links) {
             link.page.gameObject.SetActive(link.key == key);
         }

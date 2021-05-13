@@ -20,6 +20,7 @@ public class Minion : Character {
     public bool battlecryActive, hasEverAttacked;
     public bool riposte, deathrattle;
     public string owner;
+
     Player GetOwner(CosmicAPI api) {
         return (Player)api.GetCharacter(owner);
     }
@@ -367,6 +368,7 @@ public class CosmicAPI : MonoBehaviour {
 
     // Get client player in a game
     public Player GetPlayer() {
+        if (game == null) return null;
         foreach (Player player in game.players) {
             if (player.id == me.id) return player;
         }
@@ -602,7 +604,9 @@ public class CosmicAPI : MonoBehaviour {
                     Logout();
                     break;
                 case "version":
-                    if (package.packet != API_VERSION) OnClientOutdated?.Invoke(package.packet, API_VERSION);
+                    if (package.packet != API_VERSION) {
+                        OnClientOutdated?.Invoke(package.packet, API_VERSION);
+                    }
                     break;
                 case "ping":
                     stopwatch.Stop();
@@ -666,6 +670,7 @@ public class CosmicAPI : MonoBehaviour {
         foreach (GameEvent e in game.events) {
             switch (e.identifier) {
                 case "game_start":
+                    searchingGame = false;
                     OnGameStart?.Invoke();
                     break;
                 case "next_turn":
@@ -683,8 +688,10 @@ public class CosmicAPI : MonoBehaviour {
                     }
                     break;
                 case "game_over":
+                    game = null;
+                    events.Clear();
                     OnGameEnd?.Invoke(e.values["winner"]);
-                    break;
+                    return;
                 case "attack":
                     OnAttack?.Invoke(e.values["from"], e.values["to"]);
                     break;

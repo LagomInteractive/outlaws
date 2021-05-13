@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour {
     Game game;
     public Transform deckPickList;
 
-    public AudioClip gameMusic;
+    public AudioClip gameMusic, menuMusic;
     public AudioSource musicPlayer;
 
     public InputField deckIdInput;
@@ -55,10 +55,13 @@ public class GameManager : MonoBehaviour {
     public Transform playerSpawn, opponentSpawn;
     public GameObject Necromancer, Mercenary;
 
+    public Transform winningBanner, losingBanner;
+
     private void Update() {
         if (api.IsSearchingGame()) {
             searchingForSeconds += Time.deltaTime;
         }
+
         if (game != null && api.IsLoggedIn()) {
             roundTimer -= Time.deltaTime;
 
@@ -142,30 +145,32 @@ public class GameManager : MonoBehaviour {
         PlayerPrefs.SetString("lastUsedDeck", deckIdInput.text);
     }
 
+    void ChangeMusic(AudioClip music) {
+        musicPlayer.Stop();
+        musicPlayer.clip = music;
+        musicPlayer.loop = true;
+        musicPlayer.time = 0;
+        musicPlayer.Play();
+    }
+
     void Start() {
 
-
-
-        menus.NavigateTo("loading");
+        menus.NavigateSilent("loading");
         Input.simulateMouseWithTouches = true;
 
         if (PlayerPrefs.HasKey("lastUsedDeck")) {
             deckIdInput.text = PlayerPrefs.GetString("lastUsedDeck");
         }
 
-        musicPlayer.clip = gameMusic;
-        musicPlayer.loop = true;
-        musicPlayer.Play();
 
-
-
+        ChangeMusic(menuMusic);
 
         api.OnNoToken += () => {
-            menus.NavigateTo("login");
+            menus.NavigateSilent("login");
         };
 
         api.OnLogin += () => {
-            menus.NavigateTo("main");
+            menus.NavigateSilent("main");
             menu.Setup();
         };
 
@@ -198,26 +203,24 @@ public class GameManager : MonoBehaviour {
         api.OnGameStart += () => {
             endGameTitle.gameObject.SetActive(false);
             matchmaking = false;
-            menus.CloseMenu();
+            menu.StoppedSearchingGame();
             LoadCharacters();
-        };
-
-        api.OnFriendlyCardUsed += (index) => {
-
-        };
-
-        api.OnMinionSpawned += (id) => {
-
+            menus.CloseMenu();
+            ChangeMusic(gameMusic);
         };
 
         api.OnGameEnd += (winningPlayer) => {
             game = null;
-            endGameTitle.gameObject.SetActive(true);
-            endGameTitle.Find("Text").GetComponent<Image>().sprite = (winningPlayer == api.GetProfile().id) ? winner : loser;
+            bool won = (winningPlayer == api.GetProfile().id);
+            menus.NavigateSilent("end_game");
+
+            winningBanner.gameObject.SetActive(won);
+            losingBanner.gameObject.SetActive(!won);
+            ChangeMusic(menuMusic);
         };
 
         api.OnClientOutdated += (server_version, client_version) => {
-            GameClientOutOfDateWarning.gameObject.SetActive(true);
+            menus.NavigateSilent("out_of_date_warning");
         };
     }
 
@@ -248,12 +251,4 @@ public class GameManager : MonoBehaviour {
         GameObject card = api.InstantiateCard(id, cardPreview);
         menus.NavigateTo("card_preview");
     }
-
-
-    /*public void StartTest() {
-        if (!matchmaking) {
-            SaveLatestCardDeckId();
-            //api.PlayVsBot(deckIdInput.text);
-        }
-    }*/
 }
