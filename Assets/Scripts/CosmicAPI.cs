@@ -50,6 +50,12 @@ public class Minion : Character {
 }
 
 [Serializable]
+public class Pack {
+    public string name, id;
+    public int[] cards;
+}
+
+[Serializable]
 public class Player : Character {
     public string name;
     public bool isBot, turn;
@@ -142,12 +148,21 @@ public class Profile {
     public string id, username;
     public int level, xp;
     public Dictionary<int, int> cards;
+    public Dictionary<string, int> packs;
     public Deck[] decks;
     public bool admin;
     public Record record;
     public int GetInventoryAmount(int cardId) {
         if (!cards.ContainsKey(cardId)) return 0;
         else return cards[cardId];
+    }
+
+    public int GetPacksAmount() {
+        int total = 0;
+        foreach (KeyValuePair<string, int> pack in packs) {
+            total += pack.Value;
+        }
+        return total;
     }
 }
 [Serializable]
@@ -301,6 +316,9 @@ public class CosmicAPI : MonoBehaviour {
     // List of all cards in the game
     Card[] cards;
 
+    // List of all card packs in the game
+    Pack[] packs;
+
     // Client cosmic account
     Profile me;
 
@@ -310,7 +328,8 @@ public class CosmicAPI : MonoBehaviour {
     // The last calculated ping in ms
     int ping;
     // If the cards are loaded
-    bool cardsLoaded;
+    bool cardsLoaded = false;
+
     // If the user is connected and logged in
     bool loggedIn = false;
 
@@ -320,6 +339,7 @@ public class CosmicAPI : MonoBehaviour {
     System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
 
     bool searchingGame = false;
+
 
 
     // The time difference between the local clock on this clien and the server clock
@@ -534,6 +554,14 @@ public class CosmicAPI : MonoBehaviour {
         ws.Close();
     }
 
+    void LoadPacks(string json) {
+        packs = JsonConvert.DeserializeObject<Pack[]>(json);
+    }
+
+    public Pack[] GetPacks() {
+        return packs;
+    }
+
     async void Start() {
 
         token = PlayerPrefs.GetString("token");
@@ -579,6 +607,9 @@ public class CosmicAPI : MonoBehaviour {
                 case "ping":
                     stopwatch.Stop();
                     OnPing?.Invoke((int)stopwatch.ElapsedMilliseconds);
+                    break;
+                case "packs":
+                    LoadPacks(package.packet);
                     break;
                 case "cards":
                     LoadCards(package.packet);

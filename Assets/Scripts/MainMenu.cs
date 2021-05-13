@@ -14,12 +14,20 @@ public class MainMenu : MonoBehaviour {
     public GameObject searchingGame;
     public Text gamemodeText, timeQueued;
 
+    public Text amountOfPacksToOpen;
     public void Setup() {
         Profile me = api.GetProfile();
         username.text = me.username;
         level.text = "Level " + me.level;
         version.text = "V" + CosmicAPI.API_VERSION;
         searchingGame.SetActive(false);
+        api.OnProfileUpdate += UpdateMenu;
+        UpdateMenu();
+    }
+
+    public void UpdateMenu() {
+        int packsToOpen = api.GetProfile().GetPacksAmount();
+        amountOfPacksToOpen.text = packsToOpen == 0 ? "" : packsToOpen.ToString();
     }
 
     void Update() {
