@@ -63,7 +63,7 @@ public class Player : Character {
     public int[] cards;
     public int[] deck;
     public int passive;
-    public string outlaw;
+    public Outlaw outlaw;
     public Minion[] minions;
     public Profile profile;
     public Buff buff;

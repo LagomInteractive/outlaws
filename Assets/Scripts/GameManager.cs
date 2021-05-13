@@ -52,6 +52,9 @@ public class GameManager : MonoBehaviour {
 
     SearchOptions searchOptions = new SearchOptions();
 
+    public Transform playerSpawn, opponentSpawn;
+    public GameObject Necromancer, Mercenary;
+
     private void Update() {
         if (api.IsSearchingGame()) {
             searchingForSeconds += Time.deltaTime;
@@ -89,10 +92,6 @@ public class GameManager : MonoBehaviour {
         endTurnButton.GetComponent<Button>().interactable = enabled;
         endTurnButton.GetComponent<Image>().color = enabled ? Color.white : Color.grey;
         endTurnButton.Find("Text").GetComponent<Text>().color = enabled ? Color.white : Color.grey;
-    }
-
-    void UpdateMatchmakingButton() {
-        startMatchmakingButton.GetComponentInChildren<Text>().text = matchmaking ? "Searching game..." : "Start match making";
     }
 
     public void PrepareForGame() {
@@ -200,7 +199,7 @@ public class GameManager : MonoBehaviour {
             endGameTitle.gameObject.SetActive(false);
             matchmaking = false;
             menus.CloseMenu();
-            UpdateMatchmakingButton();
+            LoadCharacters();
         };
 
         api.OnFriendlyCardUsed += (index) => {
@@ -220,6 +219,27 @@ public class GameManager : MonoBehaviour {
         api.OnClientOutdated += (server_version, client_version) => {
             GameClientOutOfDateWarning.gameObject.SetActive(true);
         };
+    }
+
+    public void LoadCharacters() {
+        LoadCharacter(api.GetPlayer(), playerSpawn);
+        LoadCharacter(api.GetOpponent(), opponentSpawn);
+    }
+
+    public void LoadCharacter(Player player, Transform spawn) {
+        while (spawn.childCount > 0) DestroyImmediate(spawn.GetChild(0).gameObject);
+
+        GameObject outlaw = null;
+        switch (player.outlaw) {
+            case Outlaw.Mercenary:
+                outlaw = Mercenary;
+                break;
+            case Outlaw.Necromancer:
+                outlaw = Necromancer;
+                break;
+        }
+
+        Instantiate(outlaw, spawn);
     }
 
     public void PreviewCard(int id) {

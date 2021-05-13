@@ -33,7 +33,6 @@ public class OpenPack : MonoBehaviour {
     }
 
     void ViewPack() {
-        Debug.Log("VIEWING: " + activePack);
         Pack pack = api.GetPacks()[activePack];
         Profile me = api.GetProfile();
         int inventoryOfPack = me.packs.ContainsKey(pack.id) ? me.packs[pack.id] : 0;
