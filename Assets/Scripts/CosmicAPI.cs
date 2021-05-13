@@ -91,6 +91,12 @@ public class Buff {
 }
 
 [Serializable]
+public class RedeemResponse {
+    public bool success;
+    public string message;
+}
+
+[Serializable]
 public class Card {
     public int id, mana, damage, hp;
     public Rarity rarity;
@@ -278,6 +284,12 @@ public class CosmicAPI : MonoBehaviour {
     public Action<string, int> OnMinionDamage { get; set; }
 
     /// <summary>
+    /// When the user redeems a code
+    /// bool success, string message
+    /// </summary>
+    public Action<bool, string> OnCodeRedeem { get; set; }
+
+    /// <summary>
     /// When the game client is running an older version, prevent the player from playing.
     /// </summary>
     public Action<string, string> OnClientOutdated { get; set; }
@@ -450,7 +462,10 @@ public class CosmicAPI : MonoBehaviour {
         return null;
     }
 
-
+    public void RedeemCode(string code) {
+        Send("redeem_code", code);
+        Debug.Log("Redeem code: " + code);
+    }
 
     /// <summary>
     /// Gives you all card ids (For testing)
@@ -551,6 +566,10 @@ public class CosmicAPI : MonoBehaviour {
             SocketPackage package = JsonUtility.FromJson<SocketPackage>(message);
 
             switch (package.identifier) {
+                case "code_redeemed":
+                    RedeemResponse response = JsonConvert.DeserializeObject<RedeemResponse>(package.packet);
+                    OnCodeRedeem?.Invoke(response.success, response.message);
+                    break;
                 case "user_not_found":
                     Logout();
                     break;
