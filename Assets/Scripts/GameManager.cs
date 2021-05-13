@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
+
     public CosmicAPI api;
     public HandPlacement hand;
     public Battlefield battlefield;
@@ -42,9 +43,12 @@ public class GameManager : MonoBehaviour {
     public MainMenu menu;
     public GameObject deckPrefab;
 
+    public Image countdownDial;
+    public Text countdownText;
+
     float searchingForSeconds = 0;
 
-
+    public Color32 timerGreen, timerOrange, timerRed;
 
     SearchOptions searchOptions = new SearchOptions();
 
@@ -54,6 +58,16 @@ public class GameManager : MonoBehaviour {
         }
         if (game != null && api.IsLoggedIn()) {
             roundTimer -= Time.deltaTime;
+
+            Color32 dialColor = timerGreen;
+            int timeLeft = (int)Math.Round(roundTimer);
+            if (timeLeft <= 30) dialColor = timerOrange;
+            if (timeLeft <= 10) dialColor = timerRed;
+
+            countdownDial.fillAmount = roundTimer / 60f;
+            countdownDial.color = dialColor;
+            countdownText.text = timeLeft.ToString();
+
             //infoText.text = $"V{CosmicAPI.API_VERSION} outlaws.ygstr.com\n---\nRound: {game.round}\nTurn: {(api.GetPlayer().turn ? "You" : "Opponent")}\nTime left: {Mathf.Round(roundTimer)}\nOpponent: {api.GetOpponent().name}\nOutlaw: {api.GetPlayer().outlaw} (You) vs. {api.GetOpponent().outlaw}";
             if (Input.GetKeyDown(KeyCode.Escape)) {
                 // Show pause menu
