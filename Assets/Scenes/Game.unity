@@ -33963,6 +33963,7 @@ GameObject:
   - component: {fileID: 426996346}
   - component: {fileID: 426996348}
   - component: {fileID: 426996347}
+  - component: {fileID: 426996349}
   m_Layer: 5
   m_Name: Video
   m_TagString: Untagged
@@ -34009,7 +34010,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 82a92c9cdd5fdc84db1f834b5d0ea6fd, type: 3}
+  m_Texture: {fileID: 8400000, guid: 8ef5f6875ab895b42a194d264ee07a62, type: 2}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -34024,6 +34025,41 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 426996345}
   m_CullTransparentMesh: 1
+--- !u!328 &426996349
+VideoPlayer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 426996345}
+  m_Enabled: 1
+  m_VideoClip: {fileID: 32900000, guid: da695b251a4441b4f84d2e7098df0a4b, type: 3}
+  m_TargetCameraAlpha: 1
+  m_TargetCamera3DLayout: 0
+  m_TargetCamera: {fileID: 0}
+  m_TargetTexture: {fileID: 8400000, guid: 8ef5f6875ab895b42a194d264ee07a62, type: 2}
+  m_TimeReference: 0
+  m_TargetMaterialRenderer: {fileID: 0}
+  m_TargetMaterialProperty: _MainTex
+  m_RenderMode: 2
+  m_AspectRatio: 2
+  m_DataSource: 0
+  m_PlaybackSpeed: 1
+  m_AudioOutputMode: 2
+  m_TargetAudioSources:
+  - {fileID: 0}
+  m_DirectAudioVolumes:
+  - 1
+  m_Url: 
+  m_EnabledAudioTracks: 01
+  m_DirectAudioMutes: 00
+  m_ControlledAudioTrackCount: 1
+  m_PlayOnAwake: 1
+  m_SkipOnDrop: 1
+  m_Looping: 1
+  m_WaitForFirstFrame: 1
+  m_FrameReadyEventEnabled: 0
+  m_VideoShaders: []
 --- !u!4 &429724001 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 449830, guid: 04109e82c0d966447966dba624e3821b, type: 3}
@@ -90368,11 +90404,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8a3bffe0ece96940a5f6bc8913f2777, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  api: {fileID: 1400600605}
   body: {fileID: 1541252768}
   title: {fileID: 464954301}
   category: {fileID: 1491947958}
   number: {fileID: 1507139283}
   progressBar: {fileID: 95822379}
+  videoPlayer: {fileID: 426996349}
+  activeTip: 0
 --- !u!1 &1220337334
 GameObject:
   m_ObjectHideFlags: 0
@@ -135357,7 +135396,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1935797483}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1217004121}
+        m_TargetAssemblyTypeName: Tips, Assembly-CSharp
+        m_MethodName: CycleTip
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 326220033}
+        m_TargetAssemblyTypeName: MenuSystem, Assembly-CSharp
+        m_MethodName: PlayClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1935797483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144289,7 +144352,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2121178390}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1217004121}
+        m_TargetAssemblyTypeName: Tips, Assembly-CSharp
+        m_MethodName: CycleTip
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: -1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 326220033}
+        m_TargetAssemblyTypeName: MenuSystem, Assembly-CSharp
+        m_MethodName: PlayClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2121178390
 MonoBehaviour:
   m_ObjectHideFlags: 0

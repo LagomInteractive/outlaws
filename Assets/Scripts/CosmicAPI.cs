@@ -105,7 +105,7 @@ public class RedeemResponse {
 
 [Serializable]
 public class Tip {
-    public string title, category, body, video;
+    public string title, category, body, content, number;
 }
 
 [Serializable]
