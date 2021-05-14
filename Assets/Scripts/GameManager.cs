@@ -255,6 +255,7 @@ public class GameManager : MonoBehaviour {
     }
 
     public void PreviewCard(int id) {
+        if (!api.IsInGame()) return;
         while (cardPreview.childCount > 0) DestroyImmediate(cardPreview.GetChild(0).gameObject);
 
         GameObject card = api.InstantiateCard(id, cardPreview);

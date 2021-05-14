@@ -126,8 +126,6 @@ public class WorldCard : MonoBehaviour {
         onDamage.Sample();
         onDamage.Stop();
 
-
-
         if (isCard) {
             isMinion = origin.type == CardType.Minion;
             mask.sprite = isMinion ? minionMask : spellMask;

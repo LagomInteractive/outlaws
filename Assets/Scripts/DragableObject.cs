@@ -48,9 +48,12 @@ public class DragableObject : MonoBehaviour {
     }
 
     void OnMouseDown() {
+        if (!api.IsInGame()) return;
+
         if (Time.time - lastClick < doubleClickTime) {
             gm.PreviewCard(id);
         }
+
         lastClick = Time.time;
         if (GetComponent<WorldCard>().GetMana() <= api.GetPlayer().manaLeft && api.GetPlayer().turn && api.GetCard(id).type != CardType.TargetSpell) {
             dragging = true;
