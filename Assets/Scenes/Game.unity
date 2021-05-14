@@ -151092,6 +151092,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3930932115876440804, guid: 0b0b1a3d4b23a9f40931c566fd1c7adf, type: 3}
+      propertyPath: api
+      value: 
+      objectReference: {fileID: 1400600605}
+    - target: {fileID: 3930932115876440804, guid: 0b0b1a3d4b23a9f40931c566fd1c7adf, type: 3}
+      propertyPath: effects
+      value: 
+      objectReference: {fileID: 533724124}
     - target: {fileID: 4027205759346498097, guid: 0b0b1a3d4b23a9f40931c566fd1c7adf, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0
@@ -152128,6 +152136,10 @@ PrefabInstance:
       propertyPath: mana
       value: 
       objectReference: {fileID: 1098600003}
+    - target: {fileID: 7910742140728158455, guid: 0b0b1a3d4b23a9f40931c566fd1c7adf, type: 3}
+      propertyPath: effects
+      value: 
+      objectReference: {fileID: 533724124}
     - target: {fileID: 7910742140728158455, guid: 0b0b1a3d4b23a9f40931c566fd1c7adf, type: 3}
       propertyPath: sacrificeEmpty
       value: 

@@ -16,9 +16,15 @@ public class PlayerUIController : MonoBehaviour {
     public Image passiveSlider, hpCircle;
 
     public CosmicAPI api;
+    public EffectsManager effects;
+    public Animation damageTakenAnimation;
+    public AudioSource audio;
 
+    public Player player;
 
     public void UpdateUI(Player player) {
+        this.player = player;
+
         hp.text = player.hp.ToString();
         hpCircle.fillAmount = player.hp / 30f;
         passiveSlider.fillAmount = player.passive / 5f;
@@ -38,6 +44,26 @@ public class PlayerUIController : MonoBehaviour {
             EnableMana();
             SetMana(player.manaLeft, player.totalMana);
         }
+    }
+
+    private void Start() {
+        damageTakenAnimation.Play();
+        damageTakenAnimation.Sample();
+        damageTakenAnimation.Stop();
+
+        api.OnDamage += ((string id, int amount) => {
+            if (id == player.id) {
+                Debug.Log("Took damage");
+                AnimateDamage(amount);
+            }
+        });
+    }
+
+    public void AnimateDamage(int damage) {
+        damageTakenAnimation.gameObject.GetComponent<Text>().text = "-" + damage.ToString();
+        damageTakenAnimation.Rewind();
+        damageTakenAnimation.Play();
+        effects.GetEffect("ON_HIT").PlaySound(audio);
     }
 
     public void DisableMana() {
