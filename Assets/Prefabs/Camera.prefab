@@ -285,6 +285,37 @@ MonoBehaviour:
   effects: {fileID: 0}
   damageTakenAnimation: {fileID: 5659317377078402803}
   audio: {fileID: 6670430484504973402}
+  player:
+    id: 
+    hp: 0
+    maxHp: 0
+    isAttacking: 0
+    hasAttacked: 0
+    hasBeenAttacked: 0
+    name: 
+    isBot: 0
+    turn: 0
+    level: 0
+    manaLeft: 0
+    totalMana: 0
+    cards: 
+    deck: 
+    passive: 0
+    outlaw: 0
+    minions: []
+    profile:
+      id: 
+      username: 
+      level: 0
+      xp: 0
+      decks: []
+      admin: 0
+      record:
+        wins: 0
+        losses: 0
+    buff:
+      sacrifices: 0
+      element: 3
 --- !u!82 &6670430484504973402
 AudioSource:
   m_ObjectHideFlags: 0
@@ -667,10 +698,10 @@ RectTransform:
   m_Father: {fileID: 6583823804160726424}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -838.13, y: 427}
-  m_SizeDelta: {x: 190.52, y: 179.76}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 121.869995, y: -113}
+  m_SizeDelta: {x: 190.52002, y: 179.76001}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8084247331891944239
 CanvasRenderer:
@@ -3046,15 +3077,15 @@ RectTransform:
   m_GameObject: {fileID: 5562080918783402193}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children: []
   m_Father: {fileID: 6642345739893775345}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.3998665}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000015259, y: 0.000030517578}
-  m_SizeDelta: {x: 98.3, y: 40.72}
+  m_AnchoredPosition: {x: 0.000034332, y: 9}
+  m_SizeDelta: {x: 366.68, y: 178.32}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7563321276786406342
 CanvasRenderer:
@@ -3086,16 +3117,16 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 580d0a614f64c9c4c93d447403f34dcd, type: 3}
-    m_FontSize: 60
+    m_FontSize: 300
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 3
-    m_MaxSize: 60
+    m_MaxSize: 300
     m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
+    m_HorizontalOverflow: 1
+    m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: 60
 --- !u!1 &5612537386812971738
@@ -4034,6 +4065,37 @@ MonoBehaviour:
   effects: {fileID: 0}
   damageTakenAnimation: {fileID: 3726259546610829491}
   audio: {fileID: 9042029486642255718}
+  player:
+    id: 
+    hp: 0
+    maxHp: 0
+    isAttacking: 0
+    hasAttacked: 0
+    hasBeenAttacked: 0
+    name: 
+    isBot: 0
+    turn: 0
+    level: 0
+    manaLeft: 0
+    totalMana: 0
+    cards: 
+    deck: 
+    passive: 0
+    outlaw: 0
+    minions: []
+    profile:
+      id: 
+      username: 
+      level: 0
+      xp: 0
+      decks: []
+      admin: 0
+      record:
+        wins: 0
+        losses: 0
+    buff:
+      sacrifices: 0
+      element: 3
 --- !u!82 &9042029486642255718
 AudioSource:
   m_ObjectHideFlags: 0
@@ -7692,23 +7754,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7276214069989153437, guid: 36218e643d2820e49b0f4acb85b7b499, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 38.0786
+      value: 167.81
       objectReference: {fileID: 0}
     - target: {fileID: 7276214069989153437, guid: 36218e643d2820e49b0f4acb85b7b499, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 30
+      value: 146.6
       objectReference: {fileID: 0}
     - target: {fileID: 7276214069989153437, guid: 36218e643d2820e49b0f4acb85b7b499, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.6856486
+      value: 0.55
       objectReference: {fileID: 0}
     - target: {fileID: 7276214069989153437, guid: 36218e643d2820e49b0f4acb85b7b499, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.6856483
+      value: 0.55
       objectReference: {fileID: 0}
     - target: {fileID: 7276214069989153437, guid: 36218e643d2820e49b0f4acb85b7b499, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.68564874
+      value: 0.55
       objectReference: {fileID: 0}
     - target: {fileID: 7276214069989153437, guid: 36218e643d2820e49b0f4acb85b7b499, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7740,11 +7802,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7276214069989153437, guid: 36218e643d2820e49b0f4acb85b7b499, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -46
+      value: -110.19994
       objectReference: {fileID: 0}
     - target: {fileID: 7276214069989153437, guid: 36218e643d2820e49b0f4acb85b7b499, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -34
+      value: -18.599981
       objectReference: {fileID: 0}
     - target: {fileID: 7276214069989153437, guid: 36218e643d2820e49b0f4acb85b7b499, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -7811,23 +7873,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7276214069989153437, guid: 36218e643d2820e49b0f4acb85b7b499, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 38.0786
+      value: 146.5
       objectReference: {fileID: 0}
     - target: {fileID: 7276214069989153437, guid: 36218e643d2820e49b0f4acb85b7b499, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 30
+      value: 134.97
       objectReference: {fileID: 0}
     - target: {fileID: 7276214069989153437, guid: 36218e643d2820e49b0f4acb85b7b499, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.68564856
+      value: 0.55
       objectReference: {fileID: 0}
     - target: {fileID: 7276214069989153437, guid: 36218e643d2820e49b0f4acb85b7b499, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.6856484
+      value: 0.55
       objectReference: {fileID: 0}
     - target: {fileID: 7276214069989153437, guid: 36218e643d2820e49b0f4acb85b7b499, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.6856487
+      value: 0.55
       objectReference: {fileID: 0}
     - target: {fileID: 7276214069989153437, guid: 36218e643d2820e49b0f4acb85b7b499, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7859,11 +7921,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7276214069989153437, guid: 36218e643d2820e49b0f4acb85b7b499, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -90
+      value: -111
       objectReference: {fileID: 0}
     - target: {fileID: 7276214069989153437, guid: 36218e643d2820e49b0f4acb85b7b499, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 7276214069989153437, guid: 36218e643d2820e49b0f4acb85b7b499, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
