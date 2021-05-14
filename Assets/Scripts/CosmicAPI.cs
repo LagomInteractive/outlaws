@@ -207,7 +207,7 @@ public class GameEvent {
 [Serializable]
 public class CosmicAPI : MonoBehaviour {
 
-    public const string API_VERSION = "2.9";
+    public const string API_VERSION = "3.0";
 
     public GameObject cardPrefab;
     bool runningEvents = false;
