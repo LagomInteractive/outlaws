@@ -20,14 +20,8 @@ public class Tips : MonoBehaviour {
     float progress = 0;
 
     void Start() {
-        if (api.GetTips() != null) {
-            tips = api.GetTips();
-            LoadTip();
-        }
-        api.OnTips += tips => {
-            this.tips = tips;
-            LoadTip();
-        };
+        tips = api.GetTips();
+        LoadTip();
     }
 
 

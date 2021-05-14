@@ -444,6 +444,8 @@ public class CosmicAPI : MonoBehaviour {
     public void Logout() {
         PlayerPrefs.DeleteKey("token");
         token = null;
+        me = null;
+        loggedIn = false;
         OnNoToken?.Invoke();
     }
 
@@ -618,7 +620,8 @@ public class CosmicAPI : MonoBehaviour {
             switch (package.identifier) {
 
                 case "tips":
-                    OnTips?.Invoke(JsonConvert.DeserializeObject<Tip[]>(package.packet));
+                    tips = JsonConvert.DeserializeObject<Tip[]>(package.packet);
+                    OnTips?.Invoke(tips);
                     break;
                 case "pack_opened":
                     OnPackOpened?.Invoke(JsonConvert.DeserializeObject<int[]>(package.packet));

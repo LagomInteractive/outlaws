@@ -20,6 +20,8 @@ public class OpenPack : MonoBehaviour {
     public MenuSystem menus;
     public GameObject openedCardContainerPrefab;
 
+    public AudioClip openPackSound;
+
     private void OnEnable() {
         if (api.IsLoggedIn()) ViewPack();
     }
@@ -52,7 +54,23 @@ public class OpenPack : MonoBehaviour {
     }
 
     public void OpenActivePack() {
+        menus.PlaySoundEffect(openPackSound);
         api.OpenPack(api.GetPacks()[activePack].id);
+    }
+
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.Return)) {
+            if (menus.at == "open_packs") {
+                OpenActivePack();
+            } else {
+                menus.NavigateTo("open_packs");
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            if (menus.at != "open_packs") {
+                menus.NavigateTo("open_packs");
+            }
+        }
     }
 
     void ViewPack() {

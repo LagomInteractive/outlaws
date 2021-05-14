@@ -18,4 +18,19 @@ public class Login : MonoBehaviour {
             loginFail.text = reason;
         };
     }
+
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.Tab)) {
+            if (username.isFocused) {
+                password.Select();
+                password.ActivateInputField();
+            } else if (password.isFocused) {
+                username.Select();
+                username.ActivateInputField();
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Return)) {
+            LoginWithPass();
+        }
+    }
 }
