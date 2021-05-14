@@ -104,6 +104,11 @@ public class RedeemResponse {
 }
 
 [Serializable]
+public class Tip {
+    public string title, category, body, video;
+}
+
+[Serializable]
 public class Card {
     public int id, mana, damage, hp;
     public Rarity rarity;
@@ -289,6 +294,8 @@ public class CosmicAPI : MonoBehaviour {
     /// </summary>
     public Action<int[]> OnPackOpened { get; set; }
 
+    public Action<Tip[]> OnTips { get; set; }
+
     // UUID form, UUID to
     public Action<string, string> OnAttack { get; set; }
 
@@ -325,6 +332,9 @@ public class CosmicAPI : MonoBehaviour {
 
     // List of all card packs in the game
     Pack[] packs;
+
+    // List of tips to display in main menu
+    Tip[] tips;
 
     // Client cosmic account
     Profile me;
@@ -384,6 +394,10 @@ public class CosmicAPI : MonoBehaviour {
     // Get my user profile
     public Profile GetProfile() {
         return me;
+    }
+
+    public Tip[] GetTips() {
+        return tips;
     }
 
     public bool IsElemental(Element element) {
@@ -603,6 +617,9 @@ public class CosmicAPI : MonoBehaviour {
 
             switch (package.identifier) {
 
+                case "tips":
+                    OnTips?.Invoke(JsonConvert.DeserializeObject<Tip[]>(package.packet));
+                    break;
                 case "pack_opened":
                     OnPackOpened?.Invoke(JsonConvert.DeserializeObject<int[]>(package.packet));
                     break;

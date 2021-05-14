@@ -59,6 +59,9 @@ public class GameManager : MonoBehaviour {
 
     public AudioClip winningSound, losingSound;
 
+    public EffectsManager effects;
+
+
     private void Update() {
         if (api.IsSearchingGame()) {
             searchingForSeconds += Time.deltaTime;
@@ -207,6 +210,9 @@ public class GameManager : MonoBehaviour {
             menu.StoppedSearchingGame();
             LoadCharacters();
             menus.CloseMenu();
+
+            effects.GetEffect("GAME_START").Play(effects.audioSource);
+
             ChangeMusic(gameMusic);
         };
 

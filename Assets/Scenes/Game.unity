@@ -21499,6 +21499,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 326220033}
+        m_TargetAssemblyTypeName: MenuSystem, Assembly-CSharp
+        m_MethodName: PlaySoundEffect
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 14c22dcd44015054385eff4abd004575, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &288797049
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21928,6 +21940,7 @@ MonoBehaviour:
   losingBanner: {fileID: 366054606}
   winningSound: {fileID: 8300000, guid: e3263f9e9f9d8c44ab79408db6d3c3c6, type: 3}
   losingSound: {fileID: 8300000, guid: 37dab7f3bfb01024182fe1aba1414591, type: 3}
+  effects: {fileID: 533724124}
 --- !u!4 &308267426
 Transform:
   m_ObjectHideFlags: 0
@@ -44251,7 +44264,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Titel tst
+  m_Text: Title test
 --- !u!222 &464954302
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -51324,6 +51337,11 @@ MonoBehaviour:
     sounds:
     - {fileID: 8300000, guid: f34e60fd46f126a409ae848ad704ec95, type: 3}
     - {fileID: 8300000, guid: b6f12c33235ab34419333234f3eab026, type: 3}
+  - name: GAME_START
+    ids: 7c00000087000000
+    particles: {fileID: 1596603486}
+    sounds:
+    - {fileID: 8300000, guid: 04fd362c174ff3a4ba6b3c85b3afde94, type: 3}
   audioSource: {fileID: 533724125}
 --- !u!82 &533724125
 AudioSource:
@@ -62546,6 +62564,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: exit_confirm
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 326220033}
+        m_TargetAssemblyTypeName: MenuSystem, Assembly-CSharp
+        m_MethodName: PlaySoundEffect
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 5dfed0cbb38ab3b438ba6a0bd3b3b545, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &846100061
@@ -90255,6 +90285,7 @@ GameObject:
   - component: {fileID: 1217004118}
   - component: {fileID: 1217004120}
   - component: {fileID: 1217004119}
+  - component: {fileID: 1217004121}
   m_Layer: 5
   m_Name: Tips
   m_TagString: Untagged
@@ -90325,6 +90356,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1217004117}
   m_CullTransparentMesh: 1
+--- !u!114 &1217004121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1217004117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8a3bffe0ece96940a5f6bc8913f2777, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  body: {fileID: 1541252768}
+  title: {fileID: 464954301}
+  category: {fileID: 1491947958}
+  number: {fileID: 1507139283}
+  progressBar: {fileID: 95822379}
 --- !u!1 &1220337334
 GameObject:
   m_ObjectHideFlags: 0
@@ -137350,6 +137398,9 @@ MonoBehaviour:
   redeemText: {fileID: 101762157}
   codeInput: {fileID: 1238225501}
   redeemButton: {fileID: 1050010219}
+  redeemSuccessAudio: {fileID: 8300000, guid: 60133ed5ee81e8a4dbb9a5a455553f19, type: 3}
+  redeemFailAudio: {fileID: 8300000, guid: a1795120681142b4fb5e929a15395344, type: 3}
+  menus: {fileID: 326220033}
 --- !u!4 &2032992665 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 483054, guid: 857b9bcf7311f5a49b829c4fd3cc791f, type: 3}

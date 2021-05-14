@@ -12,6 +12,8 @@ public class RedeemCode : MonoBehaviour {
     public Text redeemText;
     public InputField codeInput;
     public Button redeemButton;
+    public AudioClip redeemSuccessAudio, redeemFailAudio;
+    public MenuSystem menus;
 
     void Start() {
         codeInput.onValidateInput += (string text, int index, char addedChar) => {
@@ -24,8 +26,12 @@ public class RedeemCode : MonoBehaviour {
         api.OnCodeRedeem += (success, message) => {
             redeemText.text = message;
             redeemText.color = success ? redeemSuccess : redeemFail;
+
+            menus.PlaySoundEffect(success ? redeemSuccessAudio : redeemFailAudio);
+
             if (success) codeInput.text = "";
         };
+
         redeemText.text = "";
     }
 

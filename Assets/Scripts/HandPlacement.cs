@@ -14,6 +14,10 @@ public class HandPlacement : MonoBehaviour {
 
     public void Start() {
 
+        api.OnGameStart += () => {
+            DeleteCards();
+        };
+
         if (!opponent) {
             api.OnCard += id => {
                 StartCoroutine(DealCardDelay(id, 1.8f));
@@ -48,6 +52,7 @@ public class HandPlacement : MonoBehaviour {
     }
 
     void DeleteCards() {
+        cards.Clear();
         while (transform.childCount > 0) {
             DestroyImmediate(transform.GetChild(0).gameObject);
         }

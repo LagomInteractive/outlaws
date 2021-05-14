@@ -52,7 +52,6 @@ public class OpenPack : MonoBehaviour {
     }
 
     public void OpenActivePack() {
-        menus.PlayClick();
         api.OpenPack(api.GetPacks()[activePack].id);
     }
 
