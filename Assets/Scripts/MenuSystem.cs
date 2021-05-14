@@ -27,6 +27,10 @@ public class MenuSystem : MonoBehaviour {
         audioPlayer.Play();
     }
 
+    public void PlayClick() {
+        PlaySoundEffect(click);
+    }
+
     /// <summary>
     /// Go to a menu page, hides all other pages
     /// </summary>

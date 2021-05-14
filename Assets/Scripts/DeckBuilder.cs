@@ -211,6 +211,7 @@ public class DeckBuilder : MonoBehaviour {
                     if (card.name.ToLower().IndexOf(search) == -1
                     && card.description.ToLower().IndexOf(search) == -1
                     && card.element.ToString().ToLower().IndexOf(search) == -1
+                    && card.rarity.ToString().ToLower().IndexOf(search) == -1
                     && card.type.ToString().ToLower().IndexOf(search) == -1) {
                         match = false;
                     }

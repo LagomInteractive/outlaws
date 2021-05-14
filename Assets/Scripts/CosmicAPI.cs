@@ -202,7 +202,7 @@ public class GameEvent {
 [Serializable]
 public class CosmicAPI : MonoBehaviour {
 
-    public const string API_VERSION = "2.8";
+    public const string API_VERSION = "2.9";
 
     public GameObject cardPrefab;
     bool runningEvents = false;
@@ -282,6 +282,12 @@ public class CosmicAPI : MonoBehaviour {
     // When a character gets healed, string id, int amount
     public Action<string, int> OnHeal { get; set; }
     public Action<string, int> OnMinionHeal { get; set; }
+
+    /// <summary>
+    /// When the user openes a pack
+    /// int[] card ids that was opened
+    /// </summary>
+    public Action<int[]> OnPackOpened { get; set; }
 
     // UUID form, UUID to
     public Action<string, string> OnAttack { get; set; }
@@ -596,6 +602,10 @@ public class CosmicAPI : MonoBehaviour {
             SocketPackage package = JsonUtility.FromJson<SocketPackage>(message);
 
             switch (package.identifier) {
+
+                case "pack_opened":
+                    OnPackOpened?.Invoke(JsonConvert.DeserializeObject<int[]>(package.packet));
+                    break;
                 case "code_redeemed":
                     RedeemResponse response = JsonConvert.DeserializeObject<RedeemResponse>(package.packet);
                     OnCodeRedeem?.Invoke(response.success, response.message);
@@ -658,6 +668,10 @@ public class CosmicAPI : MonoBehaviour {
 
     public void StopMatchMaking() {
         Send("stop_matchmaking");
+    }
+
+    public void OpenPack(string packId) {
+        Send("open_pack", packId);
     }
 
     // Game update from the server
@@ -896,6 +910,7 @@ public class CosmicAPI : MonoBehaviour {
 
     void OnUser(string packet) {
         me = JsonConvert.DeserializeObject<Profile>(packet);
+
         if (!loggedIn) {
             OnLogin?.Invoke();
             Debug.Log("Logged in as " + me.username);

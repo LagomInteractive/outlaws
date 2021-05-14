@@ -57,6 +57,8 @@ public class GameManager : MonoBehaviour {
 
     public Transform winningBanner, losingBanner;
 
+    public AudioClip winningSound, losingSound;
+
     private void Update() {
         if (api.IsSearchingGame()) {
             searchingForSeconds += Time.deltaTime;
@@ -162,7 +164,6 @@ public class GameManager : MonoBehaviour {
             deckIdInput.text = PlayerPrefs.GetString("lastUsedDeck");
         }
 
-
         ChangeMusic(menuMusic);
 
         api.OnNoToken += () => {
@@ -216,6 +217,8 @@ public class GameManager : MonoBehaviour {
 
             winningBanner.gameObject.SetActive(won);
             losingBanner.gameObject.SetActive(!won);
+
+            menus.PlaySoundEffect(won ? winningSound : losingSound);
             ChangeMusic(menuMusic);
         };
 
