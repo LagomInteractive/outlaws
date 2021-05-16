@@ -103,13 +103,19 @@ public class DeckBuilder : MonoBehaviour {
         if (activeDeck == null) return;
 
         if (api.GetProfile().cards.ContainsKey(id) && api.GetProfile().cards[id] > 0) {
-            if (activeDeck.cards.ContainsKey(id)) {
-                if (activeDeck.cards[id] < 2) activeDeck.cards[id]++;
-            } else {
-                activeDeck.cards.Add(id, 1);
+            int amountInDeck = 0;
+
+            if (activeDeck.cards.ContainsKey(id)) amountInDeck = activeDeck.cards[id];
+
+            if (api.GetProfile().cards[id] - amountInDeck > 0) {
+                if (activeDeck.cards.ContainsKey(id)) {
+                    if (activeDeck.cards[id] < 2) activeDeck.cards[id]++;
+                } else {
+                    activeDeck.cards.Add(id, 1);
+                }
+                LoadDeck(activeDeck);
+                api.ModifyCardInDeck(activeDeck.id, id, true);
             }
-            LoadDeck(activeDeck);
-            api.ModifyCardInDeck(activeDeck.id, id, true);
         }
     }
 
