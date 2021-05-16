@@ -22279,6 +22279,7 @@ MonoBehaviour:
   losingSound: {fileID: 8300000, guid: 37dab7f3bfb01024182fe1aba1414591, type: 3}
   effects: {fileID: 533724124}
   xpDisplay: {fileID: 2128898733}
+  pauseButton: {fileID: 1437739039}
 --- !u!4 &308267426
 Transform:
   m_ObjectHideFlags: 0
@@ -34591,7 +34592,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 426996345}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: da695b251a4441b4f84d2e7098df0a4b, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: 90876d701c03baf499ac46ce0e84695b, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
@@ -34604,14 +34605,12 @@ VideoPlayer:
   m_DataSource: 0
   m_PlaybackSpeed: 1
   m_AudioOutputMode: 0
-  m_TargetAudioSources:
-  - {fileID: 0}
-  m_DirectAudioVolumes:
-  - 1
+  m_TargetAudioSources: []
+  m_DirectAudioVolumes: []
   m_Url: 
-  m_EnabledAudioTracks: 01
-  m_DirectAudioMutes: 00
-  m_ControlledAudioTrackCount: 1
+  m_EnabledAudioTracks: 
+  m_DirectAudioMutes: 
+  m_ControlledAudioTrackCount: 0
   m_PlayOnAwake: 1
   m_SkipOnDrop: 1
   m_Looping: 1
@@ -62712,7 +62711,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Artstation
+  m_Text: Linkedin
 --- !u!114 &744459460
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62725,7 +62724,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2bd5260103d7f245a8fa3d9f768227b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  link: https://www.artstation.com/isabellmars
+  link: https://www.linkedin.com/in/isabell-mars-2129b5204/
 --- !u!222 &744459461
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -99780,7 +99779,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1276540282
 RectTransform:
   m_ObjectHideFlags: 0
@@ -99834,7 +99833,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: -----
+  m_Text: Linkedin
 --- !u!114 &1276540284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99847,7 +99846,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2bd5260103d7f245a8fa3d9f768227b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  link: 
+  link: https://www.linkedin.com/in/cecilia-olofsson-1383aa7b
 --- !u!222 &1276540285
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -108468,6 +108467,11 @@ MonoBehaviour:
   friendlyUnits: {fileID: 1807909049}
   opponentUnits: {fileID: 1394979586}
   effectsManager: {fileID: 533724124}
+--- !u!1 &1437739039 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3833966692487627571, guid: 0b0b1a3d4b23a9f40931c566fd1c7adf, type: 3}
+  m_PrefabInstance: {fileID: 6583823805011511621}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1438055320
 GameObject:
   m_ObjectHideFlags: 0
@@ -142992,7 +142996,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Artstation
+  m_Text: Linkedin
 --- !u!114 &2031173545
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143005,7 +143009,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2bd5260103d7f245a8fa3d9f768227b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  link: https://www.artstation.com/ryuyol
+  link: https://www.linkedin.com/in/erikas-kles/
 --- !u!222 &2031173546
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -157459,6 +157463,38 @@ PrefabInstance:
     - target: {fileID: 3518021701730083277, guid: 0b0b1a3d4b23a9f40931c566fd1c7adf, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -125.119995
+      objectReference: {fileID: 0}
+    - target: {fileID: 3592610867003534938, guid: 0b0b1a3d4b23a9f40931c566fd1c7adf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3592610867003534938, guid: 0b0b1a3d4b23a9f40931c566fd1c7adf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3592610867003534938, guid: 0b0b1a3d4b23a9f40931c566fd1c7adf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 326220033}
+    - target: {fileID: 3592610867003534938, guid: 0b0b1a3d4b23a9f40931c566fd1c7adf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3592610867003534938, guid: 0b0b1a3d4b23a9f40931c566fd1c7adf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: NavigateTo
+      objectReference: {fileID: 0}
+    - target: {fileID: 3592610867003534938, guid: 0b0b1a3d4b23a9f40931c566fd1c7adf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MenuSystem, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3592610867003534938, guid: 0b0b1a3d4b23a9f40931c566fd1c7adf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: in_game_options
+      objectReference: {fileID: 0}
+    - target: {fileID: 3592610867003534938, guid: 0b0b1a3d4b23a9f40931c566fd1c7adf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 3649710958881477317, guid: 0b0b1a3d4b23a9f40931c566fd1c7adf, type: 3}
       propertyPath: m_AnchorMax.y

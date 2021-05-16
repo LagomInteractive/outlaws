@@ -3,28 +3,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 // Websockets to connect with the server
 using NativeWebSocket;
 // JSON protocol to parse and pack packets from and to the server.
 using Newtonsoft.Json;
 
+/// <summary>
+/// Can be a Player or active Unit
+/// </summary>
 public class Character {
     public string id;
     public int hp, maxHp;
     public bool isAttacking, hasAttacked, hasBeenAttacked;
 }
 
+/// <summary>
+/// An active Unit
+/// </summary>
 [Serializable]
 public class Minion : Character {
     public int origin, spawnRound, damage;
     public bool battlecryActive, hasEverAttacked;
     public bool riposte, deathrattle;
-    public string owner;
+    public string owner; // Player ID
 
+    /// <summary>
+    /// Get the owner of this Unit
+    /// </summary>
     Player GetOwner(CosmicAPI api) {
         return (Player)api.GetCharacter(owner);
     }
 
+    /// <summary>
+    /// If the Unit can be sacrificed
+    /// </summary>
     public bool canSacrifice(CosmicAPI api) {
         if (api.GetGame().round != spawnRound && api.IsElemental(api.GetCard(origin).element) && !hasAttacked) {
             return true;
@@ -32,6 +45,9 @@ public class Minion : Character {
         return false;
     }
 
+    /// <summary>
+    /// If the Unit can attack
+    /// </summary>
     public bool canAttack(CosmicAPI api) {
         Player ownerPlayer = (Player)api.GetCharacter(owner);
         if (!hasAttacked && ownerPlayer.turn)
@@ -39,6 +55,9 @@ public class Minion : Character {
         return false;
     }
 
+    /// <summary>
+    /// If the unit can be attacked, takes into account enemey Taunt status.
+    /// </summary>
     public bool canBeAttacked(CosmicAPI api) {
         if (api.GetCard(origin).element != Element.Taunt) {
             Player opponent = api.GetOpponent();
@@ -50,23 +69,29 @@ public class Minion : Character {
     }
 }
 
+/// <summary>
+/// An indexed Card pack and it's content
+/// </summary>
 [Serializable]
 public class Pack {
     public string name, id;
     public int[] cards;
 }
 
+/// <summary>
+/// A player in an active game
+/// </summary>
 [Serializable]
 public class Player : Character {
     public string name;
     public bool isBot, turn;
     public int level, manaLeft, totalMana;
     public int[] cards;
-    public int[] deck;
+    public int[] deck; // Cards in their deckm. This is only a list of nulls, can only be used to get amount of cards left (not cheat)
     public int passive;
     public Outlaw outlaw;
     public Minion[] minions;
-    public Profile profile;
+    public Profile profile; // Their account
     public Buff buff;
 
     public bool canBeAttacked(CosmicAPI api) {
@@ -81,6 +106,11 @@ public class Player : Character {
     }
 }
 
+/// <summary>
+/// Search options for matchmaking
+/// gameType is Pvp or Campaign
+/// Deck is the ID of the choosen deck
+/// </summary>
 [Serializable]
 public class SearchOptions {
     public string gameType, deck, outlaw;
@@ -91,27 +121,41 @@ public enum Outlaw {
     Necromancer, Mercenary
 }
 
+/// <summary>
+/// Player Buff
+/// </summary>
 [Serializable]
 public class Buff {
     public int sacrifices = 0;
     public Element element = Element.Nova;
 }
 
+/// <summary>
+/// Incoming response to redeeming a store code
+/// </summary>
 [Serializable]
 public class RedeemResponse {
     public bool success;
     public string message;
 }
 
+/// <summary>
+/// One tip from the list of Tips
+/// </summary>
 [Serializable]
 public class Tip {
     public string title, category, body, content, number;
 }
 
+/// <summary>
+/// A card / Unit origin
+/// </summary>
 [Serializable]
 public class Card {
     public int id, mana, damage, hp;
     public Rarity rarity;
+
+    // The loaded image from Resources/card-images
     public Sprite image = null;
     public string name, description;
     public CardType type;
@@ -139,7 +183,10 @@ public enum Rarity {
 [Serializable]
 public class Deck {
     public string title, owner, owner_username, id;
+    // The content of the deck
     public Dictionary<int, int> cards;
+
+    // Get the total amount of cards in this deck (0-30)
     public int GetSize() {
         int size = 0;
         foreach (KeyValuePair<int, int> card in this.cards) {
@@ -158,11 +205,18 @@ public class Profile {
     public Deck[] decks;
     public bool admin, hasLoggedInViaGameClient;
     public Record record;
+
+    /// <summary>
+    /// Get amount of a certain card in the users inventory
+    /// </summary>
     public int GetInventoryAmount(int cardId) {
         if (!cards.ContainsKey(cardId)) return 0;
         else return cards[cardId];
     }
 
+    /// <summary>
+    /// Get amount of packs in total the user has in their inventory
+    /// </summary>
     public int GetPacksAmount() {
         int total = 0;
         foreach (KeyValuePair<string, int> pack in packs) {
@@ -171,11 +225,18 @@ public class Profile {
         return total;
     }
 }
+
+/// <summary>
+/// Win / Loss record for Profiles
+/// </summary>
 [Serializable]
 public class Record {
     public int wins, losses;
 }
 
+/// <summary>
+/// Every package sent and recived to the server is packaged in this way.
+/// </summary>
 [Serializable]
 public class SocketPackage {
     public string identifier, packet, token;
@@ -198,6 +259,10 @@ public class Game {
     }
 }
 
+/// <summary>
+/// All events that happen in a games is processed in a GameEvent
+/// Some events are run in order with a certain delay between each event.
+/// </summary>
 [Serializable]
 public class GameEvent {
     public string identifier;
@@ -207,9 +272,14 @@ public class GameEvent {
 [Serializable]
 public class CosmicAPI : MonoBehaviour {
 
+    // API Version is checked with the server and will prompt the user to update
+    // the client if they are running an outdated version. This is critical because
+    // the old versions of the game would not work at all with the current server version.
     public const string API_VERSION = "3.0";
 
+    // The prefab for every card and Unit
     public GameObject cardPrefab;
+
     bool runningEvents = false;
 
     List<GameEvent> events = new List<GameEvent>();
@@ -300,6 +370,9 @@ public class CosmicAPI : MonoBehaviour {
     /// </summary>
     public Action<string> OnXPUpdate { get; set; }
 
+    /// <summary>
+    /// When tips are downloaded
+    /// </summary>
     public Action<Tip[]> OnTips { get; set; }
 
     // UUID form, UUID to
@@ -316,6 +389,10 @@ public class CosmicAPI : MonoBehaviour {
     // UUID to, int amount
     public Action<string, int> OnDamage { get; set; }
 
+    /// <summary>
+    /// When a minion takes damage
+    /// string id, int amount of damage
+    /// </summary>
     public Action<string, int> OnMinionDamage { get; set; }
 
     /// <summary>
@@ -330,7 +407,7 @@ public class CosmicAPI : MonoBehaviour {
     public Action<string, string> OnClientOutdated { get; set; }
 
 
-    // Diagnostics
+    // Diagnostics, ping the delay in ms for round trip time to the server
     public Action<int> OnPing { get; set; }
 
     // List of all cards in the game
@@ -361,19 +438,13 @@ public class CosmicAPI : MonoBehaviour {
     // Used to track ping delay
     System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
 
+    // Currently searching in matchmaking
     bool searchingGame = false;
 
-
-
-    // The time difference between the local clock on this clien and the server clock
-    // Game times are tracked in date time, since the clock on the server and client will sometimes not
-    // line up on the millisecond, this gives us the diffrence and is used to calculate time left on 
-    // a round for example.
-    // Currently not used because the timer is updated on every game update
-    /*long timeDifference = 0;*/
-
+    /// <summary>
+    /// Search for a game, any mode
+    /// </summary>
     public void SearchGame(SearchOptions search) {
-        //ConcedeGame();
         if (searchingGame) return;
         searchingGame = true;
         Send("search_game", JsonConvert.SerializeObject(search));
@@ -388,11 +459,20 @@ public class CosmicAPI : MonoBehaviour {
         return searchingGame;
     }
 
-    // Get client player in a game
+    // Get the client player in an active game
     public Player GetPlayer() {
         if (game == null) return null;
         foreach (Player player in game.players) {
             if (player.id == me.id) return player;
+        }
+        return null;
+    }
+
+    // Get the current opponent in the active game
+    public Player GetOpponent() {
+        if (game == null) return null;
+        foreach (Player player in game.players) {
+            if (player.id != me.id) return player;
         }
         return null;
     }
@@ -406,6 +486,10 @@ public class CosmicAPI : MonoBehaviour {
         return tips;
     }
 
+    /// <summary>
+    /// Check if an element is Elemental
+    /// This
+    /// </summary>
     public bool IsElemental(Element element) {
         switch (element) {
             case Element.Lunar:
@@ -455,12 +539,6 @@ public class CosmicAPI : MonoBehaviour {
         OnNoToken?.Invoke();
     }
 
-    public Player GetOpponent() {
-        foreach (Player player in game.players) {
-            if (player.id != me.id) return player;
-        }
-        return null;
-    }
 
     // Get any player or minion on the field (from ID)
     public Character GetCharacter(string id) {

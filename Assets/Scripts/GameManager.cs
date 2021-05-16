@@ -29,7 +29,9 @@ public class GameManager : MonoBehaviour {
 
     public PlayerUIController playerUI, opponentUI;
 
+    // Current active game
     Game game;
+
     public Transform deckPickList;
 
     public AudioClip gameMusic, menuMusic;
@@ -59,11 +61,17 @@ public class GameManager : MonoBehaviour {
 
     public AudioClip winningSound, losingSound;
 
+    // Playes particle effects and sound effects
     public EffectsManager effects;
 
+    // Display the XP gain at the end of the game
     public XPDisplay xpDisplay;
+
     // JSON of the XP update, saved once received and displayed at the end of the game.
     string xpUpdate = null;
+
+    // Only visible to mobile players
+    public GameObject pauseButton;
 
     private void Update() {
         if (api.IsSearchingGame()) {
@@ -82,11 +90,12 @@ public class GameManager : MonoBehaviour {
             countdownDial.color = dialColor;
             countdownText.text = timeLeft.ToString();
 
-            //infoText.text = $"V{CosmicAPI.API_VERSION} outlaws.ygstr.com\n---\nRound: {game.round}\nTurn: {(api.GetPlayer().turn ? "You" : "Opponent")}\nTime left: {Mathf.Round(roundTimer)}\nOpponent: {api.GetOpponent().name}\nOutlaw: {api.GetPlayer().outlaw} (You) vs. {api.GetOpponent().outlaw}";
             if (Input.GetKeyDown(KeyCode.Escape)) {
                 // Show pause menu
                 if (menus.IsMenusOpen()) menus.CloseMenu();
-                else menus.NavigateTo("in_game_options");
+                else {
+                    if (api.IsInGame()) menus.NavigateTo("in_game_options");
+                }
             }
         }
     }
@@ -162,6 +171,9 @@ public class GameManager : MonoBehaviour {
     }
 
     void Start() {
+        if (Application.platform != RuntimePlatform.Android && Application.platform != RuntimePlatform.IPhonePlayer) {
+            Destroy(pauseButton);
+        }
 
         menus.NavigateSilent("loading");
         Input.simulateMouseWithTouches = true;
