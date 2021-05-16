@@ -10,7 +10,5 @@ public class CreditCard : MonoBehaviour {
         Transform cardContainer = transform.Find("PreviewCard");
         DestroyImmediate(cardContainer.GetChild(0).gameObject);
         api.InstantiateCard(CardId, cardContainer);
-        Debug.Log(CardId);
-        Debug.Log("API: " + api == null);
     }
 }

@@ -275,7 +275,7 @@ public class CosmicAPI : MonoBehaviour {
     // API Version is checked with the server and will prompt the user to update
     // the client if they are running an outdated version. This is critical because
     // the old versions of the game would not work at all with the current server version.
-    public const string API_VERSION = "3.0";
+    public const string API_VERSION = "3.1";
 
     // The prefab for every card and Unit
     public GameObject cardPrefab;
