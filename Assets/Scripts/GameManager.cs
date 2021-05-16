@@ -248,6 +248,7 @@ public class GameManager : MonoBehaviour {
             if (api.IsInGame()) {
                 game = null;
                 menus.NavigateSilent("end_game");
+                xpDisplay.ShowNoXpGain();
                 lostConnectionBanner.gameObject.SetActive(true);
                 winningBanner.gameObject.SetActive(false);
                 losingBanner.gameObject.SetActive(false);

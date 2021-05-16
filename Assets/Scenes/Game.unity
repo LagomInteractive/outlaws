@@ -22017,7 +22017,7 @@ MonoBehaviour:
   winningBanner: {fileID: 96354861}
   losingBanner: {fileID: 366054606}
   lostConnectionBanner: {fileID: 1516015999}
-  winningSound: {fileID: 8300000, guid: e3263f9e9f9d8c44ab79408db6d3c3c6, type: 3}
+  winningSound: {fileID: 8300000, guid: e5df4032ddc329f4eabcf10acc0a5ea8, type: 3}
   losingSound: {fileID: 8300000, guid: 37dab7f3bfb01024182fe1aba1414591, type: 3}
   effects: {fileID: 533724124}
   xpDisplay: {fileID: 2128898733}

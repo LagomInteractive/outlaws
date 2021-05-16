@@ -74,7 +74,6 @@ public class AttackLine : MonoBehaviour {
     }
 
     void SetSacrificeActive(bool active) {
-        Debug.Log("Set sacrifice to:  " + active);
         sacrificeButton.color = active ? Color.red : Color.white;
         sacrificeActive = active;
     }
@@ -93,6 +92,7 @@ public class AttackLine : MonoBehaviour {
                     WorldCard wc = origin.GetComponent<WorldCard>();
                     Minion minion = (Minion)api.GetCharacter(wc.GetMinionId());
 
+                    if (minion == null) return;
                     if (api.GetPlayer().turn && minion.owner == api.GetPlayer().id && (minion.canAttack(api) || minion.battlecryActive || minion.canSacrifice(api))) {
                         active = true;
                         attackMode = !minion.battlecryActive;
@@ -118,7 +118,6 @@ public class AttackLine : MonoBehaviour {
         }
 
         if (active && Input.GetMouseButton(0)) {
-            Debug.Log("Mouse down");
             ClearTarget();
 
             line.SetPosition(0, start);
@@ -132,7 +131,6 @@ public class AttackLine : MonoBehaviour {
             Hitbox uiHit = uiHitboxes.GetActiveUIHitbox();
             if (uiHit != Hitbox.None) {
                 if (uiHit == Hitbox.Sacrifice) {
-                    Debug.Log("UI HIT SACRIFICE ACTIVE");
                     SetSacrificeActive(true);
                 } else {
                     bool isOpponent = uiHit == Hitbox.Opponent;
@@ -158,16 +156,11 @@ public class AttackLine : MonoBehaviour {
         if (canSacrifice) ShowSacrifice(true);
 
         if (active && Input.GetMouseButtonUp(0)) {
-            Debug.Log("Mouse up!");
-            Debug.Log("Sacrifice Active: " + sacrificeActive);
+
             active = false;
             string targetId = null;
             if (targetPlayer) targetId = targetPlayer.id;
             if (targetMinion) targetId = targetMinion.GetMinionId();
-
-            if (sacrificeActive) {
-                api.Sacrifice(attackerCard.GetMinionId());
-            }
 
             if (targetId != null) {
                 if (attackerCard) {
@@ -176,7 +169,8 @@ public class AttackLine : MonoBehaviour {
                 } else if (activeSpellCard) {
                     api.PlaySpell(activeSpellCard.GetId(), targetId);
                 }
-            }
+            } else if (sacrificeActive)
+                api.Sacrifice(attackerCard.GetMinionId());
 
             canSacrifice = false;
             ClearTarget();

@@ -16,6 +16,15 @@ public class XPDisplay : MonoBehaviour {
     XPUpdatePackage package;
     float animationTimeSeconds = 1;
 
+    /// <summary>
+    /// Used for on connection lost
+    /// </summary>
+    public void ShowNoXpGain() {
+        xpBar.value = 0;
+        xpGained.text = "0+ xp";
+        nextLevel.text = "";
+        currentLevel.text = "";
+    }
 
     public void XpUpdate(string json) {
         package = JsonConvert.DeserializeObject<XPUpdatePackage>(json);
