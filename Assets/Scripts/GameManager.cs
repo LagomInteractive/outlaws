@@ -13,9 +13,6 @@ public class GameManager : MonoBehaviour {
     public HandPlacement hand;
     public Battlefield battlefield;
 
-    public Transform manaBar;
-
-
     public float roundTimer;
 
     public Transform endTurnButton, endGameTitle;

@@ -128,9 +128,14 @@ public class Battlefield : MonoBehaviour {
         };
 
         api.OnMinionHeal += (id, amount) => {
-            WorldCard minion = GetMinion(id);
-            //minion.AnimateDamage(damage);
-            minion.SetHp(minion.GetHp() + amount);
+            WorldCard wc = GetMinion(id);
+
+            int newHp = (wc.GetHp() + amount);
+            Minion minion = (Minion)api.GetCharacter(id);
+
+            if (newHp > minion.maxHp) newHp = minion.maxHp;
+
+            wc.SetHp(newHp);
         };
 
         api.OnMinionDeath += (id) => {

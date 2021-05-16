@@ -22237,7 +22237,6 @@ MonoBehaviour:
   api: {fileID: 1400600605}
   hand: {fileID: 358674616}
   battlefield: {fileID: 1433872703}
-  manaBar: {fileID: 1098600003}
   roundTimer: 0
   endTurnButton: {fileID: 97804517}
   endGameTitle: {fileID: 1369999871}
@@ -103296,7 +103295,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1411013210
 RectTransform:
   m_ObjectHideFlags: 0

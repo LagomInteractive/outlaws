@@ -696,6 +696,7 @@ public class CosmicAPI : MonoBehaviour {
             else Login();
         };
 
+        // Client gets a message from the server
         ws.OnMessage += (bytes) => {
 
             string message = System.Text.Encoding.UTF8.GetString(bytes);
@@ -706,6 +707,7 @@ public class CosmicAPI : MonoBehaviour {
                     OnXPUpdate?.Invoke(package.packet);
                     break;
                 case "tips":
+                    // Tips download
                     tips = JsonConvert.DeserializeObject<Tip[]>(package.packet);
                     OnTips?.Invoke(tips);
                     break;
@@ -725,6 +727,7 @@ public class CosmicAPI : MonoBehaviour {
                     }
                     break;
                 case "ping":
+                    // Diagnostic tool
                     stopwatch.Stop();
                     OnPing?.Invoke((int)stopwatch.ElapsedMilliseconds);
                     break;
@@ -766,15 +769,6 @@ public class CosmicAPI : MonoBehaviour {
 
         // Connect to the server
         await ws.Connect();
-    }
-
-
-    public void StartMatchMaking(string deckId) {
-        Send("start_matchmaking", deckId);
-    }
-
-    public void StopMatchMaking() {
-        Send("stop_matchmaking");
     }
 
     public void OpenPack(string packId) {
@@ -1028,17 +1022,20 @@ public class CosmicAPI : MonoBehaviour {
         OnProfileUpdate?.Invoke();
     }
 
+    // The login token is always sent with the Send function,
+    // so it does not need to be provided here
     void Login() {
         Send("login_with_token");
     }
 
+    // Login or sign up via the form
     public void Login(string username, string password) {
         SocketPackage package = new SocketPackage() { identifier = "login", packet = username, token = password };
         ws.SendText(JsonConvert.SerializeObject(package));
     }
 
     void Update() {
-        // Makes sure incoming messages are received
+        // Handles incoming messages
 #if !UNITY_WEBGL || UNITY_EDITOR
         ws.DispatchMessageQueue();
 #endif

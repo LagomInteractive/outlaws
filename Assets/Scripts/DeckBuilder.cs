@@ -97,8 +97,6 @@ public class DeckBuilder : MonoBehaviour {
         activeDeck = deck;
     }
 
-
-
     public void AddCardToDeck(int id) {
         if (activeDeck == null) return;
 
