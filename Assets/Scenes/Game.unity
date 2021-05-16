@@ -19195,7 +19195,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1.18
   m_Text: "You have received a starter bonus:\n1x Lunar pack,\n1x Solar pack, \n1x
-    Zenith pack, \n1x Nova packs and \n3x All packs. \n\nEvery time you level up,
+    Zenith pack, \n1x Nova pack and \n3x All packs. \n\nEvery time you level up,
     you receive 1x All pack to open! Good luck!"
 --- !u!222 &154891085
 CanvasRenderer:
