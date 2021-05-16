@@ -74,6 +74,7 @@ public class AttackLine : MonoBehaviour {
     }
 
     void SetSacrificeActive(bool active) {
+        Debug.Log("Set sacrifice to:  " + active);
         sacrificeButton.color = active ? Color.red : Color.white;
         sacrificeActive = active;
     }
@@ -116,8 +117,10 @@ public class AttackLine : MonoBehaviour {
             }
         }
 
-        if (active) {
+        if (active && Input.GetMouseButton(0)) {
+            Debug.Log("Mouse down");
             ClearTarget();
+
             line.SetPosition(0, start);
             line.SetPosition(1, GetWorldSpaceMousePosition());
 
@@ -128,9 +131,10 @@ public class AttackLine : MonoBehaviour {
 
             Hitbox uiHit = uiHitboxes.GetActiveUIHitbox();
             if (uiHit != Hitbox.None) {
-                if (uiHit == Hitbox.Sacrifice)
+                if (uiHit == Hitbox.Sacrifice) {
+                    Debug.Log("UI HIT SACRIFICE ACTIVE");
                     SetSacrificeActive(true);
-                else {
+                } else {
                     bool isOpponent = uiHit == Hitbox.Opponent;
                     if (isOpponent || !attackMode) {
                         targetPlayer = isOpponent ? opponent : player;
@@ -154,6 +158,8 @@ public class AttackLine : MonoBehaviour {
         if (canSacrifice) ShowSacrifice(true);
 
         if (active && Input.GetMouseButtonUp(0)) {
+            Debug.Log("Mouse up!");
+            Debug.Log("Sacrifice Active: " + sacrificeActive);
             active = false;
             string targetId = null;
             if (targetPlayer) targetId = targetPlayer.id;

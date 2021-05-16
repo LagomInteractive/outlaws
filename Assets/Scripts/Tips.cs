@@ -40,7 +40,6 @@ public class Tips : MonoBehaviour {
 
     void LoadTip() {
         Tip tip = tips[activeTip];
-        Debug.Log(tip.content);
         videoPlayer.clip = Resources.Load<VideoClip>("tips/" + tip.content);
         videoPlayer.time = 0;
         videoPlayer.Play();

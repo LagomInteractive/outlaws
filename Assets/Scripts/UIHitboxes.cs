@@ -10,9 +10,14 @@ public enum Hitbox {
 public class UIHitboxes : MonoBehaviour {
 
     public Hitbox active;
+    public Hitbox last;
 
     public Hitbox GetActiveUIHitbox() {
         return active;
+    }
+
+    public Hitbox GetLastHitbox() {
+        return last;
     }
 
     public void EnterHitbox(string name) {
@@ -27,6 +32,7 @@ public class UIHitboxes : MonoBehaviour {
                 active = Hitbox.Sacrifice;
                 break;
         }
+        last = active;
     }
 
     public void ExitHitbox(string name) {

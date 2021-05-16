@@ -55,12 +55,15 @@ public class GameManager : MonoBehaviour {
     public Transform playerSpawn, opponentSpawn;
     public GameObject Necromancer, Mercenary;
 
-    public Transform winningBanner, losingBanner;
+    public Transform winningBanner, losingBanner, lostConnectionBanner;
 
     public AudioClip winningSound, losingSound;
 
     public EffectsManager effects;
 
+    public XPDisplay xpDisplay;
+    // JSON of the XP update, saved once received and displayed at the end of the game.
+    string xpUpdate = null;
 
     private void Update() {
         if (api.IsSearchingGame()) {
@@ -188,6 +191,7 @@ public class GameManager : MonoBehaviour {
         };
 
         api.OnEventsDone += () => {
+            if (!api.IsInGame()) return;
             if (!api.IsRunningEvents() && api.GetPlayer().turn) {
                 SetEndRoundButtonState(true);
             }
@@ -216,22 +220,42 @@ public class GameManager : MonoBehaviour {
             ChangeMusic(gameMusic);
         };
 
+        api.OnXPUpdate += json => {
+            xpUpdate = json;
+        };
+
         api.OnGameEnd += (winningPlayer) => {
             game = null;
             bool won = (winningPlayer == api.GetProfile().id);
             menus.NavigateSilent("end_game");
 
+            if (xpUpdate != null) {
+                xpDisplay.XpUpdate(xpUpdate);
+            }
+
             winningBanner.gameObject.SetActive(won);
             losingBanner.gameObject.SetActive(!won);
+            lostConnectionBanner.gameObject.SetActive(false);
 
             menus.PlaySoundEffect(won ? winningSound : losingSound);
             ChangeMusic(menuMusic);
+        };
+
+        api.OnDisconnected += () => {
+            if (api.IsInGame()) {
+                game = null;
+                menus.NavigateSilent("end_game");
+                lostConnectionBanner.gameObject.SetActive(true);
+                winningBanner.gameObject.SetActive(false);
+                losingBanner.gameObject.SetActive(false);
+            }
         };
 
         api.OnClientOutdated += (server_version, client_version) => {
             menus.NavigateSilent("out_of_date_warning");
         };
     }
+
 
     public void LoadCharacters() {
         LoadCharacter(api.GetPlayer(), playerSpawn);
@@ -241,6 +265,7 @@ public class GameManager : MonoBehaviour {
     public void LoadCharacter(Player player, Transform spawn) {
         while (spawn.childCount > 0) DestroyImmediate(spawn.GetChild(0).gameObject);
 
+        Debug.Log("Load player: " + player);
         GameObject outlaw = null;
         switch (player.outlaw) {
             case Outlaw.Mercenary:

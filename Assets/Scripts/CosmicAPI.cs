@@ -294,6 +294,12 @@ public class CosmicAPI : MonoBehaviour {
     /// </summary>
     public Action<int[]> OnPackOpened { get; set; }
 
+    /// <summary>
+    /// When the user gains XP (always at the end of a game)
+    /// string JSON as XPUpdatePackage
+    /// </summary>
+    public Action<string> OnXPUpdate { get; set; }
+
     public Action<Tip[]> OnTips { get; set; }
 
     // UUID form, UUID to
@@ -619,6 +625,9 @@ public class CosmicAPI : MonoBehaviour {
 
             switch (package.identifier) {
 
+                case "xp_update":
+                    OnXPUpdate?.Invoke(package.packet);
+                    break;
                 case "tips":
                     tips = JsonConvert.DeserializeObject<Tip[]>(package.packet);
                     OnTips?.Invoke(tips);
@@ -674,6 +683,7 @@ public class CosmicAPI : MonoBehaviour {
             loggedIn = false;
             OnDisconnected?.Invoke();
             // Without this nullcheck, it causes an error every time you quit the application.
+            game = null;
             if (this != null) StartCoroutine(Reconnect());
         };
 

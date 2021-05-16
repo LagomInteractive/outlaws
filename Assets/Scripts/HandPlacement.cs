@@ -44,6 +44,7 @@ public class HandPlacement : MonoBehaviour {
     }
 
     public void SetActiveCards() {
+        if (!api.IsInGame()) return;
         if (opponent) return;
         for (int i = 0; i < transform.childCount; i++) {
             WorldCard wc = transform.GetChild(i).GetComponent<WorldCard>();
