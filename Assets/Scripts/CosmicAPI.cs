@@ -156,7 +156,7 @@ public class Profile {
     public Dictionary<int, int> cards;
     public Dictionary<string, int> packs;
     public Deck[] decks;
-    public bool admin;
+    public bool admin, hasLoggedInViaGameClient;
     public Record record;
     public int GetInventoryAmount(int cardId) {
         if (!cards.ContainsKey(cardId)) return 0;
@@ -624,7 +624,6 @@ public class CosmicAPI : MonoBehaviour {
             SocketPackage package = JsonUtility.FromJson<SocketPackage>(message);
 
             switch (package.identifier) {
-
                 case "xp_update":
                     OnXPUpdate?.Invoke(package.packet);
                     break;

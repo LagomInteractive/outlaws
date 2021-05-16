@@ -18,16 +18,20 @@ public class MainMenu : MonoBehaviour {
     public void Setup() {
         Profile me = api.GetProfile();
         username.text = me.username;
-        level.text = "Level " + me.level;
         version.text = "V" + CosmicAPI.API_VERSION;
         searchingGame.SetActive(false);
         api.OnProfileUpdate += UpdateMenu;
         UpdateMenu();
     }
 
+
+    public void OnEnable() {
+        if (api.IsLoggedIn()) UpdateMenu();
+    }
     public void UpdateMenu() {
         int packsToOpen = api.GetProfile().GetPacksAmount();
         amountOfPacksToOpen.text = packsToOpen == 0 ? "" : packsToOpen.ToString();
+        level.text = "Level " + api.GetProfile().level;
     }
 
     void Update() {

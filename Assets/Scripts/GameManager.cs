@@ -178,6 +178,8 @@ public class GameManager : MonoBehaviour {
 
         api.OnLogin += () => {
             menus.NavigateSilent("main");
+
+            if (!api.GetProfile().hasLoggedInViaGameClient) menus.Overlay("welcome");
             menu.Setup();
         };
 
@@ -185,6 +187,7 @@ public class GameManager : MonoBehaviour {
             game = api.GetGame();
             roundTimer = game.roundTimeLeft;
         };
+
 
         api.OnEventsStarted += () => {
             SetEndRoundButtonState(false);
