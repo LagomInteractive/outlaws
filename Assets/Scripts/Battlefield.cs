@@ -133,6 +133,7 @@ public class Battlefield : MonoBehaviour {
             int newHp = (wc.GetHp() + amount);
             Minion minion = (Minion)api.GetCharacter(id);
 
+            if (minion == null) return;
             if (newHp > minion.maxHp) newHp = minion.maxHp;
 
             wc.SetHp(newHp);

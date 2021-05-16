@@ -611,7 +611,6 @@ public class CosmicAPI : MonoBehaviour {
     /// Play a minion card from the hand
     /// </summary>
     public void PlayMinion(int id) {
-        Debug.Log("ID: " + id);
         Send("play_minion", id.ToString());
     }
 

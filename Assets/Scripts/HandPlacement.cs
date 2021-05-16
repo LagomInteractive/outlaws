@@ -18,6 +18,10 @@ public class HandPlacement : MonoBehaviour {
             DeleteCards();
         };
 
+        api.OnGameEnd += (winner) => {
+            DeleteCards();
+        };
+
         if (!opponent) {
             api.OnCard += id => {
                 StartCoroutine(DealCardDelay(id, 1.8f));

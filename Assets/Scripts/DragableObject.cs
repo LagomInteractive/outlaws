@@ -51,7 +51,7 @@ public class DragableObject : MonoBehaviour {
         if (!api.IsInGame()) return;
 
         if (Time.time - lastClick < doubleClickTime) {
-            gm.PreviewCard(id);
+            if (api.IsInGame()) gm.PreviewCard(id);
         }
 
         lastClick = Time.time;

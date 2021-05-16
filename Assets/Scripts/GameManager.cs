@@ -278,7 +278,6 @@ public class GameManager : MonoBehaviour {
     public void LoadCharacter(Player player, Transform spawn) {
         while (spawn.childCount > 0) DestroyImmediate(spawn.GetChild(0).gameObject);
 
-        Debug.Log("Load player: " + player);
         GameObject outlaw = null;
         switch (player.outlaw) {
             case Outlaw.Mercenary:

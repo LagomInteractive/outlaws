@@ -1,3 +1,42 @@
+# The structure of this project
+
+This project is in two parts mainly
+
+* Unity game and CosmicAPI (this repo) - https://github.com/LagomInteractive/outlaws
+* Server and website - https://github.com/LagomInteractive/cosmic-server
+* Outdated, but with old Git history CosmicAPI - https://github.com/LagomInteractive/CosmicAPI
+
+### This is an overview of the structure of this project
+
+![Overview](https://user-images.githubusercontent.com/6502251/118415475-d211a780-b6aa-11eb-9824-7c4344f5dfa7.png)
+
+### This flowchart shows a basic view of how a game can look.
+
+![Flowchart](https://user-images.githubusercontent.com/6502251/118415476-d342d480-b6aa-11eb-9bfd-d4a4cb773381.png)
+
+### Code
+* [CosmicAPI.cs](https://github.com/LagomInteractive/outlaws/blob/master/Assets/Scripts/CosmicAPI.cs) - Is the main part of this project. It handles the communcation between the server and the game. It's structured like an API with all events and functions needed to play. It's a big file but it's suppoesed to be independent and work by itself. 
+
+* [WorldCard.cs](https://github.com/LagomInteractive/outlaws/blob/master/Assets/Scripts/WorldCard.cs) - This script creates and acts for all cards in the game. Units, Hand cards, Deck builder, Credits
+
+* [MenuSystem.cs](https://github.com/LagomInteractive/outlaws/blob/master/Assets/Scripts/MenuSystem.cs) - This is our navigation system for our menus, it works great!
+
+* [EffectsManager.cs](https://github.com/LagomInteractive/outlaws/blob/master/Assets/Scripts/EffectsManager.cs) - EffectsManager manages effects, VFX and SFX, often combined. It's a great way to pair our particle effects and sound effects.
+
+* [Battlefield.cs](https://github.com/LagomInteractive/outlaws/blob/master/Assets/Scripts/Battlefield.cs) - Handles all the units on the battlefield, adds them and removes then when needed.
+
+* [AttackLine.cs](https://github.com/LagomInteractive/outlaws/blob/master/Assets/Scripts/AttackLine.cs) - The AttackLine is the red arrow that you use to attack, cast and sacrifice with. 
+
+* [HandPlacement.cs](https://github.com/LagomInteractive/outlaws/blob/master/Assets/Scripts/HandPlacement.cs) - Handles the cards in the hand
+
+### Dependencies
+
+All dependencies are using upm and will automatically imported with a setup project.
+
+* [NativeWebSocket](https://github.com/endel/NativeWebSocket.git#upm) - For the socket connection to the server
+* [Newtonsoft](https://github.com/jilleJr/Newtonsoft.Json-for-Unity.git#upm) - For parsing and packing data over the sockets (JSON)
+
+
 ## Card creation and balancing
 
 We have custom, internal tools for our designers to create, test and balance cards for the game. This is done via the [Outlaws website](https://outlaws.ygstr.com/cards).
@@ -67,3 +106,29 @@ they can only be placed in a `onPlayedTarget` (minion) or a Target Spell.
 | damageRandomUnit      | Deals damage to random Unit (any team)              | Damage amount   | No     |
 | changeAlliesMaxHp     | NEEDS DOCUMENTATION                                 | Health amount   | No     |
 | damageRandomAnything  | Damange any player or unit on the board             | Damage amount   | No     |
+
+
+# XP System
+
+Every time a user levels up, they get 1x "All pack" that when opened
+gives the user 5 random cards. When the user levels up depends on how much experience points (XP) they gain. This amount is calculated like this:
+
+### XP Rewards
+
+| Action                | XP Reward |
+|-----------------------|-----------|
+| Win a game            | 500       |
+| Round played          | 5         |
+| Kill a unit           | 30        |
+| Gain sacrifice buff   | 100       |
+| Achive passive reward | 25        |
+
+### Level ladder
+
+| Level | XP needed to level up |
+|-------|-----------------------|
+| 1     | 100                   |
+| 2     | 250                   |
+| 3     | 500                   |
+| 4     | 750                   |
+| 5+    | 1000                  |
