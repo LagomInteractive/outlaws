@@ -41,6 +41,11 @@ All dependencies are using upm and will automatically imported with a setup proj
 * [Newtonsoft](https://github.com/jilleJr/Newtonsoft.Json-for-Unity.git#upm) - For parsing and packing data over the sockets (JSON)
 
 
+### Github Issues
+We used Github's bug and feature tracking system Issues
+At this link you can see some of the bigger bugs that we have SQUASHED!
+https://github.com/LagomInteractive/outlaws/issues?q=is%3Aissue+is%3Aclosed
+
 ## Card creation and balancing
 
 We have custom, internal tools for our designers to create, test and balance cards for the game. This is done via the [Outlaws website](https://outlaws.ygstr.com/cards).
