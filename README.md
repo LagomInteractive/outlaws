@@ -1,3 +1,4 @@
+
 # The structure of this project
 
 This project is in two parts mainly
@@ -8,11 +9,13 @@ This project is in two parts mainly
 
 ### This is an overview of the structure of this project
 
-![Overview](https://user-images.githubusercontent.com/6502251/118415475-d211a780-b6aa-11eb-9824-7c4344f5dfa7.png)
+![Overview](https://user-images.githubusercontent.com/6502251/118457492-17a99100-b6fa-11eb-80c2-07f7d3718b14.png)
 
 ### This flowchart shows a basic view of how a game can look.
 
-![Flowchart](https://user-images.githubusercontent.com/6502251/118415476-d342d480-b6aa-11eb-9bfd-d4a4cb773381.png)
+![Flow](https://user-images.githubusercontent.com/6502251/118457926-8850ad80-b6fa-11eb-94ad-efab1360c0d9.png)
+
+
 
 ### Code
 * [CosmicAPI.cs](https://github.com/LagomInteractive/outlaws/blob/master/Assets/Scripts/CosmicAPI.cs) - Is the main part of this project. It handles the communcation between the server and the game. It's structured like an API with all events and functions needed to play. It's a big file but it's suppoesed to be independent and work by itself. 
