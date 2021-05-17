@@ -1,4 +1,5 @@
 
+
 # The structure of this project
 
 This project is in two parts mainly
@@ -13,7 +14,7 @@ This project is in two parts mainly
 
 ### This flowchart shows a basic view of how a game can look.
 
-![Flow](https://user-images.githubusercontent.com/6502251/118457926-8850ad80-b6fa-11eb-94ad-efab1360c0d9.png)
+![Flow](https://user-images.githubusercontent.com/6502251/118458265-d960a180-b6fa-11eb-8e06-aea28d3155e3.png)
 
 
 
