@@ -16,6 +16,10 @@ This project is in two parts mainly
 
 ![Flow](https://user-images.githubusercontent.com/6502251/118618156-a1716100-b7c3-11eb-96af-69f922115c57.png)
 
+### CosmicAPI class diagram
+
+![CosmicAPIClass](https://user-images.githubusercontent.com/6502251/118629404-d682b100-b7cd-11eb-9805-5328d0be2795.png)
+
 
 ### Code
 * [CosmicAPI.cs](https://github.com/LagomInteractive/outlaws/blob/master/Assets/Scripts/CosmicAPI.cs) - Is the main part of this project. It handles the communcation between the server and the game. It's structured like an API with all events and functions needed to play. It's a big file but it's suppoesed to be independent and work by itself. 
