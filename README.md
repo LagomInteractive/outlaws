@@ -14,8 +14,7 @@ This project is in two parts mainly
 
 ### This flowchart shows a basic view of how a game can look.
 
-![Flow](https://user-images.githubusercontent.com/6502251/118458265-d960a180-b6fa-11eb-8e06-aea28d3155e3.png)
-
+![Flow](https://user-images.githubusercontent.com/6502251/118618156-a1716100-b7c3-11eb-96af-69f922115c57.png)
 
 
 ### Code
