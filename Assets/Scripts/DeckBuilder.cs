@@ -105,7 +105,7 @@ public class DeckBuilder : MonoBehaviour {
 
             if (activeDeck.cards.ContainsKey(id)) amountInDeck = activeDeck.cards[id];
 
-            if (api.GetProfile().cards[id] - amountInDeck > 0) {
+            if (api.GetProfile().cards[id] - amountInDeck > 0 && activeDeck.GetSize() < 30) {
                 if (activeDeck.cards.ContainsKey(id)) {
                     if (activeDeck.cards[id] < 2) activeDeck.cards[id]++;
                 } else {
